@@ -2,86 +2,76 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=1400,initial-scale=1"/>
-<title>TradeTaxi · Driver Screens</title>
+<meta name="viewport" content="width=1240,initial-scale=1"/>
+<title>TradeTaxi · Главный экран</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 :root{
-  --y:#FFD100;
-  --yd:#E6BC00;
-  --ys:#FFF8CC;
-  --ink:#1C1B18;
-  --ink2:#3A3830;
-  --m:#6B665A;
-  --f:#A8A293;
-  --div:#ECEAE3;
-  --bg:#F5F4EE;
-  --s:#fff;
-  --g:#16A34A;
-  --gs:#DCFCE7;
-  --r:#DC2626;
-  --rs:#FEE2E2;
-  --b:#2563EB;
-  --bs:#DBEAFE;
-  --o:#EA580C;
-  --os:#FFEDD5;
+  --y:#FFD100; --yd:#C9A800; --ys:#FFF8CC;
+  --ink:#1C1B18; --ink2:#3A3830;
+  --m:#6B665A; --f:#A8A293;
+  --div:#ECEAE3; --bg:#F5F4EE; --s:#fff;
+  --g:#16A34A; --gs:#DCFCE7; --gd:#14532D;
+  --r:#DC2626; --rs:#FEE2E2;
+  --b:#2563EB; --bs:#DBEAFE;
+  --o:#EA580C; --os:#FFEDD5;
+  --pu:#7C3AED; --pus:#EDE9FE;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
 body{
   font-family:'Inter',-apple-system,system-ui,sans-serif;
-  background:#1C1B18;
-  min-height:100vh;
-  padding:40px 24px 60px;
-  -webkit-font-smoothing:antialiased;
+  background:#141210;
+  padding:40px 28px 60px;
 }
 
-/* PAGE HEADER */
-.ph{text-align:center;margin-bottom:40px}
-.ph-ey{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6B665A;margin-bottom:8px}
-.ph h1{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:4px}
-.ph p{font-size:13px;color:#6B665A}
+/* ── PAGE HEADER ── */
+.ph{text-align:center;margin-bottom:10px}
+.ph-ey{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4A4740;margin-bottom:8px}
+.ph h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:4px}
+.ph p{font-size:13px;color:#4A4740}
 
-/* PHONES ROW */
-.row{display:flex;gap:28px;justify-content:center;align-items:flex-start}
+/* ── STATE LABEL ── */
+.state-label{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#4A4740;text-align:center;margin-bottom:12px;margin-top:28px;
+}
 
-.pw{display:flex;flex-direction:column;align-items:center;gap:14px}
-.pw-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B665A}
-.pw-stage{font-size:13px;font-weight:600;color:#A8A293;text-align:center}
+/* ── PHONES ROW ── */
+.phones{display:flex;gap:28px;justify-content:center;align-items:flex-start}
+.pw{display:flex;flex-direction:column;align-items:center}
 
-/* PHONE SHELL */
+/* ── PHONE SHELL ── */
 .phone{
   width:375px;
   background:var(--s);
   border-radius:50px;
-  box-shadow:0 0 0 10px #2A2820,0 0 0 12px #3A3830,0 40px 80px rgba(0,0,0,.6);
+  box-shadow:0 0 0 10px #252320,0 0 0 12px #323028,0 50px 100px rgba(0,0,0,.7);
   overflow:hidden;
   display:flex;
   flex-direction:column;
   position:relative;
 }
-/* Notch */
 .notch{
   position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:126px;height:37px;background:#1C1B18;
   border-radius:0 0 22px 22px;z-index:200;
 }
 
-/* STATUS BAR */
+/* ── STATUS BAR ── */
 .sb{
   height:47px;padding:14px 22px 0;
   display:flex;justify-content:space-between;align-items:center;
   flex-shrink:0;position:relative;z-index:10;
 }
-.sb.light{color:#fff}
-.sb-t{font-size:15px;font-weight:700;color:inherit}
+.sb-t{font-size:15px;font-weight:700}
 .sb-icons{display:flex;gap:5px;align-items:center}
-.sb-icons svg{fill:currentColor}
 
-/* BOTTOM NAV */
+/* ── BOTTOM NAV ── */
 .bnav{
   height:82px;background:var(--s);border-top:1px solid var(--div);
   display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;
+  position:relative;z-index:5;
 }
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
 .ni-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px}
@@ -89,331 +79,474 @@ body{
 .ni-lbl{font-size:10px;font-weight:600;color:var(--f)}
 .ni.on .ni-lbl{color:var(--ink);font-weight:700}
 
-/* CONTENT AREA */
-.pc{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+/* ── MAP SVG ── */
+.map-area{position:relative;flex-shrink:0;overflow:hidden}
 
-/* ─── MAP BASE ─── */
-.map{position:relative;flex-shrink:0;overflow:hidden;background:#E8E8E4}
-.map svg{display:block}
-
-/* ─── BOTTOM SHEET ─── */
+/* ── BOTTOM SHEET ── */
 .sheet{
   background:var(--s);
   border-radius:24px 24px 0 0;
-  padding:14px 20px 0;
-  box-shadow:0 -4px 32px rgba(0,0,0,.1);
+  overflow-y:auto;
 }
-.dh{width:36px;height:4px;background:var(--div);border-radius:2px;margin:0 auto 16px}
+.sheet::-webkit-scrollbar{display:none}
+.dh{width:36px;height:4px;background:var(--div);border-radius:2px;margin:12px auto 0}
 
-/* ─── TOKENS ─── */
-.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.04em}
-.tag-pass{background:var(--bs);color:var(--b)}
-.tag-del{background:var(--os);color:var(--o)}
-.tag-food{background:#FEF3C7;color:#92400E}
-.tag-green{background:var(--gs);color:var(--g)}
+/* ── SECTION HEADER ── */
+.sec{padding:18px 20px 0}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--f);margin-bottom:10px}
+.sec-divider{height:1px;background:var(--div);margin:16px 20px 0}
 
-.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:var(--bg);border-radius:8px;font-size:11.5px;font-weight:600;color:var(--m)}
+/* ── STATUS PILL ── */
+.status-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px 5px 8px;border-radius:20px;
+  font-size:12px;font-weight:700;
+}
+.sp-offline{background:#F5F4EE;color:var(--m)}
+.sp-online{background:var(--gs);color:var(--g)}
+.sp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sp-dot-off{background:#C5C0B4}
+.sp-dot-on{background:var(--g);animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
 
-/* ─── BUTTONS ─── */
+/* ── BUTTONS ── */
 .btn-y{
   display:flex;align-items:center;justify-content:center;gap:8px;
   width:100%;padding:17px;background:var(--y);border:none;
   border-radius:18px;font-size:17px;font-weight:800;color:var(--ink);
-  letter-spacing:-.01em;box-shadow:0 6px 20px rgba(255,209,0,.4);
+  letter-spacing:-.01em;box-shadow:0 6px 24px rgba(255,209,0,.35);
+}
+.btn-ink{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;background:var(--ink);border:none;
+  border-radius:16px;font-size:14px;font-weight:700;color:#fff;
 }
 .btn-ghost{
   display:flex;align-items:center;justify-content:center;gap:6px;
-  width:100%;padding:13px;background:transparent;border:none;
-  border-radius:14px;font-size:13px;font-weight:600;color:var(--m);
-}
-.btn-outline{
-  display:flex;align-items:center;justify-content:center;gap:6px;
   flex:1;padding:12px;background:var(--bg);border:none;
-  border-radius:14px;font-size:13px;font-weight:700;color:var(--ink);
+  border-radius:14px;font-size:13px;font-weight:700;color:var(--m);
 }
+.btn-row{display:flex;gap:8px;padding:0 20px 16px}
 
-/* ─── CARDS / ROWS ─── */
-.row2{display:flex;gap:10px}
-.card{background:var(--bg);border-radius:16px;padding:14px 16px}
-
-.sep{height:1px;background:var(--div);margin:0}
-
-/* ─── ROUTE ROW ─── */
-.route{display:flex;flex-direction:column;gap:0;padding-left:18px;position:relative}
-.route::before{content:'';position:absolute;left:5px;top:12px;bottom:12px;width:2px;background:var(--div);border-radius:1px}
-.rp{display:flex;flex-direction:column;gap:1px;padding:7px 0;position:relative}
-.rd{width:10px;height:10px;border-radius:50%;position:absolute;left:-18px;top:10px;flex-shrink:0}
-.rd-a{background:var(--ink);box-shadow:0 0 0 2px var(--bg)}
-.rd-b{background:var(--y);box-shadow:0 0 0 2px var(--yd)}
-.ra{font-size:13px;font-weight:700;color:var(--ink)}
-.rs2{font-size:11px;color:var(--m);margin-top:1px}
-
-/* pulse dot */
-.dot-live{width:8px;height:8px;background:var(--g);border-radius:50%;display:inline-block;animation:p 2s infinite}
-@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
-
-/* ─── ORDER CARD (lenta) ─── */
-.oc{background:var(--s);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1.5px solid var(--div)}
-.oc.feat{border-color:var(--y);box-shadow:0 4px 20px rgba(255,209,0,.22)}
-.oc-feat-bar{background:var(--y);padding:6px 16px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:6px}
-.oc-body{padding:16px 16px 12px}
-.oc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.oc-price{text-align:right}
-.oc-p1{font-size:22px;font-weight:900;color:var(--ink);letter-spacing:-.025em;line-height:1}
-.oc-p2{font-size:11px;color:var(--g);font-weight:700;margin-top:3px}
-.oc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.oc-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--div)}
-.oc-act{padding:13px;text-align:center;font-size:14px;font-weight:700}
-.oc-act.skip{color:var(--m)}
-.oc-act.go{background:var(--y);color:var(--ink)}
-
-/* section label */
-.slbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--f);padding:8px 0 6px}
-
-/* ─── EARNINGS BUBBLE (on map) ─── */
-.earn-pill{
-  position:absolute;top:14px;left:14px;
-  background:rgba(28,27,24,.82);backdrop-filter:blur(8px);
-  border-radius:14px;padding:10px 14px;
-  display:flex;flex-direction:column;gap:1px;
+/* ── EPL CARD ── */
+.epl-card{
+  margin:0 20px;
+  background:var(--bg);border-radius:18px;padding:14px 16px;
 }
-.ep-v{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1}
-.ep-l{font-size:10px;font-weight:600;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em}
-
-.rating-pill{
-  position:absolute;top:14px;right:14px;
-  background:rgba(255,255,255,.95);backdrop-filter:blur(8px);
-  border-radius:12px;padding:8px 12px;
-  display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--ink);
+.epl-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.epl-num{font-size:11px;font-weight:700;color:var(--f);letter-spacing:.04em}
+.epl-status{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700}
+.epl-status.active{color:var(--g)}
+.epl-status.expired{color:var(--r)}
+.epl-status.warn{color:var(--o)}
+.epl-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.epl-title{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin-bottom:2px}
+.epl-meta{font-size:12px;color:var(--m);margin-bottom:10px}
+.epl-row{display:flex;gap:6px;align-items:center}
+.epl-chip{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 10px;
+  background:var(--s);border-radius:8px;font-size:11px;font-weight:600;color:var(--m);
+  border:1px solid var(--div);
 }
-
-/* ─── ACTIVE ORDER MAP OVERLAYS ─── */
-.eta-box{
-  position:absolute;bottom:24px;left:14px;
-  background:var(--s);border-radius:14px;padding:10px 14px;
-  box-shadow:0 2px 16px rgba(0,0,0,.14);
+.epl-action{
+  margin-left:auto;padding:7px 14px;background:var(--ink);
+  border-radius:10px;font-size:12px;font-weight:700;color:#fff;
 }
-.eta-v{font-size:22px;font-weight:900;color:var(--ink);letter-spacing:-.025em;line-height:1}
-.eta-l{font-size:10px;font-weight:600;color:var(--m);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.epl-action.warn-btn{background:var(--o)}
 
-.map-earn{
-  position:absolute;top:14px;left:14px;
-  background:var(--s);border-radius:12px;padding:8px 12px;
-  box-shadow:0 2px 12px rgba(0,0,0,.12);
-  display:flex;align-items:baseline;gap:4px;
+/* ── VEHICLE CARD ── */
+.vehicle-card{
+  margin:0 20px;
+  border:1.5px solid var(--div);border-radius:18px;overflow:hidden;
+  background:var(--s);
 }
-.me-v{font-size:18px;font-weight:900;color:var(--g);letter-spacing:-.02em}
-.me-l{font-size:11px;font-weight:600;color:var(--m)}
-
-.zoom-c{
-  position:absolute;right:14px;bottom:70px;
-  border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.12);
+.vc-header{
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--div);
 }
-.zb{width:36px;height:36px;background:var(--s);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--ink)}
-.zb+.zb{border-top:1px solid var(--div)}
+.vc-icon{
+  width:48px;height:48px;background:var(--bg);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;
+}
+.vc-name{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.2}
+.vc-plate{
+  display:inline-flex;align-items:center;gap:0;margin-top:4px;
+  border:1.5px solid var(--ink);border-radius:4px;overflow:hidden;
+}
+.vc-plate-flag{background:var(--b);color:#fff;font-size:9px;font-weight:800;padding:2px 4px;line-height:1}
+.vc-plate-num{background:#fff;color:var(--ink);font-size:12px;font-weight:900;padding:2px 7px;letter-spacing:.08em;line-height:1}
+.vc-badge{
+  margin-left:auto;padding:6px 12px;border-radius:20px;
+  font-size:11px;font-weight:700;
+}
+.vc-badge.comfort{background:var(--ys);color:var(--yd)}
+.vc-badge.econom{background:var(--bg);color:var(--m);border:1px solid var(--div)}
 
-/* ─── PROGRESS BAR (sweetgreen style) ─── */
-.prog{padding:14px 0 2px}
-.prog-track{height:3px;background:var(--div);border-radius:2px;position:relative;overflow:hidden;margin-bottom:10px}
-.prog-fill{height:100%;background:var(--g);border-radius:2px}
-.prog-steps{display:flex;justify-content:space-between}
-.ps{font-size:10px;font-weight:600;color:var(--f);text-align:center}
-.ps.done{color:var(--g)}
-.ps.cur{color:var(--ink);font-weight:800}
+.vc-stats{display:flex;padding:0}
+.vc-stat{
+  flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:2px;
+  border-right:1px solid var(--div);
+}
+.vc-stat:last-child{border-right:none}
+.vc-stat-lbl{font-size:10px;font-weight:600;color:var(--f);text-transform:uppercase;letter-spacing:.06em}
+.vc-stat-v{font-size:13px;font-weight:700;color:var(--ink)}
+.vc-stat-v.ok{color:var(--g)}
+.vc-stat-v.warn{color:var(--o)}
+.vc-stat-v.bad{color:var(--r)}
 
-/* ─── GRAB-STYLE QUICK ACTIONS ─── */
-.qa-row{display:flex;gap:0;border-top:1px solid var(--div);padding:12px 0}
-.qa{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
-.qa-ic{width:40px;height:40px;background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.qa-lbl{font-size:10px;font-weight:600;color:var(--m);text-align:center}
+.vc-footer{
+  padding:12px 16px;border-top:1px solid var(--div);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.vc-footer-label{font-size:12px;color:var(--m);font-weight:500}
+.vc-change{font-size:12px;font-weight:700;color:var(--b)}
 
-/* ─── CLIENT ROW ─── */
-.client-row{display:flex;align-items:center;gap:12px;padding:12px 0}
-.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0}
-.av-name{font-size:14px;font-weight:700;color:var(--ink)}
-.av-rat{font-size:12px;color:var(--m);font-weight:600}
-.contact-btns{display:flex;gap:6px;margin-left:auto}
-.cbt{width:36px;height:36px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
-
-/* ─── DESTINATION ROW ─── */
-.dest-row{display:flex;align-items:center;gap:10px;padding:11px 0}
-.dest-ic{width:34px;height:34px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.dest-name{font-size:13px;font-weight:700;color:var(--ink)}
-.dest-addr{font-size:11px;color:var(--m);margin-top:1px}
-
-/* ─── SCROLL AREA ─── */
-.scroll{overflow-y:auto;padding:14px 16px;background:var(--bg);flex:1;display:flex;flex-direction:column;gap:10px}
-.scroll::-webkit-scrollbar{display:none}
-
-/* ─── WALLET CHIPS ─── */
-.wchip{flex:1;background:var(--bg);border-radius:14px;padding:12px 14px}
-.wchip-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--f);margin-bottom:3px}
-.wchip-v{font-size:19px;font-weight:900;letter-spacing:-.02em;color:var(--ink);line-height:1}
-.wchip-sub{font-size:11px;color:var(--m);margin-top:3px}
-.wchip.epl{background:var(--gs)}
-.wchip.epl .wchip-lbl{color:#14532D}
-.wchip.epl .wchip-v{font-size:13px;font-weight:700;color:var(--g)}
-
-/* ─── CHECKLIST ─── */
-.cl-item{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--bg);border-radius:14px}
-.cl-ic{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+/* ── CHECKLIST ── */
+.cl-list{display:flex;flex-direction:column;gap:8px;padding:0 20px}
+.cl-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;background:var(--bg);border-radius:14px;
+}
+.cl-ic{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .cl-ic.ok{background:var(--gs)}
 .cl-ic.warn{background:var(--os)}
+.cl-ic.bad{background:var(--rs)}
 .cl-name{font-size:13px;font-weight:600;color:var(--ink);flex:1}
-.cl-st{font-size:11px;color:var(--m)}
-.cl-st.ok{color:var(--g);font-weight:600}
-.cl-st.warn{color:var(--o);font-weight:600}
-.cl-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px}
+.cl-sub{font-size:11px;color:var(--m);margin-top:1px}
+.cl-badge{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:7px;white-space:nowrap}
 .cl-badge.ok{background:var(--gs);color:var(--g)}
 .cl-badge.warn{background:var(--os);color:var(--o)}
+.cl-badge.bad{background:var(--rs);color:var(--r)}
 
-/* spacing helpers */
-.mt4{margin-top:4px}
-.mt8{margin-top:8px}
-.mt12{margin-top:12px}
-.mt14{margin-top:14px}
-.mt16{margin-top:16px}
-.pb14{padding-bottom:14px}
-.pb8{padding-bottom:8px}
-.gap8{gap:8px}
-.gap6{gap:6px}
+/* ── MAIN CTA AREA ── */
+.cta-area{padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px}
+
+/* ── ONLINE STATE: MAP OVERLAYS ── */
+.map-pill-dark{
+  position:absolute;background:rgba(22,21,18,.85);backdrop-filter:blur(10px);
+  border-radius:14px;padding:10px 14px;
+}
+.mpd-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.mpd-val{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.025em;line-height:1}
+.mpd-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.mpd-action{font-size:11px;font-weight:700;color:var(--y);margin-top:3px}
+
+.map-pill-light{
+  position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-radius:14px;padding:9px 12px;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+
+/* go offline button (Grab Driver style) */
+.go-offline-btn{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:10px;
+  background:var(--s);border-radius:100px;
+  padding:10px 20px 10px 10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.18);
+  white-space:nowrap;
+}
+.go-offline-ic{
+  width:38px;height:38px;background:#22C55E;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.go-offline-text{font-size:14px;font-weight:800;color:var(--ink)}
+.go-offline-sub{font-size:11px;color:var(--m);font-weight:500}
+
+/* ── ONLINE BOTTOM SHEET ── */
+.status-bar-inline{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 0;
+}
+.sbi-left{display:flex;flex-direction:column;gap:2px}
+.sbi-status{display:flex;align-items:center;gap:6px}
+.sbi-title{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.015em}
+.sbi-sub{font-size:12px;color:var(--m)}
+.sbi-action{
+  padding:10px 16px;background:var(--rs);border-radius:12px;
+  font-size:13px;font-weight:700;color:var(--r);
+}
+
+/* ── EPL ROW COMPACT ── */
+.epl-row-compact{
+  margin:14px 20px 0;
+  background:var(--bg);border-radius:14px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.epl-rc-icon{
+  width:34px;height:34px;background:var(--gs);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+}
+.epl-rc-name{font-size:13px;font-weight:700;color:var(--ink)}
+.epl-rc-meta{font-size:11px;color:var(--m);margin-top:1px}
+.epl-rc-badge{
+  margin-left:auto;padding:4px 10px;border-radius:8px;
+  font-size:11px;font-weight:700;white-space:nowrap;
+}
+
+/* ── VEHICLE ROW COMPACT ── */
+.vc-row-compact{
+  margin:10px 20px 0;
+  background:var(--bg);border-radius:14px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.vc-rc-icon{
+  width:34px;height:34px;background:var(--ys);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.vc-rc-name{font-size:13px;font-weight:700;color:var(--ink)}
+.vc-rc-plate{font-size:11px;color:var(--m);margin-top:1px;font-weight:600;letter-spacing:.04em}
+
+/* ── QUICK ACTIONS ── */
+.qa-row{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;padding:14px 20px 0;
+}
+.qa{display:flex;flex-direction:column;align-items:center;gap:6px}
+.qa-ic{
+  width:44px;height:44px;background:var(--bg);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.qa-lbl{font-size:9.5px;font-weight:600;color:var(--m);text-align:center;line-height:1.3}
+
+/* ── FINDING JOBS ── */
+.finding-jobs{
+  margin:14px 20px 0;
+  background:var(--bg);border-radius:14px;
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.fj-left{display:flex;align-items:center;gap:8px}
+.fj-icon{font-size:16px}
+.fj-text{font-size:13px;font-weight:600;color:var(--ink)}
+.fj-sub{font-size:11px;color:var(--m);margin-top:1px}
+.fj-right{display:flex;gap:8px}
+.fj-btn{
+  padding:7px 12px;border-radius:10px;font-size:12px;font-weight:700;
+}
+.fj-btn.off{background:var(--rs);color:var(--r)}
+.fj-btn.nav{background:var(--bs);color:var(--b)}
+
+/* ── DELIVERY TOGGLE ── */
+.del-toggle{
+  margin:10px 20px 0;
+  background:var(--bg);border-radius:14px;
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.dt-left{display:flex;flex-direction:column;gap:2px}
+.dt-title{font-size:13px;font-weight:700;color:var(--ink)}
+.dt-sub{font-size:11px;color:var(--m)}
+.pill{width:44px;height:26px;border-radius:13px;position:relative;transition:background .2s;flex-shrink:0}
+.pill.on{background:var(--y)}
+.pill.off{background:#D0CCBF}
+.pill-dot{
+  width:22px;height:22px;background:#fff;border-radius:50%;
+  position:absolute;top:2px;box-shadow:0 1px 4px rgba(0,0,0,.2);
+  transition:left .2s;
+}
+.pill.on .pill-dot{left:20px}
+.pill.off .pill-dot{left:2px}
+
+/* ── SHIFT STATS ── */
+.shift-stats{
+  display:flex;gap:0;padding:14px 20px 0;
+}
+.ss-item{
+  flex:1;display:flex;flex-direction:column;gap:2px;
+  padding-right:16px;border-right:1px solid var(--div);margin-right:16px;
+}
+.ss-item:last-child{border-right:none;padding-right:0;margin-right:0}
+.ss-lbl{font-size:10px;font-weight:600;color:var(--f);text-transform:uppercase;letter-spacing:.06em}
+.ss-val{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.ss-sub{font-size:11px;color:var(--m);margin-top:1px}
 
 </style>
 </head>
 <body>
 
 <div class="ph">
-  <div class="ph-ey">TradeTaxi · Driver App · MVP</div>
-  <h1>Экраны водителя</h1>
-  <p>Начало смены → Лента заказов → Активный заказ</p>
+  <div class="ph-ey">TradeTaxi · Driver App · Главный экран</div>
+  <h1>Главный экран — два состояния</h1>
+  <p>Офлайн (по умолчанию) → процесс выхода → На линии</p>
 </div>
 
-<div class="row">
+<div class="phones">
 
-<!-- ════════════════════════════
-     ЭКРАН 1 · ГЛАВНЫЙ (ОФЛАЙН)
-     ════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     PHONE 1 · OFFLINE STATE (default)
+     ════════════════════════════════════════ -->
 <div class="pw">
-  <div class="pw-label">Экран 1</div>
-  <div class="pw-stage">Главный · Начало смены</div>
+  <div class="state-label">Состояние 1 · Офлайн · начало смены</div>
 
-  <div class="phone" style="height:812px">
+  <div class="phone" style="height:870px">
     <div class="notch"></div>
 
-    <!-- Статус бар поверх карты -->
-    <div class="sb light" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
-      <span class="sb-t" style="color:#fff">9:41</span>
-      <div class="sb-icons" style="color:#fff">
-        <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/><path d="M2.5 5.5A7.07 7.07 0 0 1 7.5 3.5c1.95 0 3.7.78 4.97 2.03" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.14 7.44 3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
-      </div>
-    </div>
-
-    <!-- MAP full bleed -->
-    <div class="map" style="height:480px;flex-shrink:0">
-      <svg width="375" height="480" viewBox="0 0 375 480" preserveAspectRatio="xMidYMid slice">
-        <rect width="375" height="480" fill="#E8E8E4"/>
-        <!-- blocks -->
-        <rect x="4" y="48" width="70" height="55" rx="3" fill="#D0CEC0" opacity=".8"/>
-        <rect x="82" y="52" width="85" height="48" rx="3" fill="#D8D6C8" opacity=".8"/>
-        <rect x="178" y="44" width="95" height="60" rx="3" fill="#D0CEC0" opacity=".8"/>
-        <rect x="285" y="52" width="86" height="52" rx="3" fill="#D8D6C8" opacity=".8"/>
-        <rect x="4" y="120" width="58" height="80" rx="3" fill="#D8D6C8" opacity=".75"/>
-        <rect x="74" y="116" width="90" height="74" rx="3" fill="#D0CEC0" opacity=".75"/>
-        <rect x="178" y="120" width="80" height="68" rx="3" fill="#D8D6C8" opacity=".75"/>
-        <rect x="274" y="116" width="97" height="80" rx="3" fill="#D0CEC0" opacity=".75"/>
-        <rect x="4" y="218" width="66" height="70" rx="3" fill="#D0CEC0" opacity=".7"/>
-        <rect x="82" y="214" width="88" height="66" rx="3" fill="#D8D6C8" opacity=".7"/>
-        <rect x="185" y="218" width="78" height="62" rx="3" fill="#D0CEC0" opacity=".7"/>
-        <rect x="276" y="210" width="95" height="78" rx="3" fill="#D8D6C8" opacity=".7"/>
-        <rect x="4" y="308" width="72" height="60" rx="3" fill="#D8D6C8" opacity=".6"/>
-        <rect x="88" y="304" width="85" height="58" rx="3" fill="#D0CEC0" opacity=".6"/>
-        <rect x="186" y="308" width="80" height="55" rx="3" fill="#D8D6C8" opacity=".6"/>
-        <rect x="280" y="300" width="91" height="68" rx="3" fill="#D0CEC0" opacity=".6"/>
-        <rect x="4" y="386" width="68" height="52" rx="3" fill="#D0CEC0" opacity=".5"/>
-        <rect x="86" y="382" width="90" height="52" rx="3" fill="#D8D6C8" opacity=".5"/>
-        <!-- main roads -->
-        <rect x="0" y="100" width="375" height="13" fill="#E8E680" opacity=".9"/>
-        <rect x="0" y="196" width="375" height="10" fill="#fff" opacity=".85"/>
-        <rect x="0" y="292" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
-        <rect x="155" y="0" width="10" height="480" fill="#fff" opacity=".85"/>
-        <rect x="70" y="0" width="6" height="480" fill="#F0EEDF" opacity=".7"/>
-        <rect x="265" y="0" width="6" height="480" fill="#F0EEDF" opacity=".7"/>
+    <!-- MAP (dimmed, offline feel) -->
+    <div class="map-area" style="height:260px">
+      <svg width="375" height="260" viewBox="0 0 375 260" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="260" fill="#E4E2D8"/>
+        <rect x="4" y="0" width="60" height="45" rx="3" fill="#D4D2C4" opacity=".9"/>
+        <rect x="74" y="4" width="78" height="38" rx="3" fill="#CCCAB8" opacity=".9"/>
+        <rect x="164" y="0" width="88" height="48" rx="3" fill="#D4D2C4" opacity=".9"/>
+        <rect x="264" y="4" width="107" height="40" rx="3" fill="#CCCAB8" opacity=".9"/>
+        <rect x="4" y="62" width="60" height="65" rx="3" fill="#CCCAB8" opacity=".85"/>
+        <rect x="74" y="58" width="84" height="60" rx="3" fill="#D4D2C4" opacity=".85"/>
+        <rect x="172" y="62" width="76" height="56" rx="3" fill="#CCCAB8" opacity=".85"/>
+        <rect x="262" y="56" width="109" height="72" rx="3" fill="#D4D2C4" opacity=".85"/>
+        <rect x="4" y="148" width="62" height="58" rx="3" fill="#D4D2C4" opacity=".8"/>
+        <rect x="78" y="144" width="82" height="54" rx="3" fill="#CCCAB8" opacity=".8"/>
+        <rect x="174" y="148" width="74" height="52" rx="3" fill="#D4D2C4" opacity=".8"/>
+        <rect x="262" y="144" width="109" height="60" rx="3" fill="#CCCAB8" opacity=".8"/>
+        <!-- roads -->
+        <rect x="0" y="48" width="375" height="10" fill="#E0DDD0" opacity=".9"/>
+        <rect x="0" y="130" width="375" height="8" fill="#E8E6DA" opacity=".8"/>
+        <rect x="0" y="210" width="375" height="7" fill="#E8E6DA" opacity=".7"/>
+        <rect x="144" y="0" width="9" height="260" fill="#E8E6DA" opacity=".85"/>
+        <rect x="64" y="0" width="6" height="260" fill="#E4E2D6" opacity=".7"/>
+        <rect x="256" y="0" width="6" height="260" fill="#E4E2D6" opacity=".7"/>
         <!-- park -->
-        <ellipse cx="320" cy="165" rx="40" ry="28" fill="#C8DFB0" opacity=".75"/>
-        <!-- river -->
-        <path d="M0 440 Q100 428 200 442 Q285 454 375 435" stroke="#B8D8E8" stroke-width="20" fill="none" opacity=".7"/>
-        <!-- driver dot -->
-        <circle cx="188" cy="260" r="10" fill="#FFD100"/>
-        <circle cx="188" cy="260" r="18" fill="#FFD100" opacity=".2"/>
-        <circle cx="188" cy="260" r="26" fill="#FFD100" opacity=".1"/>
-        <!-- order pins -->
-        <circle cx="108" cy="134" r="6" fill="#2563EB"/>
-        <circle cx="245" cy="118" r="6" fill="#EA580C"/>
-        <circle cx="300" cy="228" r="6" fill="#16A34A"/>
+        <ellipse cx="310" cy="110" rx="36" ry="24" fill="#D0DEC0" opacity=".7"/>
+        <!-- greyed driver dot -->
+        <circle cx="188" cy="180" r="9" fill="#C5C0B4"/>
+        <circle cx="188" cy="180" r="17" fill="#C5C0B4" opacity=".15"/>
+        <!-- offline overlay -->
+        <rect width="375" height="260" fill="rgba(240,238,232,0.3)"/>
       </svg>
 
-      <!-- gradient fade to sheet -->
-      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#fff,transparent)"></div>
-
-      <!-- Earnings / rating overlay (Grab Driver pattern) -->
-      <div class="earn-pill">
-        <div class="ep-l">Сегодня</div>
-        <div class="ep-v">2 840 ₽</div>
+      <!-- "Офлайн" badge on map -->
+      <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(28,27,24,.75);backdrop-filter:blur(8px);border-radius:20px;padding:6px 14px;display:flex;align-items:center;gap:7px">
+        <div style="width:8px;height:8px;background:#9CA3AF;border-radius:50%"></div>
+        <span style="font-size:12px;font-weight:700;color:#fff;letter-spacing:.02em">Вы офлайн</span>
       </div>
-      <div class="rating-pill">⭐ 4.92</div>
 
-      <!-- order pins labels -->
-      <div style="position:absolute;top:118px;left:76px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>👤</span>520₽</div>
-      <div style="position:absolute;top:102px;left:212px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>📦</span>340₽</div>
-      <div style="position:absolute;top:212px;left:270px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>🍕</span>290₽</div>
+      <!-- gradient -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,#fff,transparent)"></div>
     </div>
 
     <!-- BOTTOM SHEET -->
-    <div class="sheet" style="flex:1;display:flex;flex-direction:column;gap:12px;padding-bottom:0;overflow:hidden">
+    <div class="sheet" style="flex:1;overflow-y:auto">
       <div class="dh"></div>
 
-      <!-- Toggle row -->
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--ink)">Заказы</div>
-        <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:20px;padding:6px 10px 6px 12px">
-          <span style="font-size:12px;font-weight:600;color:var(--m)">Доставка</span>
-          <div style="width:38px;height:22px;background:var(--y);border-radius:11px;position:relative">
-            <div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+      <!-- SECTION: Смена -->
+      <div class="sec">
+        <div class="sec-title">Статус смены</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <div class="status-pill sp-offline">
+                <div class="sp-dot sp-dot-off"></div>
+                Офлайн
+              </div>
+            </div>
+            <div style="font-size:12px;color:var(--m)">Приём заказов отключён</div>
+          </div>
+          <!-- Delivery toggle -->
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <div style="font-size:10px;font-weight:600;color:var(--f);text-transform:uppercase;letter-spacing:.06em">Доставка</div>
+            <div style="display:flex;align-items:center;gap:7px">
+              <span style="font-size:12px;color:var(--g);font-weight:700">ВКЛ</span>
+              <div class="pill on"><div class="pill-dot"></div></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Wallet row -->
-      <div class="row2">
-        <div class="wchip">
-          <div class="wchip-lbl">Кошелёк</div>
-          <div class="wchip-v">2 840 ₽</div>
-          <div class="wchip-sub">Пополнить через СБП →</div>
+      <!-- EPL SECTION -->
+      <div class="sec-divider"></div>
+      <div class="sec">
+        <div class="sec-title">Электронный путевой лист</div>
+      </div>
+      <div class="epl-card">
+        <div class="epl-top">
+          <div>
+            <div class="epl-num">ЭПЛ № 2024-00184753</div>
+          </div>
+          <div class="epl-status active">
+            <div class="epl-status-dot" style="background:var(--g)"></div>
+            Активен
+          </div>
         </div>
-        <div class="wchip epl" style="flex:0 0 auto;width:130px">
-          <div class="wchip-lbl">ЭПЛ</div>
-          <div class="wchip-v"><span class="dot-live"></span> Активен</div>
-          <div class="wchip-sub" style="font-size:10px;color:var(--g)">до 23:59</div>
+        <div class="epl-title">Такси-парк «ТрейдТакси»</div>
+        <div class="epl-meta">Выписан сегодня, 06:00 · Действует до 23:59</div>
+        <div class="epl-row">
+          <div class="epl-chip">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            17 ч 43 мин
+          </div>
+          <div class="epl-chip">📋 Осмотр ✓</div>
+          <div class="epl-action">Просмотр →</div>
         </div>
       </div>
 
-      <!-- Checklist -->
-      <div style="display:flex;flex-direction:column;gap:8px">
+      <!-- VEHICLE SECTION -->
+      <div class="sec-divider"></div>
+      <div class="sec">
+        <div class="sec-title">Транспортное средство</div>
+      </div>
+      <div class="vehicle-card">
+        <div class="vc-header">
+          <div class="vc-icon">🚖</div>
+          <div style="flex:1">
+            <div class="vc-name">Kia Rio · 2021</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:5px">
+              <div class="vc-plate">
+                <div class="vc-plate-flag">RU</div>
+                <div class="vc-plate-num">А 847 КМ · 77</div>
+              </div>
+            </div>
+          </div>
+          <div class="vc-badge comfort">Комфорт</div>
+        </div>
+
+        <div class="vc-stats">
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Страховка</div>
+            <div class="vc-stat-v ok">✓ ОСАГО</div>
+            <div style="font-size:10px;color:var(--m)">до 15.03.2026</div>
+          </div>
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Техосмотр</div>
+            <div class="vc-stat-v ok">✓ ТО-8</div>
+            <div style="font-size:10px;color:var(--m)">до 12.08.2026</div>
+          </div>
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Пробег</div>
+            <div class="vc-stat-v">87 432 км</div>
+            <div style="font-size:10px;color:var(--m)">обнови одометр</div>
+          </div>
+        </div>
+
+        <div class="vc-footer">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="font-size:12px;color:var(--m)">Закреплено: <b style="color:var(--ink)">Автопарк №3</b></div>
+          </div>
+          <div class="vc-change">Сменить ТС →</div>
+        </div>
+      </div>
+
+      <!-- READINESS CHECKLIST -->
+      <div class="sec-divider"></div>
+      <div class="sec" style="padding-bottom:10px">
+        <div class="sec-title">Готовность к смене</div>
+      </div>
+      <div class="cl-list">
         <div class="cl-item">
           <div class="cl-ic ok">✅</div>
           <div style="flex:1">
-            <div class="cl-name">Страховка</div>
-            <div class="cl-st ok">Действует до 15.03.2026</div>
+            <div class="cl-name">Документы водителя</div>
+            <div class="cl-sub">ВУ, паспорт — проверены</div>
           </div>
           <div class="cl-badge ok">ОК</div>
         </div>
         <div class="cl-item">
           <div class="cl-ic ok">✅</div>
           <div style="flex:1">
-            <div class="cl-name">Техосмотр</div>
-            <div class="cl-st ok">Действует до 12.08.2026</div>
+            <div class="cl-name">ЭПЛ и медосмотр</div>
+            <div class="cl-sub">Осмотр пройден в 05:58</div>
           </div>
           <div class="cl-badge ok">ОК</div>
         </div>
@@ -421,27 +554,30 @@ body{
           <div class="cl-ic warn">⚠️</div>
           <div style="flex:1">
             <div class="cl-name">Баланс кошелька</div>
-            <div class="cl-st warn">Рекомендуем не менее 3 000 ₽</div>
+            <div class="cl-sub">2 840 ₽ · рекомендуем ≥ 3 000 ₽</div>
           </div>
-          <div class="cl-badge warn">Низкий</div>
+          <div class="cl-badge warn">Пополни</div>
         </div>
       </div>
 
-      <!-- CTA -->
-      <div class="pb14">
+      <!-- MAIN CTA -->
+      <div class="cta-area">
         <div class="btn-y">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1C1B18" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke="#1C1B18" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.364 5.636A9 9 0 1 1 5.636 18.364 9 9 0 0 1 18.364 5.636z" stroke="#1C1B18" stroke-width="2"/><path d="M12 8v4l3 2" stroke="#1C1B18" stroke-width="2" stroke-linecap="round"/></svg>
           Выйти на линию
         </div>
-        <div class="btn-ghost mt8">История смен →</div>
+        <div style="text-align:center;font-size:12px;color:var(--f)">
+          Начнёт работать ЭПЛ № 2024-00184753
+        </div>
       </div>
-    </div>
+
+    </div><!-- /sheet -->
 
     <!-- Bottom Nav -->
     <div class="bnav">
       <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
-      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
     </div>
@@ -449,218 +585,225 @@ body{
 </div><!-- /pw1 -->
 
 
-<!-- ════════════════════════════
-     ЭКРАН 2 · ЛЕНТА ЗАКАЗОВ
-     ════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     PHONE 2 · ONLINE STATE
+     ════════════════════════════════════════ -->
 <div class="pw">
-  <div class="pw-label">Экран 2</div>
-  <div class="pw-stage">Лента · Выбор заказа</div>
+  <div class="state-label">Состояние 2 · На линии · ожидание заказов</div>
 
-  <div class="phone" style="height:812px">
+  <div class="phone" style="height:870px">
     <div class="notch"></div>
-    <div class="sb">
-      <span class="sb-t">9:41</span>
-      <div class="sb-icons">
-        <svg width="16" height="11" viewBox="0 0 16 11" fill="#1C1B18"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="#1C1B18"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
-        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#1C1B18" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#1C1B18"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#1C1B18"/></svg>
+
+    <!-- Status bar over map -->
+    <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">9:41</span>
+      <div class="sb-icons" style="color:#fff">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#fff"/><path d="M2.5 6A7.07 7.07 0 0 1 7.5 4c1.95 0 3.7.78 4.97 2.03" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3.2A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.14 7.44 3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
       </div>
     </div>
 
-    <div class="pc">
+    <!-- MAP full bleed -->
+    <div class="map-area" style="height:460px;flex-shrink:0">
+      <svg width="375" height="460" viewBox="0 0 375 460" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="460" fill="#E8E8E4"/>
+        <!-- blocks -->
+        <rect x="4" y="44" width="60" height="50" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="74" y="48" width="78" height="44" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="164" y="40" width="88" height="58" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="264" y="46" width="107" height="50" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="4" y="112" width="60" height="68" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="74" y="108" width="84" height="64" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="172" y="112" width="76" height="60" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="264" y="106" width="107" height="74" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="4" y="200" width="62" height="66" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="78" y="196" width="82" height="62" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="178" y="200" width="74" height="58" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="268" y="192" width="103" height="74" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="4" y="288" width="66" height="58" rx="3" fill="#D8D6C8" opacity=".65"/>
+        <rect x="82" y="284" width="84" height="56" rx="3" fill="#D0CEC0" opacity=".65"/>
+        <rect x="182" y="288" width="76" height="54" rx="3" fill="#D8D6C8" opacity=".65"/>
+        <rect x="272" y="282" width="99" height="66" rx="3" fill="#D0CEC0" opacity=".65"/>
+        <rect x="4" y="368" width="64" height="54" rx="3" fill="#D0CEC0" opacity=".55"/>
+        <rect x="82" y="364" width="84" height="50" rx="3" fill="#D8D6C8" opacity=".55"/>
+        <rect x="180" y="368" width="76" height="52" rx="3" fill="#D0CEC0" opacity=".55"/>
+        <rect x="270" y="362" width="101" height="62" rx="3" fill="#D8D6C8" opacity=".55"/>
+        <!-- roads -->
+        <rect x="0" y="94" width="375" height="12" fill="#E8E680" opacity=".9"/>
+        <rect x="0" y="182" width="375" height="9" fill="#fff" opacity=".85"/>
+        <rect x="0" y="270" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
+        <rect x="0" y="354" width="375" height="7" fill="#F0EEDF" opacity=".75"/>
+        <rect x="144" y="0" width="9" height="460" fill="#fff" opacity=".85"/>
+        <rect x="64" y="0" width="6" height="460" fill="#F0EEDF" opacity=".7"/>
+        <rect x="256" y="0" width="6" height="460" fill="#F0EEDF" opacity=".7"/>
+        <!-- park -->
+        <ellipse cx="315" cy="155" rx="38" ry="26" fill="#C8DFB0" opacity=".75"/>
+        <!-- driver dot (active, yellow) -->
+        <circle cx="188" cy="310" r="12" fill="#FFD100" stroke="#fff" stroke-width="3"/>
+        <circle cx="188" cy="310" r="20" fill="#FFD100" opacity=".2"/>
+        <circle cx="188" cy="310" r="30" fill="#FFD100" opacity=".08"/>
+        <!-- some order pins -->
+        <circle cx="106" cy="120" r="5" fill="#2563EB"/>
+        <circle cx="240" cy="108" r="5" fill="#EA580C"/>
+        <circle cx="295" cy="220" r="5" fill="#16A34A"/>
+      </svg>
 
-      <!-- Header -->
-      <div style="padding:4px 20px 12px;background:var(--s)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <div style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em">Заказы</div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="display:flex;align-items:center;gap:5px;background:var(--gs);padding:5px 10px;border-radius:10px">
-              <span class="dot-live"></span>
-              <span style="font-size:12px;font-weight:700;color:var(--g)">На линии</span>
-            </div>
-            <div style="background:var(--bg);padding:5px 10px;border-radius:10px;font-size:12px;font-weight:700;color:var(--m)">3 заказа</div>
-          </div>
-        </div>
-        <!-- Filters -->
-        <div style="display:flex;gap:6px">
-          <div style="padding:8px 14px;background:var(--ink);color:#fff;border-radius:10px;font-size:13px;font-weight:700">Все</div>
-          <div style="padding:8px 14px;background:var(--bg);color:var(--m);border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><span>👤</span>Пассажиры</div>
-          <div style="padding:8px 14px;background:var(--bg);color:var(--m);border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><span>📦</span>Доставка</div>
+      <!-- gradient to bottom -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#fff,transparent)"></div>
+
+      <!-- Earnings pill (Grab Driver style, dark) -->
+      <div class="map-pill-dark" style="top:58px;left:14px">
+        <div class="mpd-label">Сегодня</div>
+        <div class="mpd-val">3 280 ₽</div>
+        <div class="mpd-action">История →</div>
+      </div>
+
+      <!-- Cash wallet pill -->
+      <div class="map-pill-dark" style="top:58px;left:150px">
+        <div class="mpd-label">Кошелёк</div>
+        <div class="mpd-val">2 840 ₽</div>
+        <div class="mpd-sub">Пополнить СБП</div>
+      </div>
+
+      <!-- Rating pill (light) -->
+      <div class="map-pill-light" style="top:58px;right:14px">
+        <span style="font-size:16px">⭐</span>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--ink)">4.92</div>
+          <div style="font-size:10px;color:var(--m);font-weight:600">Рейтинг</div>
         </div>
       </div>
 
-      <!-- Mini map -->
-      <div class="map" style="height:118px;flex-shrink:0">
-        <svg width="375" height="118" viewBox="0 0 375 118" preserveAspectRatio="xMidYMid slice">
-          <rect width="375" height="118" fill="#E8E8E4"/>
-          <rect x="0" y="40" width="375" height="9" fill="#E8E680" opacity=".9"/>
-          <rect x="0" y="80" width="375" height="7" fill="#fff" opacity=".8"/>
-          <rect x="138" y="0" width="9" height="118" fill="#fff" opacity=".8"/>
-          <rect x="68" y="0" width="5" height="118" fill="#F0EEDF" opacity=".7"/>
-          <rect x="270" y="0" width="5" height="118" fill="#F0EEDF" opacity=".7"/>
-          <rect x="5" y="7" width="54" height="28" rx="3" fill="#D0CEC0" opacity=".7"/>
-          <rect x="78" y="5" width="52" height="30" rx="3" fill="#D8D6C8" opacity=".7"/>
-          <rect x="152" y="5" width="72" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
-          <rect x="240" y="7" width="52" height="28" rx="3" fill="#D8D6C8" opacity=".7"/>
-          <rect x="300" y="5" width="70" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
-          <rect x="5" y="54" width="54" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
-          <rect x="78" y="52" width="52" height="24" rx="3" fill="#D0CEC0" opacity=".65"/>
-          <rect x="152" y="54" width="72" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
-          <rect x="240" y="52" width="52" height="24" rx="3" fill="#D0CEC0" opacity=".65"/>
-          <rect x="300" y="54" width="70" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
-          <circle cx="188" cy="88" r="7" fill="#FFD100"/>
-          <circle cx="188" cy="88" r="12" fill="#FFD100" opacity=".2"/>
-          <circle cx="108" cy="20" r="5" fill="#2563EB"/>
-          <circle cx="228" cy="18" r="5" fill="#EA580C"/>
-          <circle cx="310" cy="22" r="5" fill="#16A34A"/>
-        </svg>
-        <div style="position:absolute;top:8px;left:74px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">👤 520₽</div>
-        <div style="position:absolute;top:6px;left:194px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">📦 340₽</div>
-        <div style="position:absolute;top:9px;left:278px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">🍕 290₽</div>
-        <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(0deg,var(--bg),transparent)"></div>
+      <!-- Order pins labels -->
+      <div style="position:absolute;top:104px;left:72px;background:#fff;border-radius:9px;padding:3px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px">👤 520₽</div>
+      <div style="position:absolute;top:92px;left:206px;background:#fff;border-radius:9px;padding:3px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px">📦 340₽</div>
+      <div style="position:absolute;top:204px;left:261px;background:#fff;border-radius:9px;padding:3px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px">🍕 290₽</div>
+
+      <!-- Go Offline button (Grab Driver pattern) -->
+      <div class="go-offline-btn" style="bottom:16px">
+        <div class="go-offline-ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18.364 5.636A9 9 0 1 0 5.636 18.364 9 9 0 0 0 18.364 5.636z" stroke="#fff" stroke-width="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#fff"/></svg>
+        </div>
+        <div>
+          <div class="go-offline-text">На линии · Tap чтобы уйти</div>
+          <div class="go-offline-sub">Принимаю пассажиров и доставку</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;overflow-y:auto;padding-bottom:0">
+      <div class="dh"></div>
+
+      <!-- Status + action row -->
+      <div class="status-bar-inline">
+        <div class="sbi-left">
+          <div class="sbi-status">
+            <div class="sp-dot sp-dot-on" style="width:9px;height:9px"></div>
+            <div class="sbi-title">На линии</div>
+          </div>
+          <div class="sbi-sub">С 07:15 · 2 ч 26 мин</div>
+        </div>
+        <div class="sbi-action">Завершить смену</div>
       </div>
 
-      <!-- Orders scroll list -->
-      <div class="scroll">
+      <!-- Shift stats -->
+      <div class="shift-stats">
+        <div class="ss-item">
+          <div class="ss-lbl">Заработок</div>
+          <div class="ss-val">3 280 ₽</div>
+          <div class="ss-sub">+2 заказа</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">До окупаемости</div>
+          <div class="ss-val">720 ₽</div>
+          <div class="ss-sub">аренды</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Смена</div>
+          <div class="ss-val">2:26</div>
+          <div class="ss-sub">из 12 ч</div>
+        </div>
+      </div>
 
-        <div class="slbl">⚡ Рядом с вами · 1.2 км</div>
-
-        <!-- Featured card -->
-        <div class="oc feat">
-          <div class="oc-feat-bar">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="#1C1B18"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            Лучший заказ смены
-          </div>
-          <div class="oc-body">
-            <div class="oc-top">
-              <div>
-                <div class="tag tag-pass">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                  Пассажир
-                </div>
-                <div style="font-size:12px;color:var(--m);margin-top:6px">Подача через <b style="color:var(--ink)">4 мин</b></div>
-              </div>
-              <div class="oc-price">
-                <div class="oc-p1">520 ₽</div>
-                <div class="oc-p2">≈ 442 ₽ вам</div>
-              </div>
-            </div>
-
-            <div class="route">
-              <div class="rp">
-                <div class="rd rd-a"></div>
-                <div class="ra">ул. Ленина, 45</div>
-                <div class="rs2">Место посадки</div>
-              </div>
-              <div class="rp">
-                <div class="rd rd-b"></div>
-                <div class="ra">Аэропорт Пулково, Терм. 1</div>
-                <div class="rs2">32 км · ~38 мин</div>
-              </div>
-            </div>
-
-            <div class="oc-meta">
-              <div class="chip">⏱ 38 мин</div>
-              <div class="chip">📍 32 км</div>
-              <div class="chip">★ 4.9 · 1 чел.</div>
-            </div>
-          </div>
-          <div class="oc-foot">
-            <div class="oc-act skip">Пропустить</div>
-            <div class="oc-act go">✓ Принять</div>
+      <!-- Finding jobs -->
+      <div class="finding-jobs">
+        <div class="fj-left">
+          <div class="fj-icon">⚡</div>
+          <div>
+            <div class="fj-text">Ищу заказы в районе</div>
+            <div class="fj-sub">Кировский р-н · Спрос средний</div>
           </div>
         </div>
-
-        <div class="slbl">Другие заказы</div>
-
-        <!-- Delivery card -->
-        <div class="oc">
-          <div class="oc-body">
-            <div class="oc-top">
-              <div>
-                <div class="tag tag-del">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>
-                  Посылка
-                </div>
-                <div style="font-size:12px;color:var(--m);margin-top:6px">Подача через <b style="color:var(--ink)">7 мин</b></div>
-              </div>
-              <div class="oc-price">
-                <div class="oc-p1">340 ₽</div>
-                <div class="oc-p2">≈ 289 ₽ вам</div>
-              </div>
-            </div>
-
-            <div class="route">
-              <div class="rp">
-                <div class="rd rd-a"></div>
-                <div class="ra">пр. Невский, 112</div>
-                <div class="rs2">Забрать у отправителя</div>
-              </div>
-              <div class="rp">
-                <div class="rd rd-b"></div>
-                <div class="ra">ул. Садовая, 28</div>
-                <div class="rs2">8.5 км · ~18 мин</div>
-              </div>
-            </div>
-
-            <div class="oc-meta">
-              <div class="chip">⏱ 18 мин</div>
-              <div class="chip">📍 8.5 км</div>
-              <div class="chip">📦 до 5 кг</div>
-            </div>
-          </div>
-          <div class="oc-foot">
-            <div class="oc-act skip">Пропустить</div>
-            <div class="oc-act go">✓ Принять</div>
-          </div>
+        <div class="fj-right">
+          <div class="fj-btn nav">Карта</div>
         </div>
+      </div>
 
-        <!-- Food card -->
-        <div class="oc">
-          <div class="oc-body">
-            <div class="oc-top">
-              <div>
-                <div class="tag tag-food">🍕 Еда</div>
-                <div style="font-size:12px;color:var(--m);margin-top:6px">Готово через <b style="color:var(--ink)">5 мин</b></div>
-              </div>
-              <div class="oc-price">
-                <div class="oc-p1">290 ₽</div>
-                <div class="oc-p2">≈ 247 ₽ вам</div>
-              </div>
-            </div>
-
-            <div class="route">
-              <div class="rp">
-                <div class="rd rd-a"></div>
-                <div class="ra">Додо Пицца · Лиговский</div>
-                <div class="rs2">Забрать у ресторана</div>
-              </div>
-              <div class="rp">
-                <div class="rd rd-b"></div>
-                <div class="ra">ул. Рубинштейна, 6</div>
-                <div class="rs2">3.2 км · ~12 мин</div>
-              </div>
-            </div>
-
-            <div class="oc-meta">
-              <div class="chip">⏱ 12 мин</div>
-              <div class="chip">📍 3.2 км</div>
-            </div>
-          </div>
-          <div class="oc-foot">
-            <div class="oc-act skip">Пропустить</div>
-            <div class="oc-act go">✓ Принять</div>
-          </div>
+      <!-- Delivery toggle -->
+      <div class="del-toggle">
+        <div class="dt-left">
+          <div class="dt-title">Принимать доставку</div>
+          <div class="dt-sub">Посылки, еда, продукты</div>
         </div>
+        <div class="pill on"><div class="pill-dot"></div></div>
+      </div>
 
-      </div><!-- /scroll -->
-    </div><!-- /pc -->
+      <!-- EPL compact -->
+      <div class="sec-divider" style="margin-top:14px"></div>
+      <div class="epl-row-compact">
+        <div class="epl-rc-icon">📋</div>
+        <div style="flex:1">
+          <div class="epl-rc-name">ЭПЛ № 2024-00184753</div>
+          <div class="epl-rc-meta">Такси-парк «ТрейдТакси» · до 23:59</div>
+        </div>
+        <div class="epl-rc-badge" style="background:var(--gs);color:var(--g)">Активен</div>
+      </div>
+
+      <!-- Vehicle compact -->
+      <div class="vc-row-compact">
+        <div class="vc-rc-icon">🚖</div>
+        <div style="flex:1">
+          <div class="vc-rc-name">Kia Rio 2021 · Комфорт</div>
+          <div class="vc-rc-plate">А 847 КМ 77 · Автопарк №3</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--b)">Детали</div>
+      </div>
+
+      <!-- Quick Actions (Grab Driver pattern) -->
+      <div class="sec-divider" style="margin-top:14px"></div>
+      <div class="qa-row">
+        <div class="qa">
+          <div class="qa-ic">🚗</div>
+          <div class="qa-lbl">Типы<br>заказов</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">📍</div>
+          <div class="qa-lbl">Моё<br>направление</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">⚡</div>
+          <div class="qa-lbl">Авто-<br>приём</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">🛡️</div>
+          <div class="qa-lbl">Безопас-<br>ность</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">⋯</div>
+          <div class="qa-lbl">Ещё</div>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div><!-- /sheet -->
 
     <!-- Bottom Nav -->
     <div class="bnav">
-      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
-      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
     </div>
@@ -668,182 +811,184 @@ body{
 </div><!-- /pw2 -->
 
 
-<!-- ════════════════════════════
-     ЭКРАН 3 · АКТИВНЫЙ ЗАКАЗ
-     ════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     PHONE 3 · ONLINE + EPL EXPIRING
+     ════════════════════════════════════════ -->
 <div class="pw">
-  <div class="pw-label">Экран 3</div>
-  <div class="pw-stage">Активный заказ · В пути</div>
+  <div class="state-label">Состояние 3 · На линии · ЭПЛ истекает</div>
 
-  <div class="phone" style="height:812px">
+  <div class="phone" style="height:870px">
     <div class="notch"></div>
 
-    <!-- Status bar over map -->
-    <div class="sb light" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
-      <span class="sb-t" style="color:#fff">9:41</span>
+    <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">22:41</span>
       <div class="sb-icons" style="color:#fff">
         <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="#fff"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
-        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#fff"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="9" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
       </div>
     </div>
 
-    <div class="pc">
-      <!-- FULL MAP -->
-      <div class="map" style="height:390px;flex-shrink:0">
-        <svg width="375" height="390" viewBox="0 0 375 390" preserveAspectRatio="xMidYMid slice">
-          <rect width="375" height="390" fill="#E8E8E4"/>
-          <rect x="4" y="44" width="62" height="50" rx="3" fill="#D0CEC0" opacity=".8"/>
-          <rect x="76" y="48" width="78" height="44" rx="3" fill="#D8D6C8" opacity=".8"/>
-          <rect x="168" y="40" width="88" height="58" rx="3" fill="#D0CEC0" opacity=".8"/>
-          <rect x="272" y="46" width="99" height="52" rx="3" fill="#D8D6C8" opacity=".8"/>
-          <rect x="4" y="112" width="62" height="72" rx="3" fill="#D8D6C8" opacity=".75"/>
-          <rect x="76" y="108" width="84" height="68" rx="3" fill="#D0CEC0" opacity=".75"/>
-          <rect x="174" y="112" width="78" height="64" rx="3" fill="#D8D6C8" opacity=".75"/>
-          <rect x="268" y="108" width="103" height="76" rx="3" fill="#D0CEC0" opacity=".75"/>
-          <rect x="4" y="202" width="64" height="66" rx="3" fill="#D0CEC0" opacity=".7"/>
-          <rect x="80" y="198" width="84" height="62" rx="3" fill="#D8D6C8" opacity=".7"/>
-          <rect x="180" y="202" width="74" height="58" rx="3" fill="#D0CEC0" opacity=".7"/>
-          <rect x="270" y="196" width="101" height="74" rx="3" fill="#D8D6C8" opacity=".7"/>
-          <rect x="4" y="288" width="66" height="56" rx="3" fill="#D8D6C8" opacity=".6"/>
-          <rect x="84" y="284" width="82" height="54" rx="3" fill="#D0CEC0" opacity=".6"/>
-          <rect x="182" y="288" width="76" height="52" rx="3" fill="#D8D6C8" opacity=".6"/>
-          <rect x="274" y="282" width="97" height="64" rx="3" fill="#D0CEC0" opacity=".6"/>
-          <!-- main roads -->
-          <rect x="0" y="94" width="375" height="12" fill="#E8E680" opacity=".9"/>
-          <rect x="0" y="184" width="375" height="9" fill="#fff" opacity=".85"/>
-          <rect x="0" y="272" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
-          <rect x="148" y="0" width="10" height="390" fill="#fff" opacity=".85"/>
-          <rect x="66" y="0" width="6" height="390" fill="#F0EEDF" opacity=".7"/>
-          <rect x="258" y="0" width="6" height="390" fill="#F0EEDF" opacity=".7"/>
-          <!-- park -->
-          <ellipse cx="316" cy="158" rx="38" ry="26" fill="#C8DFB0" opacity=".75"/>
-          <!-- ROUTE LINE (DoorDash Dasher style - solid, colored) -->
-          <path d="M88 318 L88 188 Q88 184 92 184 L282 184 Q286 184 286 96" stroke="#16A34A" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
-          <!-- destination marker -->
-          <circle cx="286" cy="90" r="12" fill="#DC2626" stroke="#fff" stroke-width="2.5"/>
-          <!-- driver marker -->
-          <circle cx="88" cy="318" r="14" fill="#FFD100" stroke="#fff" stroke-width="3"/>
-          <text x="88" y="323" text-anchor="middle" font-size="12">🚖</text>
-        </svg>
+    <!-- MAP -->
+    <div class="map-area" style="height:340px;flex-shrink:0">
+      <svg width="375" height="340" viewBox="0 0 375 340" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="340" fill="#2C2C2A"/>
+        <!-- dark map (night mode) -->
+        <rect x="4" y="44" width="60" height="50" rx="3" fill="#383632" opacity=".9"/>
+        <rect x="74" y="48" width="78" height="44" rx="3" fill="#302E2B" opacity=".9"/>
+        <rect x="164" y="40" width="88" height="58" rx="3" fill="#383632" opacity=".9"/>
+        <rect x="264" y="46" width="107" height="50" rx="3" fill="#302E2B" opacity=".9"/>
+        <rect x="4" y="112" width="60" height="68" rx="3" fill="#302E2B" opacity=".85"/>
+        <rect x="74" y="108" width="84" height="64" rx="3" fill="#383632" opacity=".85"/>
+        <rect x="172" y="112" width="76" height="60" rx="3" fill="#302E2B" opacity=".85"/>
+        <rect x="264" y="106" width="107" height="74" rx="3" fill="#383632" opacity=".85"/>
+        <rect x="4" y="200" width="62" height="66" rx="3" fill="#383632" opacity=".8"/>
+        <rect x="78" y="196" width="82" height="62" rx="3" fill="#302E2B" opacity=".8"/>
+        <rect x="178" y="200" width="74" height="58" rx="3" fill="#383632" opacity=".8"/>
+        <rect x="268" y="192" width="103" height="74" rx="3" fill="#302E2B" opacity=".8"/>
+        <rect x="4" y="288" width="66" height="42" rx="3" fill="#302E2B" opacity=".7"/>
+        <rect x="82" y="284" width="84" height="42" rx="3" fill="#383632" opacity=".7"/>
+        <!-- night roads -->
+        <rect x="0" y="94" width="375" height="12" fill="#4A4840" opacity=".9"/>
+        <rect x="0" y="182" width="375" height="9" fill="#3C3A36" opacity=".85"/>
+        <rect x="0" y="270" width="375" height="8" fill="#3C3A36" opacity=".8"/>
+        <rect x="144" y="0" width="9" height="340" fill="#3C3A36" opacity=".85"/>
+        <rect x="64" y="0" width="6" height="340" fill="#383632" opacity=".7"/>
+        <rect x="256" y="0" width="6" height="340" fill="#383632" opacity=".7"/>
+        <!-- driver dot -->
+        <circle cx="188" cy="220" r="12" fill="#FFD100" stroke="#2C2C2A" stroke-width="3"/>
+        <circle cx="188" cy="220" r="22" fill="#FFD100" opacity=".15"/>
+      </svg>
 
-        <!-- Earnings on map (DoorDash pattern) -->
-        <div class="map-earn">
-          <div class="me-v">+442 ₽</div>
-          <div class="me-l">этот заказ</div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:70px;background:linear-gradient(0deg,#fff,transparent)"></div>
+
+      <!-- Earnings -->
+      <div class="map-pill-dark" style="top:58px;left:14px">
+        <div class="mpd-label">Сегодня</div>
+        <div class="mpd-val">7 140 ₽</div>
+        <div class="mpd-sub">8 заказов</div>
+      </div>
+      <!-- Rating -->
+      <div class="map-pill-light" style="top:58px;right:14px">
+        <span style="font-size:16px">⭐</span>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--ink)">4.92</div>
+          <div style="font-size:10px;color:var(--m);font-weight:600">Рейтинг</div>
         </div>
-
-        <!-- ETA -->
-        <div class="eta-box">
-          <div class="eta-l">До конца</div>
-          <div class="eta-v">38 мин</div>
-        </div>
-
-        <!-- Zoom -->
-        <div class="zoom-c">
-          <div class="zb">+</div>
-          <div class="zb">−</div>
-        </div>
-
-        <!-- Destination label -->
-        <div style="position:absolute;top:56px;right:22px;background:var(--r);color:#fff;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.2)">Пулково ✈️</div>
-
-        <!-- gradient -->
-        <div style="position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(0deg,var(--s),transparent)"></div>
       </div>
 
-      <!-- BOTTOM SHEET (scrollable) -->
-      <div style="flex:1;overflow-y:auto;padding:0 20px;background:var(--s)" class="scroll" style="padding:0 20px">
-        <div class="dh" style="margin-top:12px"></div>
-
-        <!-- Progress (sweetgreen style — thin bar) -->
-        <div class="prog">
-          <div class="prog-track">
-            <div class="prog-fill" style="width:60%"></div>
-          </div>
-          <div class="prog-steps">
-            <div class="ps done">Принят</div>
-            <div class="ps done">Забрал</div>
-            <div class="ps cur">В пути</div>
-            <div class="ps">Сдача</div>
-            <div class="ps">Готово</div>
-          </div>
+      <!-- Go Offline -->
+      <div class="go-offline-btn" style="bottom:16px">
+        <div class="go-offline-ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18.364 5.636A9 9 0 1 0 5.636 18.364 9 9 0 0 0 18.364 5.636z" stroke="#fff" stroke-width="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#fff"/></svg>
         </div>
-
-        <div class="sep mt14"></div>
-
-        <!-- Destination row (DoorDash Dasher style) -->
-        <div class="dest-row">
-          <div class="dest-ic">✈️</div>
-          <div style="flex:1">
-            <div class="dest-name">Аэропорт Пулково</div>
-            <div class="dest-addr">Пулковское ш., 41А · Терминал 1</div>
-          </div>
-          <div style="background:var(--bs);color:var(--b);border-radius:10px;padding:6px 11px;font-size:12px;font-weight:700">Маршрут</div>
+        <div>
+          <div class="go-offline-text">На линии · Tap чтобы уйти</div>
+          <div class="go-offline-sub">Принимаю пассажиров и доставку</div>
         </div>
-
-        <div class="sep"></div>
-
-        <!-- Client row (Grab Driver style) -->
-        <div class="client-row">
-          <div class="av">МС</div>
-          <div style="flex:1">
-            <div class="av-name">Михаил С.</div>
-            <div class="av-rat">★ 4.9 · Пассажир</div>
-          </div>
-          <div class="contact-btns">
-            <div class="cbt">📞</div>
-            <div class="cbt">💬</div>
-          </div>
-        </div>
-
-        <div class="sep"></div>
-
-        <!-- Quick actions (Grab Driver pattern) -->
-        <div class="qa-row">
-          <div class="qa">
-            <div class="qa-ic">🛡️</div>
-            <div class="qa-lbl">Безопас-<br>ность</div>
-          </div>
-          <div class="qa">
-            <div class="qa-ic">⏸️</div>
-            <div class="qa-lbl">Пауза<br>после</div>
-          </div>
-          <div class="qa">
-            <div class="qa-ic">📋</div>
-            <div class="qa-lbl">Детали<br>заказа</div>
-          </div>
-          <div class="qa">
-            <div class="qa-ic">⋯</div>
-            <div class="qa-lbl">Ещё</div>
-          </div>
-        </div>
-
-        <div class="sep"></div>
-
-        <!-- CTA -->
-        <div style="padding:16px 0 8px">
-          <div class="btn-y">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#1C1B18"/></svg>
-            Я на месте
-          </div>
-          <div class="btn-ghost mt8">⚠️ Проблема с заказом</div>
-        </div>
-
       </div>
-    </div><!-- /pc -->
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;overflow-y:auto;padding-bottom:0">
+      <div class="dh"></div>
+
+      <!-- Status row -->
+      <div class="status-bar-inline">
+        <div class="sbi-left">
+          <div class="sbi-status">
+            <div class="sp-dot sp-dot-on"></div>
+            <div class="sbi-title">На линии</div>
+          </div>
+          <div class="sbi-sub">С 07:15 · 15 ч 26 мин</div>
+        </div>
+        <div class="sbi-action">Завершить смену</div>
+      </div>
+
+      <!-- Shift stats -->
+      <div class="shift-stats">
+        <div class="ss-item">
+          <div class="ss-lbl">Заработок</div>
+          <div class="ss-val">7 140 ₽</div>
+          <div class="ss-sub">8 заказов</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Аренда закрыта</div>
+          <div class="ss-val" style="color:var(--g)">✓ 4 000 ₽</div>
+          <div class="ss-sub">в плюсе +3 140 ₽</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Смена</div>
+          <div class="ss-val">15:26</div>
+          <div class="ss-sub">из 16 ч</div>
+        </div>
+      </div>
+
+      <!-- EPL WARNING -->
+      <div style="margin:14px 20px 0;background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:18px;padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:7px">
+            <span style="font-size:20px">⚠️</span>
+            <div>
+              <div style="font-size:14px;font-weight:800;color:var(--ink)">ЭПЛ истекает через 1 ч 18 мин</div>
+              <div style="font-size:12px;color:var(--o);font-weight:600;margin-top:2px">ЭПЛ № 2024-00184753 · до 23:59</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--m);margin-bottom:12px;line-height:1.5">После истечения ЭПЛ вы не сможете принимать новые заказы. Выпишите новый заранее.</div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;padding:10px;background:var(--o);border-radius:12px;text-align:center;font-size:13px;font-weight:700;color:#fff">
+            Выписать новый ЭПЛ
+          </div>
+          <div style="padding:10px 14px;background:var(--s);border:1px solid var(--div);border-radius:12px;font-size:13px;font-weight:600;color:var(--m)">
+            Позже
+          </div>
+        </div>
+      </div>
+
+      <!-- Vehicle compact -->
+      <div class="vc-row-compact">
+        <div class="vc-rc-icon">🚖</div>
+        <div style="flex:1">
+          <div class="vc-rc-name">Kia Rio 2021 · Комфорт</div>
+          <div class="vc-rc-plate">А 847 КМ 77 · Автопарк №3</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--b)">Детали</div>
+      </div>
+
+      <!-- Delivery toggle -->
+      <div class="del-toggle" style="margin-top:10px">
+        <div class="dt-left">
+          <div class="dt-title">Принимать доставку</div>
+          <div class="dt-sub">Посылки, еда, продукты</div>
+        </div>
+        <div class="pill on"><div class="pill-dot"></div></div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="sec-divider" style="margin-top:14px"></div>
+      <div class="qa-row">
+        <div class="qa"><div class="qa-ic">🚗</div><div class="qa-lbl">Типы<br>заказов</div></div>
+        <div class="qa"><div class="qa-ic">📍</div><div class="qa-lbl">Моё<br>направление</div></div>
+        <div class="qa"><div class="qa-ic">⚡</div><div class="qa-lbl">Авто-<br>приём</div></div>
+        <div class="qa"><div class="qa-ic">🛡️</div><div class="qa-lbl">Безопас-<br>ность</div></div>
+        <div class="qa"><div class="qa-ic">⋯</div><div class="qa-lbl">Ещё</div></div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div>
 
     <!-- Bottom Nav -->
     <div class="bnav">
-      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
-      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
       <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
     </div>
   </div>
 </div><!-- /pw3 -->
 
-</div><!-- /row -->
+</div><!-- /phones -->
 </body>
 </html>
