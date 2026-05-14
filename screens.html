@@ -1,1690 +1,849 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=1400, initial-scale=1" />
-<title>TradeTaxi · Driver Screens · v1</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1400,initial-scale=1"/>
+<title>TradeTaxi · Driver Screens</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-  :root {
-    --yellow: #FFD100;
-    --yellow-dark: #E6BC00;
-    --yellow-soft: #FFF9D6;
-    --ink: #1C1B18;
-    --ink2: #3A3830;
-    --muted: #6B665A;
-    --faint: #A8A293;
-    --divider: #ECEAE3;
-    --bg: #F5F4EE;
-    --surface: #FFFFFF;
-    --green: #16A34A;
-    --green-soft: #DCFCE7;
-    --red: #DC2626;
-    --red-soft: #FEE2E2;
-    --blue: #2563EB;
-    --blue-soft: #DBEAFE;
-    --orange: #EA580C;
-    --orange-soft: #FFEDD5;
-  }
+:root{
+  --y:#FFD100;
+  --yd:#E6BC00;
+  --ys:#FFF8CC;
+  --ink:#1C1B18;
+  --ink2:#3A3830;
+  --m:#6B665A;
+  --f:#A8A293;
+  --div:#ECEAE3;
+  --bg:#F5F4EE;
+  --s:#fff;
+  --g:#16A34A;
+  --gs:#DCFCE7;
+  --r:#DC2626;
+  --rs:#FEE2E2;
+  --b:#2563EB;
+  --bs:#DBEAFE;
+  --o:#EA580C;
+  --os:#FFEDD5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',-apple-system,system-ui,sans-serif;
+  background:#1C1B18;
+  min-height:100vh;
+  padding:40px 24px 60px;
+  -webkit-font-smoothing:antialiased;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    background: #E8E5DE;
-    min-height: 100vh;
-    padding: 40px 32px 60px;
-    -webkit-font-smoothing: antialiased;
-  }
+/* PAGE HEADER */
+.ph{text-align:center;margin-bottom:40px}
+.ph-ey{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6B665A;margin-bottom:8px}
+.ph h1{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:4px}
+.ph p{font-size:13px;color:#6B665A}
 
-  .page-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .page-header .eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: #8a8272;
-    margin-bottom: 8px;
-  }
-  .page-header h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -.02em;
-    margin-bottom: 6px;
-  }
-  .page-header p {
-    font-size: 14px;
-    color: var(--muted);
-  }
+/* PHONES ROW */
+.row{display:flex;gap:28px;justify-content:center;align-items:flex-start}
 
-  /* ── PHONES LAYOUT ── */
-  .phones {
-    display: flex;
-    gap: 32px;
-    justify-content: center;
-    align-items: flex-start;
-  }
+.pw{display:flex;flex-direction:column;align-items:center;gap:14px}
+.pw-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B665A}
+.pw-stage{font-size:13px;font-weight:600;color:#A8A293;text-align:center}
 
-  .phone-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-  .phone-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .phone-stage {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-top: -10px;
-    text-align: center;
-  }
+/* PHONE SHELL */
+.phone{
+  width:375px;
+  background:var(--s);
+  border-radius:50px;
+  box-shadow:0 0 0 10px #2A2820,0 0 0 12px #3A3830,0 40px 80px rgba(0,0,0,.6);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+/* Notch */
+.notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:126px;height:37px;background:#1C1B18;
+  border-radius:0 0 22px 22px;z-index:200;
+}
 
-  /* ── PHONE SHELL ── */
-  .phone {
-    width: 375px;
-    height: 812px;
-    background: var(--surface);
-    border-radius: 44px;
-    box-shadow:
-      0 0 0 10px #1C1B18,
-      0 0 0 12px #3A3830,
-      0 40px 80px rgba(0,0,0,.35),
-      0 12px 30px rgba(0,0,0,.2);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+/* STATUS BAR */
+.sb{
+  height:47px;padding:14px 22px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-shrink:0;position:relative;z-index:10;
+}
+.sb.light{color:#fff}
+.sb-t{font-size:15px;font-weight:700;color:inherit}
+.sb-icons{display:flex;gap:5px;align-items:center}
+.sb-icons svg{fill:currentColor}
 
-  /* Notch */
-  .phone::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 30px;
-    background: #1C1B18;
-    border-radius: 0 0 20px 20px;
-    z-index: 100;
-  }
+/* BOTTOM NAV */
+.bnav{
+  height:82px;background:var(--s);border-top:1px solid var(--div);
+  display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;
+}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ni-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.ni.on .ni-icon{background:var(--y)}
+.ni-lbl{font-size:10px;font-weight:600;color:var(--f)}
+.ni.on .ni-lbl{color:var(--ink);font-weight:700}
 
-  /* ── STATUS BAR ── */
-  .status-bar {
-    height: 44px;
-    padding: 14px 24px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ink);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
-  }
-  .status-bar.light { color: #fff; }
-  .status-bar .time { font-size: 15px; font-weight: 700; }
-  .status-icons { display: flex; gap: 5px; align-items: center; }
-  .status-icons svg { fill: currentColor; }
+/* CONTENT AREA */
+.pc{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
 
-  /* ── BOTTOM NAV ── */
-  .bottom-nav {
-    height: 83px;
-    background: var(--surface);
-    border-top: 1px solid var(--divider);
-    display: flex;
-    align-items: flex-start;
-    padding-top: 8px;
-    flex-shrink: 0;
-  }
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    padding: 0 4px;
-    cursor: default;
-  }
-  .nav-icon {
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-  }
-  .nav-item.active .nav-icon {
-    background: var(--yellow);
-  }
-  .nav-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--faint);
-    letter-spacing: .01em;
-  }
-  .nav-item.active .nav-label { color: var(--ink); font-weight: 700; }
+/* ─── MAP BASE ─── */
+.map{position:relative;flex-shrink:0;overflow:hidden;background:#E8E8E4}
+.map svg{display:block}
 
-  /* ── SCROLL CONTENT ── */
-  .phone-content {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
+/* ─── BOTTOM SHEET ─── */
+.sheet{
+  background:var(--s);
+  border-radius:24px 24px 0 0;
+  padding:14px 20px 0;
+  box-shadow:0 -4px 32px rgba(0,0,0,.1);
+}
+.dh{width:36px;height:4px;background:var(--div);border-radius:2px;margin:0 auto 16px}
 
-  /* ════════════════════════════════════
-     SCREEN 1 · ГЛАВНЫЙ ЭКРАН (OFFLINE)
-     ════════════════════════════════════ */
+/* ─── TOKENS ─── */
+.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.04em}
+.tag-pass{background:var(--bs);color:var(--b)}
+.tag-del{background:var(--os);color:var(--o)}
+.tag-food{background:#FEF3C7;color:#92400E}
+.tag-green{background:var(--gs);color:var(--g)}
 
-  .s1-map {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0) 45%, rgba(255,255,255,1) 75%);
-  }
-  /* SVG Map Background */
-  .s1-map-bg {
-    position: absolute;
-    inset: 0;
-    background-color: #E8E8E4;
-    overflow: hidden;
-  }
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:var(--bg);border-radius:8px;font-size:11.5px;font-weight:600;color:var(--m)}
 
-  /* roads */
-  .road {
-    position: absolute;
-    background: #FFFFFF;
-    border-radius: 2px;
-  }
-  .road-main {
-    background: #DDDBB4;
-    border-radius: 3px;
-  }
+/* ─── BUTTONS ─── */
+.btn-y{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:17px;background:var(--y);border:none;
+  border-radius:18px;font-size:17px;font-weight:800;color:var(--ink);
+  letter-spacing:-.01em;box-shadow:0 6px 20px rgba(255,209,0,.4);
+}
+.btn-ghost{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:13px;background:transparent;border:none;
+  border-radius:14px;font-size:13px;font-weight:600;color:var(--m);
+}
+.btn-outline{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  flex:1;padding:12px;background:var(--bg);border:none;
+  border-radius:14px;font-size:13px;font-weight:700;color:var(--ink);
+}
 
-  .s1-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 20px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-  }
-  .s1-header-title {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -.02em;
-  }
-  .delivery-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 6px 10px 6px 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.1);
-  }
-  .delivery-toggle span {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  .toggle-pill {
-    width: 38px;
-    height: 22px;
-    background: #E0DDCF;
-    border-radius: 11px;
-    position: relative;
-    transition: background .2s;
-  }
-  .toggle-pill.on { background: var(--yellow); }
-  .toggle-dot {
-    width: 18px;
-    height: 18px;
-    background: #fff;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.2);
-    transition: transform .2s;
-  }
-  .toggle-pill.on .toggle-dot { transform: translateX(16px); }
+/* ─── CARDS / ROWS ─── */
+.row2{display:flex;gap:10px}
+.card{background:var(--bg);border-radius:16px;padding:14px 16px}
 
-  .s1-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-radius: 24px 24px 0 0;
-    padding: 20px 20px 12px;
-    box-shadow: 0 -4px 24px rgba(0,0,0,.08);
-  }
+.sep{height:1px;background:var(--div);margin:0}
 
-  .drag-handle {
-    width: 36px;
-    height: 4px;
-    background: var(--divider);
-    border-radius: 2px;
-    margin: 0 auto 18px;
-  }
+/* ─── ROUTE ROW ─── */
+.route{display:flex;flex-direction:column;gap:0;padding-left:18px;position:relative}
+.route::before{content:'';position:absolute;left:5px;top:12px;bottom:12px;width:2px;background:var(--div);border-radius:1px}
+.rp{display:flex;flex-direction:column;gap:1px;padding:7px 0;position:relative}
+.rd{width:10px;height:10px;border-radius:50%;position:absolute;left:-18px;top:10px;flex-shrink:0}
+.rd-a{background:var(--ink);box-shadow:0 0 0 2px var(--bg)}
+.rd-b{background:var(--y);box-shadow:0 0 0 2px var(--yd)}
+.ra{font-size:13px;font-weight:700;color:var(--ink)}
+.rs2{font-size:11px;color:var(--m);margin-top:1px}
 
-  .wallet-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .wallet-card {
-    flex: 1;
-    background: var(--bg);
-    border-radius: 16px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .wallet-card-label {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--faint);
-  }
-  .wallet-card-value {
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: -.02em;
-    color: var(--ink);
-  }
-  .wallet-card-sub {
-    font-size: 11px;
-    color: var(--muted);
-  }
-  .wallet-card.epl {
-    flex: 0 0 auto;
-    width: 120px;
-    background: var(--green-soft);
-  }
-  .wallet-card.epl .wallet-card-label { color: #14532D; }
-  .wallet-card.epl .wallet-card-value { font-size: 13px; font-weight: 700; color: var(--green); margin-top: 2px; }
-  .epl-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--green);
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 4px;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .4; }
-  }
+/* pulse dot */
+.dot-live{width:8px;height:8px;background:var(--g);border-radius:50%;display:inline-block;animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
 
-  .checklist {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    background: var(--bg);
-    border-radius: 12px;
-  }
-  .check-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  .check-icon.ok { background: var(--green-soft); }
-  .check-icon.warn { background: var(--orange-soft); }
-  .check-text { flex: 1; }
-  .check-name { font-size: 13px; font-weight: 600; color: var(--ink); }
-  .check-status { font-size: 11px; color: var(--muted); }
-  .check-status.ok-text { color: var(--green); font-weight: 600; }
-  .check-status.warn-text { color: var(--orange); font-weight: 600; }
-  .check-badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-  .check-badge.ok { background: var(--green-soft); color: var(--green); }
-  .check-badge.warn { background: var(--orange-soft); color: var(--orange); }
+/* ─── ORDER CARD (lenta) ─── */
+.oc{background:var(--s);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1.5px solid var(--div)}
+.oc.feat{border-color:var(--y);box-shadow:0 4px 20px rgba(255,209,0,.22)}
+.oc-feat-bar{background:var(--y);padding:6px 16px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:6px}
+.oc-body{padding:16px 16px 12px}
+.oc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.oc-price{text-align:right}
+.oc-p1{font-size:22px;font-weight:900;color:var(--ink);letter-spacing:-.025em;line-height:1}
+.oc-p2{font-size:11px;color:var(--g);font-weight:700;margin-top:3px}
+.oc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.oc-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--div)}
+.oc-act{padding:13px;text-align:center;font-size:14px;font-weight:700}
+.oc-act.skip{color:var(--m)}
+.oc-act.go{background:var(--y);color:var(--ink)}
 
-  .btn-primary {
-    width: 100%;
-    height: 56px;
-    background: var(--yellow);
-    border: none;
-    border-radius: 16px;
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -.01em;
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 14px rgba(255,209,0,.4);
-  }
-  .btn-secondary {
-    width: 100%;
-    height: 48px;
-    background: var(--bg);
-    border: none;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-  }
+/* section label */
+.slbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--f);padding:8px 0 6px}
 
-  /* ════════════════════════════════════
-     SCREEN 2 · ЛЕНТА ЗАКАЗОВ
-     ════════════════════════════════════ */
+/* ─── EARNINGS BUBBLE (on map) ─── */
+.earn-pill{
+  position:absolute;top:14px;left:14px;
+  background:rgba(28,27,24,.82);backdrop-filter:blur(8px);
+  border-radius:14px;padding:10px 14px;
+  display:flex;flex-direction:column;gap:1px;
+}
+.ep-v{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1}
+.ep-l{font-size:10px;font-weight:600;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em}
 
-  .s2-header {
-    padding: 12px 20px 0;
-    background: var(--surface);
-    position: relative;
-    z-index: 5;
-  }
-  .s2-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-  }
-  .s2-title { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
-  .s2-count {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--muted);
-    background: var(--bg);
-    padding: 4px 10px;
-    border-radius: 10px;
-  }
+.rating-pill{
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(8px);
+  border-radius:12px;padding:8px 12px;
+  display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--ink);
+}
 
-  .filter-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .filter-tab {
-    height: 34px;
-    padding: 0 14px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: default;
-  }
-  .filter-tab.active {
-    background: var(--ink);
-    color: #fff;
-  }
-  .filter-tab:not(.active) {
-    background: var(--bg);
-    color: var(--muted);
-  }
-  .filter-tab .tab-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
+/* ─── ACTIVE ORDER MAP OVERLAYS ─── */
+.eta-box{
+  position:absolute;bottom:24px;left:14px;
+  background:var(--s);border-radius:14px;padding:10px 14px;
+  box-shadow:0 2px 16px rgba(0,0,0,.14);
+}
+.eta-v{font-size:22px;font-weight:900;color:var(--ink);letter-spacing:-.025em;line-height:1}
+.eta-l{font-size:10px;font-weight:600;color:var(--m);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 
-  .s2-map-mini {
-    height: 130px;
-    background: #E8E8E4;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-  }
+.map-earn{
+  position:absolute;top:14px;left:14px;
+  background:var(--s);border-radius:12px;padding:8px 12px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+  display:flex;align-items:baseline;gap:4px;
+}
+.me-v{font-size:18px;font-weight:900;color:var(--g);letter-spacing:-.02em}
+.me-l{font-size:11px;font-weight:600;color:var(--m)}
 
-  .orders-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 12px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: var(--bg);
-  }
+.zoom-c{
+  position:absolute;right:14px;bottom:70px;
+  border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+.zb{width:36px;height:36px;background:var(--s);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--ink)}
+.zb+.zb{border-top:1px solid var(--div)}
 
-  .order-card {
-    background: var(--surface);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
-  }
-  .order-card-main {
-    padding: 14px 16px;
-  }
-  .order-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-  .order-type-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-  }
-  .order-type-badge.passenger { background: var(--blue-soft); color: var(--blue); }
-  .order-type-badge.delivery { background: var(--orange-soft); color: var(--orange); }
-  .order-type-badge.food { background: #FEF3C7; color: #92400E; }
+/* ─── PROGRESS BAR (sweetgreen style) ─── */
+.prog{padding:14px 0 2px}
+.prog-track{height:3px;background:var(--div);border-radius:2px;position:relative;overflow:hidden;margin-bottom:10px}
+.prog-fill{height:100%;background:var(--g);border-radius:2px}
+.prog-steps{display:flex;justify-content:space-between}
+.ps{font-size:10px;font-weight:600;color:var(--f);text-align:center}
+.ps.done{color:var(--g)}
+.ps.cur{color:var(--ink);font-weight:800}
 
-  .order-price {
-    text-align: right;
-  }
-  .order-price-main {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -.02em;
-    line-height: 1;
-  }
-  .order-price-net {
-    font-size: 11px;
-    color: var(--green);
-    font-weight: 600;
-    margin-top: 2px;
-  }
+/* ─── GRAB-STYLE QUICK ACTIONS ─── */
+.qa-row{display:flex;gap:0;border-top:1px solid var(--div);padding:12px 0}
+.qa{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.qa-ic{width:40px;height:40px;background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.qa-lbl{font-size:10px;font-weight:600;color:var(--m);text-align:center}
 
-  .order-route {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 12px;
-  }
-  .order-route::before {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 10px;
-    bottom: 10px;
-    width: 2px;
-    background: var(--divider);
-    border-radius: 1px;
-  }
-  .route-point {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 0;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
-    position: relative;
-  }
-  .route-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    position: absolute;
-    left: -20px;
-    border: 2px solid var(--surface);
-    box-shadow: 0 0 0 1px var(--divider);
-  }
-  .route-dot.from { background: var(--ink); }
-  .route-dot.to { background: var(--yellow); border-color: var(--yellow-dark); box-shadow: none; }
-  .route-address { font-weight: 600; }
-  .route-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+/* ─── CLIENT ROW ─── */
+.client-row{display:flex;align-items:center;gap:12px;padding:12px 0}
+.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0}
+.av-name{font-size:14px;font-weight:700;color:var(--ink)}
+.av-rat{font-size:12px;color:var(--m);font-weight:600}
+.contact-btns{display:flex;gap:6px;margin-left:auto}
+.cbt{width:36px;height:36px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
 
-  .order-meta {
-    display: flex;
-    gap: 8px;
-  }
-  .meta-chip {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 5px 10px;
-    background: var(--bg);
-    border-radius: 8px;
-    font-size: 11.5px;
-    font-weight: 600;
-    color: var(--muted);
-  }
+/* ─── DESTINATION ROW ─── */
+.dest-row{display:flex;align-items:center;gap:10px;padding:11px 0}
+.dest-ic{width:34px;height:34px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.dest-name{font-size:13px;font-weight:700;color:var(--ink)}
+.dest-addr{font-size:11px;color:var(--m);margin-top:1px}
 
-  .order-card-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-top: 1px solid var(--divider);
-  }
-  .order-action {
-    padding: 12px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: default;
-  }
-  .order-action.accept {
-    background: var(--yellow);
-    color: var(--ink);
-    border-radius: 0 0 18px 0;
-  }
-  .order-action.skip {
-    color: var(--muted);
-  }
+/* ─── SCROLL AREA ─── */
+.scroll{overflow-y:auto;padding:14px 16px;background:var(--bg);flex:1;display:flex;flex-direction:column;gap:10px}
+.scroll::-webkit-scrollbar{display:none}
 
-  .order-card.featured {
-    border: 2px solid var(--yellow);
-    box-shadow: 0 4px 16px rgba(255,209,0,.25);
-  }
-  .featured-label {
-    background: var(--yellow);
-    padding: 5px 16px;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+/* ─── WALLET CHIPS ─── */
+.wchip{flex:1;background:var(--bg);border-radius:14px;padding:12px 14px}
+.wchip-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--f);margin-bottom:3px}
+.wchip-v{font-size:19px;font-weight:900;letter-spacing:-.02em;color:var(--ink);line-height:1}
+.wchip-sub{font-size:11px;color:var(--m);margin-top:3px}
+.wchip.epl{background:var(--gs)}
+.wchip.epl .wchip-lbl{color:#14532D}
+.wchip.epl .wchip-v{font-size:13px;font-weight:700;color:var(--g)}
 
-  /* ════════════════════════════════════
-     SCREEN 3 · АКТИВНЫЙ ЗАКАЗ
-     ════════════════════════════════════ */
+/* ─── CHECKLIST ─── */
+.cl-item{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--bg);border-radius:14px}
+.cl-ic{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cl-ic.ok{background:var(--gs)}
+.cl-ic.warn{background:var(--os)}
+.cl-name{font-size:13px;font-weight:600;color:var(--ink);flex:1}
+.cl-st{font-size:11px;color:var(--m)}
+.cl-st.ok{color:var(--g);font-weight:600}
+.cl-st.warn{color:var(--o);font-weight:600}
+.cl-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px}
+.cl-badge.ok{background:var(--gs);color:var(--g)}
+.cl-badge.warn{background:var(--os);color:var(--o)}
 
-  .s3-map {
-    height: 360px;
-    background: #E8E8E4;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
+/* spacing helpers */
+.mt4{margin-top:4px}
+.mt8{margin-top:8px}
+.mt12{margin-top:12px}
+.mt14{margin-top:14px}
+.mt16{margin-top:16px}
+.pb14{padding-bottom:14px}
+.pb8{padding-bottom:8px}
+.gap8{gap:8px}
+.gap6{gap:6px}
 
-  .s3-map-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(0deg, var(--surface), transparent);
-  }
-
-  .map-route-line {
-    position: absolute;
-    top: 60px;
-    left: 80px;
-    right: 50px;
-    bottom: 80px;
-    border: 3px solid var(--blue);
-    border-right: none;
-    border-bottom: none;
-    border-radius: 12px 0 0 0;
-    opacity: .7;
-  }
-
-  .driver-pin {
-    position: absolute;
-    bottom: 90px;
-    left: 70px;
-    width: 36px;
-    height: 36px;
-    background: var(--yellow);
-    border-radius: 50%;
-    border: 3px solid var(--surface);
-    box-shadow: 0 2px 8px rgba(0,0,0,.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-  .dest-pin {
-    position: absolute;
-    top: 55px;
-    right: 55px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .dest-pin-head {
-    width: 32px;
-    height: 32px;
-    background: var(--red);
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.25);
-  }
-  .dest-pin-head::after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    transform: rotate(45deg);
-  }
-
-  .eta-bubble {
-    position: absolute;
-    top: 55px;
-    left: 16px;
-    background: var(--surface);
-    border-radius: 12px;
-    padding: 8px 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.12);
-    display: flex;
-    flex-direction: column;
-  }
-  .eta-time { font-size: 20px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
-  .eta-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-
-  .zoom-btns {
-    position: absolute;
-    right: 16px;
-    bottom: 70px;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.12);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .zoom-btn {
-    width: 34px;
-    height: 34px;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-
-  .s3-bottom {
-    background: var(--surface);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px 12px;
-    overflow: hidden;
-  }
-
-  .order-progress {
-    display: flex;
-    gap: 0;
-    margin-bottom: 16px;
-    padding-top: 14px;
-  }
-  .progress-step {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    position: relative;
-  }
-  .progress-step::after {
-    content: '';
-    position: absolute;
-    top: 14px;
-    left: 60%;
-    right: -40%;
-    height: 2px;
-    background: var(--divider);
-  }
-  .progress-step:last-child::after { display: none; }
-  .progress-step.done::after { background: var(--green); }
-  .progress-step.active::after { background: linear-gradient(90deg, var(--yellow), var(--divider)); }
-
-  .step-circle {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 800;
-    z-index: 1;
-    background: var(--divider);
-    color: var(--faint);
-  }
-  .progress-step.done .step-circle { background: var(--green); color: #fff; }
-  .progress-step.active .step-circle { background: var(--yellow); color: var(--ink); }
-
-  .step-label {
-    font-size: 9.5px;
-    font-weight: 600;
-    color: var(--faint);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    text-align: center;
-  }
-  .progress-step.active .step-label { color: var(--ink); }
-  .progress-step.done .step-label { color: var(--green); }
-
-  .order-details {
-    background: var(--bg);
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-  }
-  .od-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .od-type-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .od-type-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-  .od-type-icon.passenger { background: var(--blue-soft); }
-  .od-type-icon.delivery { background: var(--orange-soft); }
-
-  .od-title { font-size: 15px; font-weight: 800; color: var(--ink); }
-  .od-subtitle { font-size: 12px; color: var(--muted); }
-
-  .od-earnings {
-    text-align: right;
-  }
-  .od-earnings-main {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--green);
-    letter-spacing: -.01em;
-  }
-  .od-earnings-label {
-    font-size: 10px;
-    color: var(--muted);
-    font-weight: 600;
-  }
-
-  .od-address {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-top: 1px solid var(--divider);
-  }
-  .od-addr-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  .od-addr-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .od-addr-full {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .od-client {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-top: 1px solid var(--divider);
-  }
-  .od-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #6366F1, #8B5CF6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    flex-shrink: 0;
-  }
-  .od-client-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink);
-    flex: 1;
-  }
-  .od-rating {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 600;
-  }
-  .od-action-row {
-    display: flex;
-    gap: 8px;
-  }
-  .od-icon-btn {
-    width: 40px;
-    height: 40px;
-    background: var(--surface);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .btn-main-action {
-    width: 100%;
-    height: 58px;
-    background: var(--yellow);
-    border: none;
-    border-radius: 18px;
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -.01em;
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 16px rgba(255,209,0,.45);
-    margin-bottom: 10px;
-  }
-
-  .btn-problem {
-    width: 100%;
-    height: 44px;
-    background: transparent;
-    border: none;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--muted);
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  /* ── MAP SVG BACKGROUND ── */
-  .map-svg-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* ── SCREEN 2 MAP PINS ── */
-  .map-pin-cluster {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-  .pin-head {
-    width: 28px;
-    height: 28px;
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,.2);
-  }
-  .pin-head::after {
-    display: block;
-    transform: rotate(45deg);
-    font-size: 13px;
-  }
-  .pin-price {
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 3px 7px;
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--ink);
-    box-shadow: 0 1px 4px rgba(0,0,0,.12);
-    margin-top: 2px;
-  }
-
-  /* tiny scrollbar */
-  .orders-list::-webkit-scrollbar { width: 3px; }
-  .orders-list::-webkit-scrollbar-thumb { background: var(--divider); border-radius: 3px; }
-
-  /* ── SECTION DIVIDERS IN ORDERS ── */
-  .orders-section-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--faint);
-    padding: 4px 4px 6px;
-  }
 </style>
 </head>
 <body>
 
-<div class="page-header">
-  <div class="eyebrow">TradeTaxi · Driver App · MVP</div>
-  <h1>Ключевые экраны водителя</h1>
-  <p>Выход на смену → Лента заказов → Активный заказ</p>
+<div class="ph">
+  <div class="ph-ey">TradeTaxi · Driver App · MVP</div>
+  <h1>Экраны водителя</h1>
+  <p>Начало смены → Лента заказов → Активный заказ</p>
 </div>
 
-<div class="phones">
+<div class="row">
 
-  <!-- ══════════════════════════════════════
-       PHONE 1 · ГЛАВНЫЙ ЭКРАН (до смены)
-       ══════════════════════════════════════ -->
-  <div class="phone-wrap">
-    <div class="phone-label">Экран 1</div>
-    <div class="phone-stage">Главный · Начало смены</div>
+<!-- ════════════════════════════
+     ЭКРАН 1 · ГЛАВНЫЙ (ОФЛАЙН)
+     ════════════════════════════ -->
+<div class="pw">
+  <div class="pw-label">Экран 1</div>
+  <div class="pw-stage">Главный · Начало смены</div>
 
-    <div class="phone">
-      <!-- Status Bar -->
-      <div class="status-bar">
-        <span class="time">9:41</span>
-        <div class="status-icons">
-          <!-- signal -->
-          <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1C1B18"/><rect x="4.5" y="5" width="3" height="7" rx="1" fill="#1C1B18"/><rect x="9" y="2" width="3" height="10" rx="1" fill="#1C1B18"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1C1B18"/></svg>
-          <!-- wifi -->
-          <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#1C1B18"/><path d="M2.5 6A7.07 7.07 0 0 1 7.5 4c1.95 0 3.7.8 4.97 2.07" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3.5A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.18 7.44 3.09" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-          <!-- battery -->
-          <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#1C1B18" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="#1C1B18"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#1C1B18"/></svg>
-        </div>
-      </div>
+  <div class="phone" style="height:812px">
+    <div class="notch"></div>
 
-      <!-- Content -->
-      <div class="phone-content">
-        <!-- Map Background -->
-        <div class="s1-map-bg">
-          <svg class="map-svg-bg" viewBox="0 0 375 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <rect width="375" height="500" fill="#E8E8E4"/>
-            <!-- blocks -->
-            <rect x="20" y="30" width="80" height="60" rx="4" fill="#D8D6C8" opacity=".8"/>
-            <rect x="115" y="20" width="100" height="45" rx="4" fill="#D0CEC0" opacity=".8"/>
-            <rect x="230" y="35" width="70" height="55" rx="4" fill="#D8D6C8" opacity=".8"/>
-            <rect x="20" y="120" width="55" height="80" rx="4" fill="#D0CEC0" opacity=".8"/>
-            <rect x="90" y="100" width="90" height="65" rx="4" fill="#D8D6C8" opacity=".8"/>
-            <rect x="200" y="110" width="80" height="50" rx="4" fill="#D0CEC0" opacity=".8"/>
-            <rect x="300" y="100" width="60" height="80" rx="4" fill="#D8D6C8" opacity=".8"/>
-            <rect x="20" y="230" width="70" height="60" rx="4" fill="#D0CEC0" opacity=".8"/>
-            <rect x="110" y="220" width="95" height="55" rx="4" fill="#D8D6C8" opacity=".8"/>
-            <rect x="225" y="215" width="75" height="70" rx="4" fill="#D0CEC0" opacity=".8"/>
-            <!-- main roads -->
-            <rect x="0" y="92" width="375" height="14" fill="#E8E680" opacity=".9"/>
-            <rect x="0" y="195" width="375" height="10" fill="#FFFFFF" opacity=".85"/>
-            <rect x="165" y="0" width="10" height="500" fill="#FFFFFF" opacity=".85"/>
-            <rect x="310" y="0" width="8" height="500" fill="#F0EEDF" opacity=".7"/>
-            <rect x="80" y="0" width="6" height="500" fill="#F0EEDF" opacity=".7"/>
-            <!-- small roads -->
-            <rect x="0" y="145" width="375" height="5" fill="#F0EEDF" opacity=".7"/>
-            <rect x="0" y="280" width="375" height="5" fill="#F0EEDF" opacity=".7"/>
-            <!-- green park -->
-            <ellipse cx="245" cy="165" rx="40" ry="25" fill="#C8DFB0" opacity=".7"/>
-            <!-- river -->
-            <path d="M0 380 Q100 365 200 380 Q280 392 375 370" stroke="#B8D8E8" stroke-width="18" fill="none" opacity=".8"/>
-            <!-- location dot -->
-            <circle cx="188" cy="210" r="10" fill="#FFD100" opacity=".95"/>
-            <circle cx="188" cy="210" r="16" fill="#FFD100" opacity=".2"/>
-            <circle cx="188" cy="210" r="22" fill="#FFD100" opacity=".1"/>
-          </svg>
-        </div>
-
-        <!-- Header -->
-        <div class="s1-header">
-          <div class="s1-header-title">Заказы</div>
-          <div class="delivery-toggle">
-            <span>Доставка</span>
-            <div class="toggle-pill on">
-              <div class="toggle-dot"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Map pins -->
-        <div style="position:absolute; top: 105px; left: 90px; z-index:5">
-          <div style="background:#fff;border-radius:10px;padding:4px 8px;font-size:12px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;gap:4px">
-            <span style="font-size:14px">📦</span> 340 ₽
-          </div>
-        </div>
-        <div style="position:absolute; top: 135px; left: 220px; z-index:5">
-          <div style="background:#fff;border-radius:10px;padding:4px 8px;font-size:12px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;gap:4px">
-            <span style="font-size:14px">👤</span> 520 ₽
-          </div>
-        </div>
-        <div style="position:absolute; top: 75px; left: 270px; z-index:5">
-          <div style="background:#fff;border-radius:10px;padding:4px 8px;font-size:12px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;gap:4px">
-            <span style="font-size:14px">🍕</span> 290 ₽
-          </div>
-        </div>
-
-        <!-- Bottom sheet -->
-        <div class="s1-bottom">
-          <div class="drag-handle"></div>
-
-          <!-- Wallet + EPL row -->
-          <div class="wallet-row">
-            <div class="wallet-card">
-              <div class="wallet-card-label">Кошелёк</div>
-              <div class="wallet-card-value">2 840 ₽</div>
-              <div class="wallet-card-sub">Пополнить через СБП →</div>
-            </div>
-            <div class="wallet-card epl">
-              <div class="wallet-card-label">ЭПЛ</div>
-              <div class="wallet-card-value">
-                <span class="epl-dot"></span> Активен
-              </div>
-              <div class="wallet-card-sub" style="font-size:10px; color:#15803d">до 23:59</div>
-            </div>
-          </div>
-
-          <!-- Checklist -->
-          <div class="checklist">
-            <div class="check-item">
-              <div class="check-icon ok">✅</div>
-              <div class="check-text">
-                <div class="check-name">Страховка</div>
-                <div class="check-status ok-text">Действует до 15.03</div>
-              </div>
-              <div class="check-badge ok">ОК</div>
-            </div>
-            <div class="check-item">
-              <div class="check-icon ok">✅</div>
-              <div class="check-text">
-                <div class="check-name">Техосмотр</div>
-                <div class="check-status ok-text">Действует до 12.08</div>
-              </div>
-              <div class="check-badge ok">ОК</div>
-            </div>
-            <div class="check-item">
-              <div class="check-icon warn">⚠️</div>
-              <div class="check-text">
-                <div class="check-name">Баланс кошелька</div>
-                <div class="check-status warn-text">Рекомендуем ≥ 3 000 ₽</div>
-              </div>
-              <div class="check-badge warn">Пополни</div>
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#1C1B18" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#1C1B18" stroke-width="2" stroke-linecap="round"/></svg>
-            Выйти на линию
-          </div>
-          <div class="btn-secondary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" stroke="#6B665A" stroke-width="2"/><path d="M3 9h18M9 21V9" stroke="#6B665A" stroke-width="2"/></svg>
-            История смен
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Nav -->
-      <div class="bottom-nav">
-        <div class="nav-item active">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div class="nav-label">Главная</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <div class="nav-label">ЭПЛ</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#A8A293" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="nav-label">Заказы</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg>
-          </div>
-          <div class="nav-label">Штрафы</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="nav-label">Профиль</div>
-        </div>
+    <!-- Статус бар поверх карты -->
+    <div class="sb light" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">9:41</span>
+      <div class="sb-icons" style="color:#fff">
+        <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/><path d="M2.5 5.5A7.07 7.07 0 0 1 7.5 3.5c1.95 0 3.7.78 4.97 2.03" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.14 7.44 3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
       </div>
     </div>
-  </div>
 
-  <!-- ══════════════════════════════════════
-       PHONE 2 · ЛЕНТА ЗАКАЗОВ
-       ══════════════════════════════════════ -->
-  <div class="phone-wrap">
-    <div class="phone-label">Экран 2</div>
-    <div class="phone-stage">Лента · Выбор заказа</div>
+    <!-- MAP full bleed -->
+    <div class="map" style="height:480px;flex-shrink:0">
+      <svg width="375" height="480" viewBox="0 0 375 480" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="480" fill="#E8E8E4"/>
+        <!-- blocks -->
+        <rect x="4" y="48" width="70" height="55" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="82" y="52" width="85" height="48" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="178" y="44" width="95" height="60" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="285" y="52" width="86" height="52" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="4" y="120" width="58" height="80" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="74" y="116" width="90" height="74" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="178" y="120" width="80" height="68" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="274" y="116" width="97" height="80" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="4" y="218" width="66" height="70" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="82" y="214" width="88" height="66" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="185" y="218" width="78" height="62" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="276" y="210" width="95" height="78" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="4" y="308" width="72" height="60" rx="3" fill="#D8D6C8" opacity=".6"/>
+        <rect x="88" y="304" width="85" height="58" rx="3" fill="#D0CEC0" opacity=".6"/>
+        <rect x="186" y="308" width="80" height="55" rx="3" fill="#D8D6C8" opacity=".6"/>
+        <rect x="280" y="300" width="91" height="68" rx="3" fill="#D0CEC0" opacity=".6"/>
+        <rect x="4" y="386" width="68" height="52" rx="3" fill="#D0CEC0" opacity=".5"/>
+        <rect x="86" y="382" width="90" height="52" rx="3" fill="#D8D6C8" opacity=".5"/>
+        <!-- main roads -->
+        <rect x="0" y="100" width="375" height="13" fill="#E8E680" opacity=".9"/>
+        <rect x="0" y="196" width="375" height="10" fill="#fff" opacity=".85"/>
+        <rect x="0" y="292" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
+        <rect x="155" y="0" width="10" height="480" fill="#fff" opacity=".85"/>
+        <rect x="70" y="0" width="6" height="480" fill="#F0EEDF" opacity=".7"/>
+        <rect x="265" y="0" width="6" height="480" fill="#F0EEDF" opacity=".7"/>
+        <!-- park -->
+        <ellipse cx="320" cy="165" rx="40" ry="28" fill="#C8DFB0" opacity=".75"/>
+        <!-- river -->
+        <path d="M0 440 Q100 428 200 442 Q285 454 375 435" stroke="#B8D8E8" stroke-width="20" fill="none" opacity=".7"/>
+        <!-- driver dot -->
+        <circle cx="188" cy="260" r="10" fill="#FFD100"/>
+        <circle cx="188" cy="260" r="18" fill="#FFD100" opacity=".2"/>
+        <circle cx="188" cy="260" r="26" fill="#FFD100" opacity=".1"/>
+        <!-- order pins -->
+        <circle cx="108" cy="134" r="6" fill="#2563EB"/>
+        <circle cx="245" cy="118" r="6" fill="#EA580C"/>
+        <circle cx="300" cy="228" r="6" fill="#16A34A"/>
+      </svg>
 
-    <div class="phone">
-      <!-- Status Bar -->
-      <div class="status-bar">
-        <span class="time">9:41</span>
-        <div class="status-icons">
-          <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1C1B18"/><rect x="4.5" y="5" width="3" height="7" rx="1" fill="#1C1B18"/><rect x="9" y="2" width="3" height="10" rx="1" fill="#1C1B18"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1C1B18"/></svg>
-          <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#1C1B18"/><path d="M2.5 6A7.07 7.07 0 0 1 7.5 4c1.95 0 3.7.8 4.97 2.07" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3.5A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.18 7.44 3.09" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-          <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#1C1B18" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="#1C1B18"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#1C1B18"/></svg>
+      <!-- gradient fade to sheet -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#fff,transparent)"></div>
+
+      <!-- Earnings / rating overlay (Grab Driver pattern) -->
+      <div class="earn-pill">
+        <div class="ep-l">Сегодня</div>
+        <div class="ep-v">2 840 ₽</div>
+      </div>
+      <div class="rating-pill">⭐ 4.92</div>
+
+      <!-- order pins labels -->
+      <div style="position:absolute;top:118px;left:76px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>👤</span>520₽</div>
+      <div style="position:absolute;top:102px;left:212px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>📦</span>340₽</div>
+      <div style="position:absolute;top:212px;left:270px;background:#fff;border-radius:9px;padding:3px 8px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.14);display:flex;align-items:center;gap:3px"><span>🍕</span>290₽</div>
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;display:flex;flex-direction:column;gap:12px;padding-bottom:0;overflow:hidden">
+      <div class="dh"></div>
+
+      <!-- Toggle row -->
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--ink)">Заказы</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:20px;padding:6px 10px 6px 12px">
+          <span style="font-size:12px;font-weight:600;color:var(--m)">Доставка</span>
+          <div style="width:38px;height:22px;background:var(--y);border-radius:11px;position:relative">
+            <div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+          </div>
         </div>
       </div>
 
-      <!-- Phone content -->
-      <div class="phone-content" style="display:flex;flex-direction:column;overflow:hidden;">
-
-        <!-- Header -->
-        <div class="s2-header">
-          <div class="s2-title-row">
-            <div class="s2-title">Заказы</div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div style="display:flex;align-items:center;gap:5px;background:var(--green-soft);padding:5px 10px;border-radius:10px;">
-                <span class="epl-dot" style="width:7px;height:7px;background:var(--green)"></span>
-                <span style="font-size:12px;font-weight:700;color:var(--green)">На линии</span>
-              </div>
-              <div class="s2-count">3</div>
-            </div>
-          </div>
-
-          <!-- Filters -->
-          <div class="filter-tabs">
-            <div class="filter-tab active">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M4 6h4M6 4v4" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-              Все
-            </div>
-            <div class="filter-tab">
-              <span style="font-size:12px">👤</span> Пассажиры
-            </div>
-            <div class="filter-tab">
-              <span style="font-size:12px">📦</span> Доставка
-            </div>
-          </div>
+      <!-- Wallet row -->
+      <div class="row2">
+        <div class="wchip">
+          <div class="wchip-lbl">Кошелёк</div>
+          <div class="wchip-v">2 840 ₽</div>
+          <div class="wchip-sub">Пополнить через СБП →</div>
         </div>
-
-        <!-- Mini Map -->
-        <div class="s2-map-mini">
-          <svg width="375" height="130" viewBox="0 0 375 130" preserveAspectRatio="xMidYMid slice">
-            <rect width="375" height="130" fill="#E8E8E4"/>
-            <rect x="0" y="45" width="375" height="8" fill="#E8E680" opacity=".9"/>
-            <rect x="0" y="90" width="375" height="6" fill="#FFFFFF" opacity=".8"/>
-            <rect x="140" y="0" width="7" height="130" fill="#FFFFFF" opacity=".8"/>
-            <rect x="280" y="0" width="5" height="130" fill="#F0EEDF" opacity=".7"/>
-            <rect x="30" y="0" width="5" height="130" fill="#F0EEDF" opacity=".7"/>
-            <rect x="5" y="10" width="55" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="75" y="5" width="55" height="35" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="155" y="5" width="75" height="35" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="245" y="8" width="50" height="30" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="305" y="5" width="65" height="35" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="5" y="58" width="55" height="28" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="75" y="55" width="55" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="155" y="55" width="75" height="28" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="245" y="55" width="50" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="305" y="58" width="65" height="25" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <!-- driver location -->
-            <circle cx="188" cy="95" r="7" fill="#FFD100"/>
-            <circle cx="188" cy="95" r="13" fill="#FFD100" opacity=".2"/>
-          </svg>
-
-          <!-- Pins on mini map -->
-          <div style="position:absolute;top:10px;left:52px;background:#fff;border-radius:8px;padding:3px 7px;font-size:11px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.15);display:flex;align-items:center;gap:3px">
-            <span>📦</span> 340 ₽
-          </div>
-          <div style="position:absolute;top:15px;left:200px;background:#fff;border-radius:8px;padding:3px 7px;font-size:11px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.15);display:flex;align-items:center;gap:3px">
-            <span>👤</span> 520 ₽
-          </div>
-          <div style="position:absolute;top:8px;left:295px;background:#fff;border-radius:8px;padding:3px 7px;font-size:11px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.15);display:flex;align-items:center;gap:3px">
-            <span>🍕</span> 290 ₽
-          </div>
-        </div>
-
-        <!-- Orders List -->
-        <div class="orders-list">
-
-          <!-- Featured / closest order -->
-          <div class="orders-section-label">⚡ Рядом с вами</div>
-          <div class="order-card featured">
-            <div class="featured-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="#1C1B18"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Лучший заказ · 1.2 км
-            </div>
-            <div class="order-card-main">
-              <div class="order-top">
-                <div>
-                  <div class="order-type-badge passenger">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                    Пассажир
-                  </div>
-                </div>
-                <div class="order-price">
-                  <div class="order-price-main">520 ₽</div>
-                  <div class="order-price-net">≈ 442 ₽ вам</div>
-                </div>
-              </div>
-
-              <div class="order-route">
-                <div class="route-point">
-                  <div class="route-dot from"></div>
-                  <div>
-                    <div class="route-address">ул. Ленина, 45</div>
-                    <div class="route-sub">Подача через 4 мин</div>
-                  </div>
-                </div>
-                <div class="route-point">
-                  <div class="route-dot to"></div>
-                  <div>
-                    <div class="route-address">Аэропорт Пулково</div>
-                    <div class="route-sub">32 км · ~38 мин</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="order-meta">
-                <div class="meta-chip">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                  38 мин
-                </div>
-                <div class="meta-chip">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
-                  32 км
-                </div>
-                <div class="meta-chip">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
-                  4.9 · 1 пасс.
-                </div>
-              </div>
-            </div>
-            <div class="order-card-footer">
-              <div class="order-action skip">Пропустить</div>
-              <div class="order-action accept">✓ Принять</div>
-            </div>
-          </div>
-
-          <div class="orders-section-label">Другие заказы</div>
-
-          <!-- Delivery order -->
-          <div class="order-card">
-            <div class="order-card-main">
-              <div class="order-top">
-                <div>
-                  <div class="order-type-badge delivery">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                    Посылка
-                  </div>
-                </div>
-                <div class="order-price">
-                  <div class="order-price-main">340 ₽</div>
-                  <div class="order-price-net">≈ 289 ₽ вам</div>
-                </div>
-              </div>
-
-              <div class="order-route">
-                <div class="route-point">
-                  <div class="route-dot from"></div>
-                  <div>
-                    <div class="route-address">пр. Невский, 112</div>
-                    <div class="route-sub">Забрать у отправителя</div>
-                  </div>
-                </div>
-                <div class="route-point">
-                  <div class="route-dot to"></div>
-                  <div>
-                    <div class="route-address">ул. Садовая, 28</div>
-                    <div class="route-sub">8.5 км · ~18 мин</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="order-meta">
-                <div class="meta-chip">⏱ 18 мин</div>
-                <div class="meta-chip">📍 8.5 км</div>
-                <div class="meta-chip">📦 До 5 кг</div>
-              </div>
-            </div>
-            <div class="order-card-footer">
-              <div class="order-action skip">Пропустить</div>
-              <div class="order-action accept">✓ Принять</div>
-            </div>
-          </div>
-
-          <!-- Food order -->
-          <div class="order-card">
-            <div class="order-card-main">
-              <div class="order-top">
-                <div>
-                  <div class="order-type-badge food">
-                    <span style="font-size:10px">🍕</span>
-                    Еда
-                  </div>
-                </div>
-                <div class="order-price">
-                  <div class="order-price-main">290 ₽</div>
-                  <div class="order-price-net">≈ 246 ₽ вам</div>
-                </div>
-              </div>
-
-              <div class="order-route">
-                <div class="route-point">
-                  <div class="route-dot from"></div>
-                  <div>
-                    <div class="route-address">Додо Пицца · Лиговский</div>
-                    <div class="route-sub">Готово через 5 мин</div>
-                  </div>
-                </div>
-                <div class="route-point">
-                  <div class="route-dot to"></div>
-                  <div>
-                    <div class="route-address">ул. Рубинштейна, 6</div>
-                    <div class="route-sub">3.2 км · ~12 мин</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="order-meta">
-                <div class="meta-chip">⏱ 12 мин</div>
-                <div class="meta-chip">📍 3.2 км</div>
-              </div>
-            </div>
-            <div class="order-card-footer">
-              <div class="order-action skip">Пропустить</div>
-              <div class="order-action accept">✓ Принять</div>
-            </div>
-          </div>
-
+        <div class="wchip epl" style="flex:0 0 auto;width:130px">
+          <div class="wchip-lbl">ЭПЛ</div>
+          <div class="wchip-v"><span class="dot-live"></span> Активен</div>
+          <div class="wchip-sub" style="font-size:10px;color:var(--g)">до 23:59</div>
         </div>
       </div>
 
-      <!-- Bottom Nav -->
-      <div class="bottom-nav">
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2" fill="none"/></svg>
+      <!-- Checklist -->
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="cl-item">
+          <div class="cl-ic ok">✅</div>
+          <div style="flex:1">
+            <div class="cl-name">Страховка</div>
+            <div class="cl-st ok">Действует до 15.03.2026</div>
           </div>
-          <div class="nav-label">Главная</div>
+          <div class="cl-badge ok">ОК</div>
         </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="cl-item">
+          <div class="cl-ic ok">✅</div>
+          <div style="flex:1">
+            <div class="cl-name">Техосмотр</div>
+            <div class="cl-st ok">Действует до 12.08.2026</div>
           </div>
-          <div class="nav-label">ЭПЛ</div>
+          <div class="cl-badge ok">ОК</div>
         </div>
-        <div class="nav-item active">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="cl-item">
+          <div class="cl-ic warn">⚠️</div>
+          <div style="flex:1">
+            <div class="cl-name">Баланс кошелька</div>
+            <div class="cl-st warn">Рекомендуем не менее 3 000 ₽</div>
           </div>
-          <div class="nav-label">Заказы</div>
+          <div class="cl-badge warn">Низкий</div>
         </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg>
-          </div>
-          <div class="nav-label">Штрафы</div>
+      </div>
+
+      <!-- CTA -->
+      <div class="pb14">
+        <div class="btn-y">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1C1B18" stroke-width="2"/><path d="M12 7v5l3.5 2" stroke="#1C1B18" stroke-width="2" stroke-linecap="round"/></svg>
+          Выйти на линию
         </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="nav-label">Профиль</div>
-        </div>
+        <div class="btn-ghost mt8">История смен →</div>
       </div>
     </div>
+
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
+    </div>
   </div>
+</div><!-- /pw1 -->
 
-  <!-- ══════════════════════════════════════
-       PHONE 3 · АКТИВНЫЙ ЗАКАЗ
-       ══════════════════════════════════════ -->
-  <div class="phone-wrap">
-    <div class="phone-label">Экран 3</div>
-    <div class="phone-stage">Активный заказ · В пути</div>
 
-    <div class="phone">
-      <!-- Status Bar -->
-      <div class="status-bar">
-        <span class="time">9:41</span>
-        <div class="status-icons">
-          <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#1C1B18"/><rect x="4.5" y="5" width="3" height="7" rx="1" fill="#1C1B18"/><rect x="9" y="2" width="3" height="10" rx="1" fill="#1C1B18"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="#1C1B18"/></svg>
-          <svg width="15" height="12" viewBox="0 0 15 12"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#1C1B18"/><path d="M2.5 6A7.07 7.07 0 0 1 7.5 4c1.95 0 3.7.8 4.97 2.07" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3.5A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.18 7.44 3.09" stroke="#1C1B18" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-          <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#1C1B18" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="#1C1B18"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#1C1B18"/></svg>
+<!-- ════════════════════════════
+     ЭКРАН 2 · ЛЕНТА ЗАКАЗОВ
+     ════════════════════════════ -->
+<div class="pw">
+  <div class="pw-label">Экран 2</div>
+  <div class="pw-stage">Лента · Выбор заказа</div>
+
+  <div class="phone" style="height:812px">
+    <div class="notch"></div>
+    <div class="sb">
+      <span class="sb-t">9:41</span>
+      <div class="sb-icons">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#1C1B18"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="#1C1B18"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#1C1B18" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#1C1B18"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#1C1B18"/></svg>
+      </div>
+    </div>
+
+    <div class="pc">
+
+      <!-- Header -->
+      <div style="padding:4px 20px 12px;background:var(--s)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em">Заказы</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="display:flex;align-items:center;gap:5px;background:var(--gs);padding:5px 10px;border-radius:10px">
+              <span class="dot-live"></span>
+              <span style="font-size:12px;font-weight:700;color:var(--g)">На линии</span>
+            </div>
+            <div style="background:var(--bg);padding:5px 10px;border-radius:10px;font-size:12px;font-weight:700;color:var(--m)">3 заказа</div>
+          </div>
+        </div>
+        <!-- Filters -->
+        <div style="display:flex;gap:6px">
+          <div style="padding:8px 14px;background:var(--ink);color:#fff;border-radius:10px;font-size:13px;font-weight:700">Все</div>
+          <div style="padding:8px 14px;background:var(--bg);color:var(--m);border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><span>👤</span>Пассажиры</div>
+          <div style="padding:8px 14px;background:var(--bg);color:var(--m);border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px"><span>📦</span>Доставка</div>
         </div>
       </div>
 
-      <!-- Phone content -->
-      <div class="phone-content" style="display:flex;flex-direction:column;overflow:hidden;">
+      <!-- Mini map -->
+      <div class="map" style="height:118px;flex-shrink:0">
+        <svg width="375" height="118" viewBox="0 0 375 118" preserveAspectRatio="xMidYMid slice">
+          <rect width="375" height="118" fill="#E8E8E4"/>
+          <rect x="0" y="40" width="375" height="9" fill="#E8E680" opacity=".9"/>
+          <rect x="0" y="80" width="375" height="7" fill="#fff" opacity=".8"/>
+          <rect x="138" y="0" width="9" height="118" fill="#fff" opacity=".8"/>
+          <rect x="68" y="0" width="5" height="118" fill="#F0EEDF" opacity=".7"/>
+          <rect x="270" y="0" width="5" height="118" fill="#F0EEDF" opacity=".7"/>
+          <rect x="5" y="7" width="54" height="28" rx="3" fill="#D0CEC0" opacity=".7"/>
+          <rect x="78" y="5" width="52" height="30" rx="3" fill="#D8D6C8" opacity=".7"/>
+          <rect x="152" y="5" width="72" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
+          <rect x="240" y="7" width="52" height="28" rx="3" fill="#D8D6C8" opacity=".7"/>
+          <rect x="300" y="5" width="70" height="30" rx="3" fill="#D0CEC0" opacity=".7"/>
+          <rect x="5" y="54" width="54" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
+          <rect x="78" y="52" width="52" height="24" rx="3" fill="#D0CEC0" opacity=".65"/>
+          <rect x="152" y="54" width="72" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
+          <rect x="240" y="52" width="52" height="24" rx="3" fill="#D0CEC0" opacity=".65"/>
+          <rect x="300" y="54" width="70" height="22" rx="3" fill="#D8D6C8" opacity=".65"/>
+          <circle cx="188" cy="88" r="7" fill="#FFD100"/>
+          <circle cx="188" cy="88" r="12" fill="#FFD100" opacity=".2"/>
+          <circle cx="108" cy="20" r="5" fill="#2563EB"/>
+          <circle cx="228" cy="18" r="5" fill="#EA580C"/>
+          <circle cx="310" cy="22" r="5" fill="#16A34A"/>
+        </svg>
+        <div style="position:absolute;top:8px;left:74px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">👤 520₽</div>
+        <div style="position:absolute;top:6px;left:194px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">📦 340₽</div>
+        <div style="position:absolute;top:9px;left:278px;background:#fff;border-radius:8px;padding:2px 7px;font-size:10.5px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.14)">🍕 290₽</div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(0deg,var(--bg),transparent)"></div>
+      </div>
 
-        <!-- MAP -->
-        <div class="s3-map">
-          <svg width="375" height="360" viewBox="0 0 375 360" preserveAspectRatio="xMidYMid slice">
-            <rect width="375" height="360" fill="#E8E8E4"/>
-            <!-- blocks -->
-            <rect x="5" y="5" width="65" height="45" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="80" y="10" width="80" height="40" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="180" y="5" width="90" height="50" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="285" y="10" width="80" height="45" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="5" y="80" width="55" height="70" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="75" y="80" width="85" height="65" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="175" y="85" width="75" height="55" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="270" y="80" width="100" height="70" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="5" y="185" width="65" height="55" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="85" y="185" width="90" height="55" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="190" y="185" width="75" height="55" rx="3" fill="#D0CEC0" opacity=".7"/>
-            <rect x="280" y="185" width="90" height="55" rx="3" fill="#D8D6C8" opacity=".7"/>
-            <rect x="5" y="270" width="70" height="50" rx="3" fill="#D8D6C8" opacity=".6"/>
-            <rect x="90" y="270" width="80" height="50" rx="3" fill="#D0CEC0" opacity=".6"/>
-            <rect x="185" y="270" width="85" height="50" rx="3" fill="#D8D6C8" opacity=".6"/>
-            <rect x="285" y="270" width="85" height="50" rx="3" fill="#D0CEC0" opacity=".6"/>
-            <!-- roads -->
-            <rect x="0" y="58" width="375" height="14" fill="#E8E680" opacity=".9"/>
-            <rect x="0" y="155" width="375" height="10" fill="#FFFFFF" opacity=".85"/>
-            <rect x="0" y="245" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
-            <rect x="155" y="0" width="10" height="360" fill="#FFFFFF" opacity=".85"/>
-            <rect x="70" y="0" width="6" height="360" fill="#F0EEDF" opacity=".7"/>
-            <rect x="265" y="0" width="6" height="360" fill="#F0EEDF" opacity=".7"/>
-            <!-- park -->
-            <ellipse cx="315" cy="130" rx="45" ry="30" fill="#C8DFB0" opacity=".7"/>
-            <!-- route line -->
-            <path d="M90 295 L90 160 Q90 155 95 155 L285 155 Q290 155 290 70 L290 60" stroke="#2563EB" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".8" stroke-dasharray="0"/>
-          </svg>
+      <!-- Orders scroll list -->
+      <div class="scroll">
 
-          <!-- ETA Bubble -->
-          <div class="eta-bubble">
-            <div class="eta-time">38 мин</div>
-            <div class="eta-label">До конца</div>
+        <div class="slbl">⚡ Рядом с вами · 1.2 км</div>
+
+        <!-- Featured card -->
+        <div class="oc feat">
+          <div class="oc-feat-bar">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="#1C1B18"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Лучший заказ смены
           </div>
-
-          <!-- Destination pin -->
-          <div style="position:absolute;top:40px;right:70px;display:flex;flex-direction:column;align-items:center;">
-            <div style="width:32px;height:32px;background:#DC2626;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 8px rgba(0,0,0,.25);"></div>
-          </div>
-          <div style="position:absolute;top:48px;right:58px;font-size:14px;font-weight:800;color:#fff;background:#DC2626;padding:3px 8px;border-radius:6px;font-size:10px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)">Аэропорт</div>
-
-          <!-- Driver pin -->
-          <div class="driver-pin" style="bottom:100px;left:75px;">🚖</div>
-
-          <!-- Zoom buttons -->
-          <div class="zoom-btns">
-            <div class="zoom-btn">+</div>
-            <div class="zoom-btn" style="border-top:1px solid #eee;">−</div>
-          </div>
-
-          <!-- Gradient overlay -->
-          <div class="s3-map-overlay"></div>
-        </div>
-
-        <!-- Bottom info -->
-        <div class="s3-bottom">
-
-          <!-- Progress steps -->
-          <div class="order-progress">
-            <div class="progress-step done">
-              <div class="step-circle">✓</div>
-              <div class="step-label">Принят</div>
-            </div>
-            <div class="progress-step done">
-              <div class="step-circle">✓</div>
-              <div class="step-label">Забрал</div>
-            </div>
-            <div class="progress-step active">
-              <div class="step-circle">3</div>
-              <div class="step-label">В пути</div>
-            </div>
-            <div class="progress-step">
-              <div class="step-circle">4</div>
-              <div class="step-label">Сдача</div>
-            </div>
-            <div class="progress-step">
-              <div class="step-circle">5</div>
-              <div class="step-label">Готово</div>
-            </div>
-          </div>
-
-          <!-- Order details -->
-          <div class="order-details">
-            <div class="od-header">
-              <div class="od-type-row">
-                <div class="od-type-icon passenger">👤</div>
-                <div>
-                  <div class="od-title">Пассажирский рейс</div>
-                  <div class="od-subtitle">Заказ #5821 · 32 км</div>
-                </div>
-              </div>
-              <div class="od-earnings">
-                <div class="od-earnings-main">+442 ₽</div>
-                <div class="od-earnings-label">ваш заработок</div>
-              </div>
-            </div>
-
-            <!-- Destination -->
-            <div class="od-address">
-              <div class="od-addr-icon">✈️</div>
+          <div class="oc-body">
+            <div class="oc-top">
               <div>
-                <div class="od-addr-name">Аэропорт Пулково</div>
-                <div class="od-addr-full">Пулковское ш., 41А · Терминал 1</div>
+                <div class="tag tag-pass">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                  Пассажир
+                </div>
+                <div style="font-size:12px;color:var(--m);margin-top:6px">Подача через <b style="color:var(--ink)">4 мин</b></div>
+              </div>
+              <div class="oc-price">
+                <div class="oc-p1">520 ₽</div>
+                <div class="oc-p2">≈ 442 ₽ вам</div>
               </div>
             </div>
 
-            <!-- Client -->
-            <div class="od-client">
-              <div class="od-avatar">МС</div>
-              <div class="od-client-name">Михаил С.</div>
-              <div class="od-rating">★ 4.9</div>
-              <div class="od-action-row" style="margin-left:8px">
-                <div class="od-icon-btn" title="Позвонить">📞</div>
-                <div class="od-icon-btn" title="Написать">💬</div>
+            <div class="route">
+              <div class="rp">
+                <div class="rd rd-a"></div>
+                <div class="ra">ул. Ленина, 45</div>
+                <div class="rs2">Место посадки</div>
               </div>
+              <div class="rp">
+                <div class="rd rd-b"></div>
+                <div class="ra">Аэропорт Пулково, Терм. 1</div>
+                <div class="rs2">32 км · ~38 мин</div>
+              </div>
+            </div>
+
+            <div class="oc-meta">
+              <div class="chip">⏱ 38 мин</div>
+              <div class="chip">📍 32 км</div>
+              <div class="chip">★ 4.9 · 1 чел.</div>
             </div>
           </div>
+          <div class="oc-foot">
+            <div class="oc-act skip">Пропустить</div>
+            <div class="oc-act go">✓ Принять</div>
+          </div>
+        </div>
 
-          <!-- Main CTA -->
-          <div class="btn-main-action">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#1C1B18"/></svg>
+        <div class="slbl">Другие заказы</div>
+
+        <!-- Delivery card -->
+        <div class="oc">
+          <div class="oc-body">
+            <div class="oc-top">
+              <div>
+                <div class="tag tag-del">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>
+                  Посылка
+                </div>
+                <div style="font-size:12px;color:var(--m);margin-top:6px">Подача через <b style="color:var(--ink)">7 мин</b></div>
+              </div>
+              <div class="oc-price">
+                <div class="oc-p1">340 ₽</div>
+                <div class="oc-p2">≈ 289 ₽ вам</div>
+              </div>
+            </div>
+
+            <div class="route">
+              <div class="rp">
+                <div class="rd rd-a"></div>
+                <div class="ra">пр. Невский, 112</div>
+                <div class="rs2">Забрать у отправителя</div>
+              </div>
+              <div class="rp">
+                <div class="rd rd-b"></div>
+                <div class="ra">ул. Садовая, 28</div>
+                <div class="rs2">8.5 км · ~18 мин</div>
+              </div>
+            </div>
+
+            <div class="oc-meta">
+              <div class="chip">⏱ 18 мин</div>
+              <div class="chip">📍 8.5 км</div>
+              <div class="chip">📦 до 5 кг</div>
+            </div>
+          </div>
+          <div class="oc-foot">
+            <div class="oc-act skip">Пропустить</div>
+            <div class="oc-act go">✓ Принять</div>
+          </div>
+        </div>
+
+        <!-- Food card -->
+        <div class="oc">
+          <div class="oc-body">
+            <div class="oc-top">
+              <div>
+                <div class="tag tag-food">🍕 Еда</div>
+                <div style="font-size:12px;color:var(--m);margin-top:6px">Готово через <b style="color:var(--ink)">5 мин</b></div>
+              </div>
+              <div class="oc-price">
+                <div class="oc-p1">290 ₽</div>
+                <div class="oc-p2">≈ 247 ₽ вам</div>
+              </div>
+            </div>
+
+            <div class="route">
+              <div class="rp">
+                <div class="rd rd-a"></div>
+                <div class="ra">Додо Пицца · Лиговский</div>
+                <div class="rs2">Забрать у ресторана</div>
+              </div>
+              <div class="rp">
+                <div class="rd rd-b"></div>
+                <div class="ra">ул. Рубинштейна, 6</div>
+                <div class="rs2">3.2 км · ~12 мин</div>
+              </div>
+            </div>
+
+            <div class="oc-meta">
+              <div class="chip">⏱ 12 мин</div>
+              <div class="chip">📍 3.2 км</div>
+            </div>
+          </div>
+          <div class="oc-foot">
+            <div class="oc-act skip">Пропустить</div>
+            <div class="oc-act go">✓ Принять</div>
+          </div>
+        </div>
+
+      </div><!-- /scroll -->
+    </div><!-- /pc -->
+
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
+    </div>
+  </div>
+</div><!-- /pw2 -->
+
+
+<!-- ════════════════════════════
+     ЭКРАН 3 · АКТИВНЫЙ ЗАКАЗ
+     ════════════════════════════ -->
+<div class="pw">
+  <div class="pw-label">Экран 3</div>
+  <div class="pw-stage">Активный заказ · В пути</div>
+
+  <div class="phone" style="height:812px">
+    <div class="notch"></div>
+
+    <!-- Status bar over map -->
+    <div class="sb light" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">9:41</span>
+      <div class="sb-icons" style="color:#fff">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="#fff"><path d="M7.5 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
+      </div>
+    </div>
+
+    <div class="pc">
+      <!-- FULL MAP -->
+      <div class="map" style="height:390px;flex-shrink:0">
+        <svg width="375" height="390" viewBox="0 0 375 390" preserveAspectRatio="xMidYMid slice">
+          <rect width="375" height="390" fill="#E8E8E4"/>
+          <rect x="4" y="44" width="62" height="50" rx="3" fill="#D0CEC0" opacity=".8"/>
+          <rect x="76" y="48" width="78" height="44" rx="3" fill="#D8D6C8" opacity=".8"/>
+          <rect x="168" y="40" width="88" height="58" rx="3" fill="#D0CEC0" opacity=".8"/>
+          <rect x="272" y="46" width="99" height="52" rx="3" fill="#D8D6C8" opacity=".8"/>
+          <rect x="4" y="112" width="62" height="72" rx="3" fill="#D8D6C8" opacity=".75"/>
+          <rect x="76" y="108" width="84" height="68" rx="3" fill="#D0CEC0" opacity=".75"/>
+          <rect x="174" y="112" width="78" height="64" rx="3" fill="#D8D6C8" opacity=".75"/>
+          <rect x="268" y="108" width="103" height="76" rx="3" fill="#D0CEC0" opacity=".75"/>
+          <rect x="4" y="202" width="64" height="66" rx="3" fill="#D0CEC0" opacity=".7"/>
+          <rect x="80" y="198" width="84" height="62" rx="3" fill="#D8D6C8" opacity=".7"/>
+          <rect x="180" y="202" width="74" height="58" rx="3" fill="#D0CEC0" opacity=".7"/>
+          <rect x="270" y="196" width="101" height="74" rx="3" fill="#D8D6C8" opacity=".7"/>
+          <rect x="4" y="288" width="66" height="56" rx="3" fill="#D8D6C8" opacity=".6"/>
+          <rect x="84" y="284" width="82" height="54" rx="3" fill="#D0CEC0" opacity=".6"/>
+          <rect x="182" y="288" width="76" height="52" rx="3" fill="#D8D6C8" opacity=".6"/>
+          <rect x="274" y="282" width="97" height="64" rx="3" fill="#D0CEC0" opacity=".6"/>
+          <!-- main roads -->
+          <rect x="0" y="94" width="375" height="12" fill="#E8E680" opacity=".9"/>
+          <rect x="0" y="184" width="375" height="9" fill="#fff" opacity=".85"/>
+          <rect x="0" y="272" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
+          <rect x="148" y="0" width="10" height="390" fill="#fff" opacity=".85"/>
+          <rect x="66" y="0" width="6" height="390" fill="#F0EEDF" opacity=".7"/>
+          <rect x="258" y="0" width="6" height="390" fill="#F0EEDF" opacity=".7"/>
+          <!-- park -->
+          <ellipse cx="316" cy="158" rx="38" ry="26" fill="#C8DFB0" opacity=".75"/>
+          <!-- ROUTE LINE (DoorDash Dasher style - solid, colored) -->
+          <path d="M88 318 L88 188 Q88 184 92 184 L282 184 Q286 184 286 96" stroke="#16A34A" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+          <!-- destination marker -->
+          <circle cx="286" cy="90" r="12" fill="#DC2626" stroke="#fff" stroke-width="2.5"/>
+          <!-- driver marker -->
+          <circle cx="88" cy="318" r="14" fill="#FFD100" stroke="#fff" stroke-width="3"/>
+          <text x="88" y="323" text-anchor="middle" font-size="12">🚖</text>
+        </svg>
+
+        <!-- Earnings on map (DoorDash pattern) -->
+        <div class="map-earn">
+          <div class="me-v">+442 ₽</div>
+          <div class="me-l">этот заказ</div>
+        </div>
+
+        <!-- ETA -->
+        <div class="eta-box">
+          <div class="eta-l">До конца</div>
+          <div class="eta-v">38 мин</div>
+        </div>
+
+        <!-- Zoom -->
+        <div class="zoom-c">
+          <div class="zb">+</div>
+          <div class="zb">−</div>
+        </div>
+
+        <!-- Destination label -->
+        <div style="position:absolute;top:56px;right:22px;background:var(--r);color:#fff;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.2)">Пулково ✈️</div>
+
+        <!-- gradient -->
+        <div style="position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(0deg,var(--s),transparent)"></div>
+      </div>
+
+      <!-- BOTTOM SHEET (scrollable) -->
+      <div style="flex:1;overflow-y:auto;padding:0 20px;background:var(--s)" class="scroll" style="padding:0 20px">
+        <div class="dh" style="margin-top:12px"></div>
+
+        <!-- Progress (sweetgreen style — thin bar) -->
+        <div class="prog">
+          <div class="prog-track">
+            <div class="prog-fill" style="width:60%"></div>
+          </div>
+          <div class="prog-steps">
+            <div class="ps done">Принят</div>
+            <div class="ps done">Забрал</div>
+            <div class="ps cur">В пути</div>
+            <div class="ps">Сдача</div>
+            <div class="ps">Готово</div>
+          </div>
+        </div>
+
+        <div class="sep mt14"></div>
+
+        <!-- Destination row (DoorDash Dasher style) -->
+        <div class="dest-row">
+          <div class="dest-ic">✈️</div>
+          <div style="flex:1">
+            <div class="dest-name">Аэропорт Пулково</div>
+            <div class="dest-addr">Пулковское ш., 41А · Терминал 1</div>
+          </div>
+          <div style="background:var(--bs);color:var(--b);border-radius:10px;padding:6px 11px;font-size:12px;font-weight:700">Маршрут</div>
+        </div>
+
+        <div class="sep"></div>
+
+        <!-- Client row (Grab Driver style) -->
+        <div class="client-row">
+          <div class="av">МС</div>
+          <div style="flex:1">
+            <div class="av-name">Михаил С.</div>
+            <div class="av-rat">★ 4.9 · Пассажир</div>
+          </div>
+          <div class="contact-btns">
+            <div class="cbt">📞</div>
+            <div class="cbt">💬</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <!-- Quick actions (Grab Driver pattern) -->
+        <div class="qa-row">
+          <div class="qa">
+            <div class="qa-ic">🛡️</div>
+            <div class="qa-lbl">Безопас-<br>ность</div>
+          </div>
+          <div class="qa">
+            <div class="qa-ic">⏸️</div>
+            <div class="qa-lbl">Пауза<br>после</div>
+          </div>
+          <div class="qa">
+            <div class="qa-ic">📋</div>
+            <div class="qa-lbl">Детали<br>заказа</div>
+          </div>
+          <div class="qa">
+            <div class="qa-ic">⋯</div>
+            <div class="qa-lbl">Ещё</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <!-- CTA -->
+        <div style="padding:16px 0 8px">
+          <div class="btn-y">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#1C1B18"/></svg>
             Я на месте
           </div>
-
-          <div class="btn-problem">
-            ⚠️ Проблема с заказом
-          </div>
-
+          <div class="btn-ghost mt8">⚠️ Проблема с заказом</div>
         </div>
+
       </div>
+    </div><!-- /pc -->
 
-      <!-- Bottom Nav -->
-      <div class="bottom-nav">
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div class="nav-label">Главная</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </div>
-          <div class="nav-label">ЭПЛ</div>
-        </div>
-        <div class="nav-item active">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="nav-label">Заказы</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg>
-          </div>
-          <div class="nav-label">Штрафы</div>
-        </div>
-        <div class="nav-item">
-          <div class="nav-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="nav-label">Профиль</div>
-        </div>
-      </div>
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 12l2 2 4-4" stroke="#1C1B18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
     </div>
   </div>
+</div><!-- /pw3 -->
 
-</div><!-- /phones -->
-
+</div><!-- /row -->
 </body>
 </html>
