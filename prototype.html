@@ -183,7 +183,7 @@ body{
 .go-sub{font-size:13px;color:rgba(255,255,255,.4)}
 
 /* Incoming order */
-.incoming-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0}
+.incoming-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0;display:flex;flex-direction:column}
 .tabs{display:flex;border-bottom:1px solid var(--div);padding:0 20px}
 .tab{flex:1;padding:11px 0;text-align:center;font-size:13px;font-weight:500;color:var(--m);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab.active{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
@@ -347,10 +347,10 @@ body{
 .sms-widget{border:1.5px solid var(--y);border-radius:12px;padding:13px 14px;background:var(--ys)}
 .sms-widget-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
 .sms-widget-sub{font-size:11px;color:var(--m);margin-bottom:10px}
-.sms-input-row{display:flex;gap:8px}
-.sms-input{flex:1;border:1.5px solid var(--div);border-radius:9px;padding:10px 0;font-size:22px;font-weight:700;letter-spacing:.25em;text-align:center;font-family:inherit;color:var(--ink);background:#fff;outline:none}
+.sms-input-row{display:flex;flex-direction:column;gap:8px}
+.sms-input{width:100%;border:1.5px solid var(--div);border-radius:9px;padding:12px 0;font-size:24px;font-weight:700;letter-spacing:.3em;text-align:center;font-family:inherit;color:var(--ink);background:#fff;outline:none;box-sizing:border-box}
 .sms-input:focus{border-color:var(--y)}
-.sms-confirm-btn{padding:10px 16px;background:var(--y);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);white-space:nowrap}
+.sms-confirm-btn{width:100%;padding:13px;background:var(--y);border:none;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;color:var(--ink)}
 
 /* Activity score badge on map */
 .activity-badge{position:absolute;top:56px;right:14px;background:rgba(22,21,18,.82);backdrop-filter:blur(10px);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;gap:1px}
@@ -532,107 +532,111 @@ body{
     <div style="position:absolute;inset:0;background:rgba(0,0,0,.12)"></div>
   </div>
 
-  <!-- Incoming order sheet -->
-  <div class="incoming-sheet" style="height:500px">
+  <!-- Incoming order sheet: flex column, scrollable content, sticky buttons -->
+  <div class="incoming-sheet" style="height:540px">
     <div class="dh"></div>
 
-    <!-- Tabs immediately, no separate timer block -->
-    <div class="tabs" style="margin-top:6px">
+    <!-- Tabs — always visible -->
+    <div class="tabs" style="margin-top:6px;flex-shrink:0">
       <div class="tab active" id="tab-taxi" onclick="setTab('taxi')">🚗 Такси · 4 точки</div>
       <div class="tab" id="tab-delivery" onclick="setTab('delivery')">📦 Доставка · Лента</div>
     </div>
 
-    <!-- TAB: Taxi -->
-    <div id="incoming-taxi">
-      <div style="padding:14px 20px 0">
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
-          <div class="order-amount">480 ₽</div>
-          <div class="order-type-badge badge-taxi">Такси · 4 остановки</div>
+    <!-- Scrollable content area -->
+    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+      <div id="incoming-taxi">
+        <div style="padding:14px 20px 0">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+            <div class="order-amount">480 ₽</div>
+            <div class="order-type-badge badge-taxi">Такси · 4 остановки</div>
+          </div>
+          <div class="order-meta-row">
+            <div class="order-meta">📍 2.1 км до посадки</div>
+            <div class="order-meta">⏱ ~28 мин</div>
+            <div class="order-meta">📏 12.4 км</div>
+            <div class="order-meta" style="color:var(--g);font-weight:600">⭐ 4.8 пасс.</div>
+          </div>
         </div>
-        <div class="order-meta-row">
-          <div class="order-meta">📍 2.1 км до посадки</div>
-          <div class="order-meta">⏱ ~28 мин</div>
-          <div class="order-meta">📏 12.4 км</div>
-          <div class="order-meta" style="color:var(--g);font-weight:600">⭐ 4.8 пасс.</div>
+        <div class="stops-list" style="margin-top:12px">
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot active"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Посадка · 2.1 км</div><div class="stop-addr">ул. Ленина, 42</div><div class="stop-meta">У парадной</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Остановка 1</div><div class="stop-addr">ТЦ Галерея, вход с Лиговского</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Остановка 2</div><div class="stop-addr">пр. Мира, 18 · МФЦ</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot filled"></div></div>
+            <div class="stop-content"><div class="stop-tag">Финальная точка</div><div class="stop-addr">ул. Садовая, 7</div></div>
+          </div>
         </div>
+        <div style="height:8px"></div>
       </div>
-      <div class="stops-list" style="margin-top:12px">
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot active"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Посадка · 2.1 км</div><div class="stop-addr">ул. Ленина, 42</div><div class="stop-meta">У парадной</div></div>
+
+      <div id="incoming-delivery" style="display:none">
+        <div style="padding:14px 20px 0">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+            <div class="order-amount">890 ₽</div>
+            <div class="surge-badge">⚡ Высокая цена</div>
+            <div class="order-type-badge badge-delivery">Доставка · 3 клиента</div>
+          </div>
+          <div class="order-meta-row">
+            <div class="order-meta">🏪 1.4 км до Ленты</div>
+            <div class="order-meta">⏱ ~45 мин</div>
+            <div class="order-meta">📏 18.2 км</div>
+          </div>
         </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Остановка 1</div><div class="stop-addr">ТЦ Галерея, вход с Лиговского</div></div>
+        <div class="stops-list" style="margin-top:12px">
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot store"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Забор товара · 1.4 км</div><div class="stop-addr">Лента, пр. Большевиков, 32А</div><div class="stop-meta">Вход для курьеров, стойка №4</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Клиент 1 · ~4.8 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 5 товаров</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
+            <div class="stop-content"><div class="stop-tag">Клиент 2 · ~7.2 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 3 товара</div></div>
+          </div>
+          <div class="stop-row">
+            <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div></div>
+            <div class="stop-content"><div class="stop-tag">Клиент 3 · ~10.1 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 7 товаров</div></div>
+          </div>
         </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Остановка 2</div><div class="stop-addr">пр. Мира, 18 · МФЦ</div></div>
+        <div style="margin:8px 20px 0;padding:8px 11px;background:var(--bs);border-radius:8px;font-size:11px;color:var(--b);font-weight:500">
+          💡 Адреса клиентов откроются после получения заказов в Ленте
         </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot filled"></div></div>
-          <div class="stop-content"><div class="stop-tag">Финальная точка</div><div class="stop-addr">ул. Садовая, 7</div></div>
-        </div>
+        <div style="height:8px"></div>
       </div>
     </div>
 
-    <!-- TAB: Delivery (hidden by default) -->
-    <div id="incoming-delivery" style="display:none">
-      <div style="padding:14px 20px 0">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-          <div class="order-amount">890 ₽</div>
-          <div class="surge-badge">⚡ Высокая цена</div>
-          <div class="order-type-badge badge-delivery">Доставка · 3 клиента</div>
-        </div>
-        <div class="order-meta-row">
-          <div class="order-meta">🏪 1.4 км до Ленты</div>
-          <div class="order-meta">⏱ ~45 мин</div>
-          <div class="order-meta">📏 18.2 км</div>
-        </div>
-      </div>
-      <div class="stops-list" style="margin-top:12px">
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot store"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Забор товара · 1.4 км</div><div class="stop-addr">Лента, пр. Большевиков, 32А</div><div class="stop-meta">Вход для курьеров, стойка №4</div></div>
-        </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 1 · ~4.8 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 5 товаров</div></div>
-        </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 2 · ~7.2 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 3 товара</div></div>
-        </div>
-        <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 3 · ~10.1 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 7 товаров</div></div>
-        </div>
-      </div>
-      <div style="margin:8px 20px 0;padding:8px 11px;background:var(--bs);border-radius:8px;font-size:11px;color:var(--b);font-weight:500">
-        💡 Адреса клиентов откроются после получения заказов в Ленте
+    <!-- Accept / Skip — always visible at bottom, never clipped -->
+    <div style="padding:10px 16px 14px;background:#fff;border-top:1px solid var(--div);flex-shrink:0">
+      <div style="display:flex;gap:8px">
+        <button class="btn-accept" onclick="acceptOrder()">
+          <span>Принять заказ</span>
+          <div class="btn-timer">
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="14" stroke="rgba(28,27,24,.15)" stroke-width="2.5" fill="none"/>
+              <circle id="timer-circle" cx="18" cy="18" r="14" stroke="rgba(28,27,24,.6)" stroke-width="2.5" fill="none"
+                stroke-dasharray="88" stroke-dashoffset="0"
+                style="transform:rotate(-90deg);transform-origin:50% 50%"/>
+            </svg>
+            <div class="timer-num" id="timer-num">15</div>
+          </div>
+        </button>
+        <button class="btn-ghost" style="flex-direction:column;gap:1px;flex-shrink:0;min-width:88px" onclick="goto('s-online')">
+          <span>Пропустить</span>
+          <span style="font-size:10px;color:var(--r);font-weight:600">−4 акт.</span>
+        </button>
       </div>
     </div>
-
-    <!-- Accept with embedded timer ring + Skip -->
-    <div class="btn-row" style="margin-top:14px">
-      <button class="btn-accept" onclick="acceptOrder()">
-        <span>Принять заказ</span>
-        <div class="btn-timer">
-          <svg width="36" height="36" viewBox="0 0 36 36">
-            <circle cx="18" cy="18" r="14" stroke="rgba(28,27,24,.15)" stroke-width="2.5" fill="none"/>
-            <circle id="timer-circle" cx="18" cy="18" r="14" stroke="rgba(28,27,24,.6)" stroke-width="2.5" fill="none"
-              stroke-dasharray="88" stroke-dashoffset="0"
-              style="transform:rotate(-90deg);transform-origin:50% 50%"/>
-          </svg>
-          <div class="timer-num" id="timer-num">15</div>
-        </div>
-      </button>
-      <button class="btn-ghost" style="flex-direction:column;gap:1px" onclick="goto('s-online')">
-        <span>Пропустить</span>
-        <span style="font-size:10px;color:var(--r);font-weight:600">−4 акт.</span>
-      </button>
-    </div>
-    <div style="height:12px"></div>
   </div>
 </div><!-- /s-incoming -->
 
