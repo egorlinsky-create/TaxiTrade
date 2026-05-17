@@ -337,8 +337,33 @@ body{
 .proto-back{padding:8px 16px;background:rgba(255,255,255,.08);border:none;border-radius:20px;font-size:12px;font-weight:500;color:rgba(255,255,255,.6);cursor:pointer;font-family:'Inter',system-ui,sans-serif}
 .proto-back:hover{background:rgba(255,255,255,.13)}
 .proto-state-name{font-size:12px;color:#5A5650}
+/* Surge / high demand badge */
+.surge-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#f3e8ff;border-radius:20px;font-size:12px;font-weight:700;color:#7c3aed}
+
+/* Hidden address (before pickup) */
+.addr-hidden{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--f);background:var(--bg);border-radius:6px;padding:3px 8px}
+
+/* SMS code widget */
+.sms-widget{border:1.5px solid var(--y);border-radius:12px;padding:13px 14px;background:var(--ys)}
+.sms-widget-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.sms-widget-sub{font-size:11px;color:var(--m);margin-bottom:10px}
+.sms-input-row{display:flex;gap:8px}
+.sms-input{flex:1;border:1.5px solid var(--div);border-radius:9px;padding:10px 0;font-size:22px;font-weight:700;letter-spacing:.25em;text-align:center;font-family:inherit;color:var(--ink);background:#fff;outline:none}
+.sms-input:focus{border-color:var(--y)}
+.sms-confirm-btn{padding:10px 16px;background:var(--y);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);white-space:nowrap}
+
+/* Activity score badge on map */
+.activity-badge{position:absolute;top:56px;right:14px;background:rgba(22,21,18,.82);backdrop-filter:blur(10px);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.ab-label{font-size:9px;font-weight:500;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.05em}
+.ab-val{font-size:15px;font-weight:700;color:#fff;line-height:1}
+.ab-sub{font-size:9px;color:rgba(255,255,255,.4)}
+
+/* Photo confirm button */
+.photo-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px;border:1.5px dashed var(--div);border-radius:10px;background:transparent;font-size:13px;font-weight:500;color:var(--m);cursor:pointer;width:100%}
+.photo-btn:active{background:var(--bg)}
+.photo-taken{border-color:var(--g);color:var(--g);background:var(--gs)}
+
 </style>
-</head>
 <body>
 
 <div class="proto-hdr">
@@ -462,7 +487,8 @@ body{
     <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#fff,transparent)"></div>
     <div class="map-pill-dark" style="top:56px;left:14px"><div class="mpd-lbl">Сегодня</div><div class="mpd-val">0 ₽</div><div class="mpd-action">Начало смены</div></div>
     <div class="map-pill-dark" style="top:56px;left:130px"><div class="mpd-lbl">Кошелёк</div><div class="mpd-val">2 840 ₽</div><div class="mpd-sub">Пополнить СБП</div></div>
-    <div class="map-pill-light" style="top:56px;right:14px"><span style="font-size:14px">⭐</span><div><div style="font-size:14px;font-weight:700;color:var(--ink)">4.92</div><div style="font-size:10px;font-weight:500;color:var(--m)">Рейтинг</div></div></div>
+    <div class="activity-badge"><div class="ab-label">Активность</div><div class="ab-val">87</div><div class="ab-sub">из 100</div></div>
+    <div class="map-pill-light" style="top:56px;right:68px"><span style="font-size:14px">⭐</span><div><div style="font-size:14px;font-weight:700;color:var(--ink)">4.92</div><div style="font-size:10px;font-weight:500;color:var(--m)">Рейтинг</div></div></div>
     <div style="position:absolute;top:102px;left:68px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12)">👤 520₽</div>
     <div style="position:absolute;top:90px;left:202px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12)">📦 340₽</div>
     <div style="position:absolute;top:196px;left:260px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12)">🍕 290₽</div>
@@ -474,7 +500,7 @@ body{
     <div class="online-status-row"><div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div class="sp-dot on" style="width:8px;height:8px"></div><div class="online-title">На линии</div></div><div class="online-sub">С 09:43 · 0 мин · смена начата</div></div><div class="online-end-btn" onclick="goto('s-offline')">Завершить</div></div>
     <div class="shift-stats"><div class="ss-item"><div class="ss-lbl">Заработок</div><div class="ss-val">0 ₽</div><div class="ss-sub">заказов нет</div></div><div class="ss-item"><div class="ss-lbl">До окупаемости</div><div class="ss-val">4 000 ₽</div><div class="ss-sub">аренды</div></div><div class="ss-item"><div class="ss-lbl">Смена</div><div class="ss-val">0:00</div><div class="ss-sub">из 12 ч</div></div></div>
     <div class="compact-row searching-row" style="margin-top:12px;background:var(--gs);border-color:var(--g)"><div style="font-size:16px">📡</div><div style="flex:1"><div class="cr-name" style="color:var(--g)">Ищу заказы в районе…</div><div class="cr-meta">Кировский р-н · Спрос средний</div></div><button onclick="goto('s-incoming')" style="padding:7px 12px;background:var(--y);border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink)">Входящий →</button></div>
-    <div class="del-row"><div><div class="del-title">Принимать доставку</div><div class="del-sub">Посылки, еда, продукты</div></div><div class="pill on"><div class="pill-dot"></div></div></div>
+    <div class="del-row"><div><div class="del-title">Принимать доставку</div><div class="del-sub">Посылки, еда, продукты</div></div><div style="display:flex;align-items:center;gap:8px"><button id="busy-btn" onclick="toggleBusy(this)" style="padding:5px 11px;border:1px solid var(--div);border-radius:8px;background:transparent;font-size:12px;font-weight:600;color:var(--m);cursor:pointer">Занят</button><div class="pill on"><div class="pill-dot"></div></div></div></div>
     <div class="sec-div" style="margin-top:10px"></div>
     <div class="compact-row"><div class="cr-icon" style="background:var(--gs)">📋</div><div style="flex:1"><div class="cr-name">ЭПЛ № 2024-00184753</div><div class="cr-meta">Такси-парк «ТрейдТакси» · до 23:59</div></div><div class="cr-badge" style="background:var(--gs);color:var(--g)">Активен</div></div>
     <div class="compact-row"><div class="cr-icon" style="background:var(--ys)">🚖</div><div style="flex:1"><div class="cr-name">Kia Rio 2021 · Комфорт</div><div class="cr-meta">А 847 КМ 77 · Автопарк №3</div></div><div class="cr-link">Детали</div></div>
@@ -553,8 +579,9 @@ body{
     <!-- TAB: Delivery (hidden by default) -->
     <div id="incoming-delivery" style="display:none">
       <div style="padding:14px 20px 0">
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
           <div class="order-amount">890 ₽</div>
+          <div class="surge-badge">⚡ Высокая цена</div>
           <div class="order-type-badge badge-delivery">Доставка · 3 клиента</div>
         </div>
         <div class="order-meta-row">
@@ -569,17 +596,20 @@ body{
           <div class="stop-content"><div class="stop-tag">Забор товара · 1.4 км</div><div class="stop-addr">Лента, пр. Большевиков, 32А</div><div class="stop-meta">Вход для курьеров, стойка №4</div></div>
         </div>
         <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 1 · 4.8 км</div><div class="stop-addr">ул. Дыбенко, 14 · кв. 82</div><div class="stop-meta">📦 Заказ #LN-2847 · 5 товаров</div></div>
+          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
+          <div class="stop-content"><div class="stop-tag">Клиент 1 · ~4.8 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 5 товаров</div></div>
         </div>
         <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot outline"></div><div class="stop-connector"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 2 · 7.2 км</div><div class="stop-addr">пр. Большевиков, 55 · кв. 14</div><div class="stop-meta">📦 Заказ #LN-2848 · 3 товара</div></div>
+          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div><div class="stop-connector"></div></div>
+          <div class="stop-content"><div class="stop-tag">Клиент 2 · ~7.2 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 3 товара</div></div>
         </div>
         <div class="stop-row">
-          <div class="stop-timeline"><div class="stop-dot filled"></div></div>
-          <div class="stop-content"><div class="stop-tag">Клиент 3 · 10.1 км</div><div class="stop-addr">ул. Ленина, 3 · кв. 5</div><div class="stop-meta">📦 Заказ #LN-2849 · 7 товаров</div></div>
+          <div class="stop-timeline"><div class="stop-dot outline" style="border-color:#c4b5fd"></div></div>
+          <div class="stop-content"><div class="stop-tag">Клиент 3 · ~10.1 км</div><div class="addr-hidden">🔒 Адрес откроется в Ленте</div><div class="stop-meta">📦 7 товаров</div></div>
         </div>
+      </div>
+      <div style="margin:8px 20px 0;padding:8px 11px;background:var(--bs);border-radius:8px;font-size:11px;color:var(--b);font-weight:500">
+        💡 Адреса клиентов откроются после получения заказов в Ленте
       </div>
     </div>
 
@@ -597,7 +627,10 @@ body{
           <div class="timer-num" id="timer-num">15</div>
         </div>
       </button>
-      <button class="btn-ghost" onclick="goto('s-online')">Пропустить</button>
+      <button class="btn-ghost" style="flex-direction:column;gap:1px" onclick="goto('s-online')">
+        <span>Пропустить</span>
+        <span style="font-size:10px;color:var(--r);font-weight:600">−4 акт.</span>
+      </button>
     </div>
     <div style="height:12px"></div>
   </div>
@@ -823,8 +856,27 @@ body{
       </div>
     </div>
 
-    <div style="padding:14px 20px 0"><button class="btn-y" onclick="goto('s-delivery-c1')">Я в Ленте — забрал все заказы ✓</button></div>
-    <div style="padding:8px 20px 0;font-size:12px;color:var(--f);text-align:center">Проверьте товары по чеку перед выходом</div>
+    <!-- Step 1: arrived button -->
+    <div style="padding:12px 20px 0" id="lenta-arrive-wrap">
+      <button class="btn-y" onclick="arrivedAtLenta()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#1C1B18" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#1C1B18" stroke-width="2" stroke-linecap="round"/></svg>
+        Я на месте · получаю заказы
+      </button>
+      <div style="font-size:11px;color:var(--f);text-align:center;margin-top:6px">Страховка 500 000 ₽ активируется при нажатии</div>
+    </div>
+
+    <!-- Step 2: SMS code (hidden initially) -->
+    <div style="padding:12px 20px 0;display:none" id="lenta-sms-wrap">
+      <div class="sms-widget">
+        <div class="sms-widget-title">🔐 Код подтверждения от Ленты</div>
+        <div class="sms-widget-sub">Назовите сотруднику стойки свой номер — он выдаст код</div>
+        <div class="sms-input-row">
+          <input class="sms-input" id="sms-lenta" placeholder="0000" maxlength="4" inputmode="numeric"/>
+          <button class="sms-confirm-btn" onclick="confirmLentaCode()">Подтвердить →</button>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--f);text-align:center;margin-top:8px">Проверьте товары по чеку перед выходом</div>
+    </div>
     <div style="height:16px"></div>
   </div>
 
@@ -900,7 +952,28 @@ body{
       <div class="pkg-item">🧃 Сок яблочный «Сады Придонья» × 2</div>
     </div>
 
-    <div style="padding:12px 20px 0"><button class="btn-y" onclick="goto('s-delivery-c2')">✓ Доставлено · к Клиенту 2 →</button></div>
+    <!-- Photo confirm -->
+    <div style="padding:10px 20px 0">
+      <button class="photo-btn" id="photo-btn-c1" onclick="takePhoto('photo-btn-c1')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/></svg>
+        Сфотографировать вручение
+      </button>
+    </div>
+
+    <!-- SMS code from recipient -->
+    <div style="padding:8px 20px 0" id="c1-arrive-wrap">
+      <button class="btn-y" onclick="arrivedAtClient('c1')">Я у двери · вручаю посылку</button>
+    </div>
+    <div style="padding:8px 20px 0;display:none" id="c1-sms-wrap">
+      <div class="sms-widget">
+        <div class="sms-widget-title">🔐 Код от получателя</div>
+        <div class="sms-widget-sub">Иван получит SMS — пусть назовёт код</div>
+        <div class="sms-input-row">
+          <input class="sms-input" id="sms-c1" placeholder="0000" maxlength="4" inputmode="numeric"/>
+          <button class="sms-confirm-btn" onclick="confirmClientCode('s-delivery-c2')">Вручено →</button>
+        </div>
+      </div>
+    </div>
     <div style="padding:6px 20px 0"><button class="btn-danger" onclick="goto('s-online')">⚠ Проблема с доставкой</button></div>
     <div style="height:16px"></div>
   </div>
@@ -966,7 +1039,27 @@ body{
       <div class="pkg-item">🪥 Зубная паста Colgate × 2</div>
     </div>
 
-    <div style="padding:12px 20px 0"><button class="btn-y" onclick="goto('s-rating')">✓ Доставлено · Клиент 2 · Завершить →</button></div>
+    <!-- Photo confirm -->
+    <div style="padding:10px 20px 0">
+      <button class="photo-btn" id="photo-btn-c2" onclick="takePhoto('photo-btn-c2')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/></svg>
+        Сфотографировать вручение
+      </button>
+    </div>
+
+    <div style="padding:8px 20px 0" id="c2-arrive-wrap">
+      <button class="btn-y" onclick="arrivedAtClient('c2')">Я у двери · вручаю посылку</button>
+    </div>
+    <div style="padding:8px 20px 0;display:none" id="c2-sms-wrap">
+      <div class="sms-widget">
+        <div class="sms-widget-title">🔐 Код от получателя</div>
+        <div class="sms-widget-sub">Анна получит SMS — пусть назовёт код</div>
+        <div class="sms-input-row">
+          <input class="sms-input" id="sms-c2" placeholder="0000" maxlength="4" inputmode="numeric"/>
+          <button class="sms-confirm-btn" onclick="confirmClientCode('s-rating')">Вручено → Завершить</button>
+        </div>
+      </div>
+    </div>
     <div style="height:16px"></div>
   </div>
 
@@ -1248,6 +1341,51 @@ function sendMsg() {
     area.scrollTop = area.scrollHeight;
   }, 1000);
   area.scrollTop = area.scrollHeight;
+}
+
+// Delivery: Lenta pickup flow
+function arrivedAtLenta() {
+  document.getElementById('lenta-arrive-wrap').style.display = 'none';
+  document.getElementById('lenta-sms-wrap').style.display = 'block';
+  document.getElementById('sms-lenta').focus();
+}
+function confirmLentaCode() {
+  goto('s-delivery-c1');
+  // Reset for next visit
+  setTimeout(() => {
+    document.getElementById('lenta-arrive-wrap').style.display = 'block';
+    document.getElementById('lenta-sms-wrap').style.display = 'none';
+    document.getElementById('sms-lenta').value = '';
+  }, 400);
+}
+
+// Delivery: client handover flow
+function arrivedAtClient(id) {
+  document.getElementById(id + '-arrive-wrap').style.display = 'none';
+  document.getElementById(id + '-sms-wrap').style.display = 'block';
+  const inp = document.getElementById('sms-' + id);
+  if (inp) inp.focus();
+}
+function confirmClientCode(nextScreen) {
+  goto(nextScreen);
+}
+
+// Photo confirmation
+function takePhoto(btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.classList.add('photo-taken');
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Фото сделано ✓';
+  }
+}
+
+// Busy mode toggle
+function toggleBusy(btn) {
+  const isBusy = btn.classList.toggle('busy-active');
+  btn.style.background = isBusy ? 'var(--os)' : 'transparent';
+  btn.style.color = isBusy ? 'var(--o)' : 'var(--m)';
+  btn.style.borderColor = isBusy ? 'var(--o)' : 'var(--div)';
+  btn.textContent = isBusy ? '● Занят' : 'Занят';
 }
 
 // Star rating interaction
