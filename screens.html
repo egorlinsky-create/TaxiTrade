@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1240,initial-scale=1"/>
+<title>TradeTaxi · Главный экран</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+:root{
+  --y:#FFD100; --yd:#C9A800; --ys:#FFFBE8;
+  --ink:#1C1B18; --ink2:#3A3830;
+  --m:#6B665A; --f:#A8A293;
+  --div:#ECEAE3; --bg:#F5F4EE; --s:#fff;
+  --g:#16A34A; --gs:#EDFBF2; --gd:#14532D;
+  --r:#DC2626; --rs:#FEF2F2;
+  --b:#2563EB; --bs:#EFF6FF;
+  --o:#EA580C; --os:#FFF7ED;
+  --pu:#7C3AED;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{
+  font-family:'Inter',-apple-system,system-ui,sans-serif;
+  background:#141210;
+  padding:40px 28px 60px;
+}
+
+/* ── PAGE HEADER ── */
+.ph{text-align:center;margin-bottom:10px}
+.ph-ey{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#4A4740;margin-bottom:8px}
+.ph h1{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:4px}
+.ph p{font-size:13px;font-weight:400;color:#4A4740}
+
+/* ── STATE LABEL ── */
+.state-label{
+  font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:#4A4740;text-align:center;margin-bottom:12px;margin-top:28px;
+}
+
+/* ── PHONES ROW ── */
+.phones{display:flex;gap:28px;justify-content:center;align-items:flex-start}
+.pw{display:flex;flex-direction:column;align-items:center}
+
+/* ── PHONE SHELL ── */
+.phone{
+  width:375px;
+  background:var(--s);
+  border-radius:50px;
+  box-shadow:0 0 0 10px #252320,0 0 0 12px #323028,0 50px 100px rgba(0,0,0,.7);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+.notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:126px;height:37px;background:#1C1B18;
+  border-radius:0 0 22px 22px;z-index:200;
+}
+
+/* ── STATUS BAR ── */
+.sb{
+  height:47px;padding:14px 22px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-shrink:0;position:relative;z-index:10;
+}
+.sb-t{font-size:15px;font-weight:600}
+.sb-icons{display:flex;gap:5px;align-items:center}
+
+/* ── BOTTOM NAV ── */
+.bnav{
+  height:82px;background:var(--s);border-top:1px solid var(--div);
+  display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;
+  position:relative;z-index:5;
+}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ni-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.ni.on .ni-icon{background:var(--y)}
+.ni-lbl{font-size:10px;font-weight:500;color:var(--f)}
+.ni.on .ni-lbl{color:var(--ink);font-weight:600}
+
+/* ── MAP SVG ── */
+.map-area{position:relative;flex-shrink:0;overflow:hidden}
+
+/* ── BOTTOM SHEET ── */
+.sheet{
+  background:var(--s);
+  border-radius:24px 24px 0 0;
+  overflow-y:auto;
+}
+.sheet::-webkit-scrollbar{display:none}
+.dh{width:36px;height:4px;background:var(--div);border-radius:2px;margin:12px auto 0}
+
+/* ── SECTION HEADER ── */
+.sec{padding:16px 20px 0}
+.sec-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--f);margin-bottom:10px}
+.sec-divider{height:1px;background:var(--div);margin:16px 20px 0}
+
+/* ── STATUS PILL ── */
+.status-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px 5px 8px;border-radius:20px;
+  font-size:12px;font-weight:600;
+}
+.sp-offline{background:#F5F4EE;color:var(--m)}
+.sp-online{background:var(--gs);color:var(--g)}
+.sp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sp-dot-off{background:#C5C0B4}
+.sp-dot-on{background:var(--g);animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ── HERO STATUS BLOCK (offline, top of sheet) ── */
+.hero-block{
+  padding:16px 20px 20px;
+}
+.hero-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.hero-status-group{display:flex;flex-direction:column;gap:5px}
+.hero-status-sub{font-size:12px;font-weight:400;color:var(--m)}
+.hero-delivery{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.hero-del-label{font-size:10px;font-weight:500;color:var(--f);text-transform:uppercase;letter-spacing:.07em}
+.hero-del-row{display:flex;align-items:center;gap:7px}
+.hero-del-val{font-size:12px;font-weight:600;color:var(--g)}
+
+/* ── BUTTONS ── */
+.btn-y{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:16px;background:var(--y);border:none;
+  border-radius:16px;font-size:16px;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+}
+.btn-ink{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:14px;background:var(--ink);border:none;
+  border-radius:14px;font-size:14px;font-weight:600;color:#fff;
+}
+.btn-ghost{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  flex:1;padding:12px;background:var(--bg);border:none;
+  border-radius:12px;font-size:13px;font-weight:500;color:var(--m);
+}
+.btn-row{display:flex;gap:8px;padding:0 20px 16px}
+.btn-caption{text-align:center;font-size:12px;font-weight:400;color:var(--f);margin-top:8px}
+
+/* ── EPL CARD ── */
+.epl-card{
+  margin:0 20px;
+  border:1px solid var(--div);border-radius:16px;padding:14px 16px;
+  background:var(--s);
+}
+.epl-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.epl-num{font-size:11px;font-weight:500;color:var(--f);letter-spacing:.03em}
+.epl-status{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600}
+.epl-status.active{color:var(--g)}
+.epl-status.expired{color:var(--r)}
+.epl-status.warn{color:var(--o)}
+.epl-status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.epl-title{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:2px}
+.epl-meta{font-size:12px;font-weight:400;color:var(--m);margin-bottom:10px}
+.epl-row{display:flex;gap:6px;align-items:center}
+.epl-chip{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 10px;
+  background:var(--bg);border-radius:8px;font-size:11px;font-weight:500;color:var(--m);
+}
+.epl-action{
+  margin-left:auto;padding:6px 13px;background:var(--bg);
+  border-radius:8px;font-size:12px;font-weight:600;color:var(--ink);
+  border:1px solid var(--div);
+}
+
+/* ── VEHICLE CARD ── */
+.vehicle-card{
+  margin:0 20px;
+  border:1px solid var(--div);border-radius:16px;overflow:hidden;
+  background:var(--s);
+}
+.vc-header{
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--div);
+}
+.vc-icon{
+  width:44px;height:44px;background:var(--bg);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.vc-name{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.2}
+.vc-plate{
+  display:inline-flex;align-items:center;gap:0;margin-top:4px;
+  border:1.5px solid var(--ink);border-radius:4px;overflow:hidden;
+}
+.vc-plate-flag{background:var(--b);color:#fff;font-size:9px;font-weight:700;padding:2px 4px;line-height:1}
+.vc-plate-num{background:#fff;color:var(--ink);font-size:11px;font-weight:700;padding:2px 7px;letter-spacing:.07em;line-height:1}
+.vc-badge{
+  margin-left:auto;padding:5px 11px;border-radius:20px;
+  font-size:11px;font-weight:600;
+}
+.vc-badge.comfort{background:var(--ys);color:var(--yd)}
+.vc-badge.econom{background:var(--bg);color:var(--m);border:1px solid var(--div)}
+
+.vc-stats{display:flex;padding:0}
+.vc-stat{
+  flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:2px;
+  border-right:1px solid var(--div);
+}
+.vc-stat:last-child{border-right:none}
+.vc-stat-lbl{font-size:10px;font-weight:500;color:var(--f);text-transform:uppercase;letter-spacing:.05em}
+.vc-stat-v{font-size:13px;font-weight:600;color:var(--ink)}
+.vc-stat-v.ok{color:var(--g)}
+.vc-stat-v.warn{color:var(--o)}
+.vc-stat-v.bad{color:var(--r)}
+.vc-stat-sub{font-size:10px;font-weight:400;color:var(--f)}
+
+.vc-footer{
+  padding:11px 16px;border-top:1px solid var(--div);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.vc-footer-label{font-size:12px;font-weight:400;color:var(--m)}
+.vc-change{font-size:12px;font-weight:600;color:var(--b)}
+
+/* ── CHECKLIST ── */
+.cl-list{display:flex;flex-direction:column;gap:6px;padding:0 20px}
+.cl-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-radius:12px;
+  background:transparent;border:1px solid var(--div);
+}
+.cl-ic{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.cl-ic.ok{background:var(--gs)}
+.cl-ic.warn{background:var(--os)}
+.cl-ic.bad{background:var(--rs)}
+.cl-name{font-size:13px;font-weight:500;color:var(--ink);flex:1}
+.cl-sub{font-size:11px;font-weight:400;color:var(--m);margin-top:1px}
+.cl-badge{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:7px;white-space:nowrap}
+.cl-badge.ok{background:var(--gs);color:var(--g)}
+.cl-badge.warn{background:var(--os);color:var(--o)}
+.cl-badge.bad{background:var(--rs);color:var(--r)}
+
+/* ── ONLINE STATE: MAP OVERLAYS ── */
+.map-pill-dark{
+  position:absolute;background:rgba(22,21,18,.82);backdrop-filter:blur(10px);
+  border-radius:14px;padding:10px 14px;
+}
+.mpd-label{font-size:10px;font-weight:500;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.mpd-val{font-size:19px;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1}
+.mpd-sub{font-size:11px;font-weight:400;color:rgba(255,255,255,.45);margin-top:2px}
+.mpd-action{font-size:11px;font-weight:600;color:var(--y);margin-top:3px}
+
+.map-pill-light{
+  position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-radius:14px;padding:9px 12px;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+/* go offline button */
+.go-offline-btn{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:10px;
+  background:var(--s);border-radius:100px;
+  padding:10px 20px 10px 10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.16);
+  white-space:nowrap;
+}
+.go-offline-ic{
+  width:38px;height:38px;background:#22C55E;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.go-offline-text{font-size:14px;font-weight:700;color:var(--ink)}
+.go-offline-sub{font-size:11px;font-weight:400;color:var(--m)}
+
+/* ── ONLINE BOTTOM SHEET ── */
+.status-bar-inline{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 0;
+}
+.sbi-left{display:flex;flex-direction:column;gap:2px}
+.sbi-status{display:flex;align-items:center;gap:6px}
+.sbi-title{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.015em}
+.sbi-sub{font-size:12px;font-weight:400;color:var(--m)}
+.sbi-action{
+  padding:9px 15px;background:var(--rs);border-radius:10px;
+  font-size:13px;font-weight:600;color:var(--r);
+}
+
+/* ── EPL ROW COMPACT ── */
+.epl-row-compact{
+  margin:12px 20px 0;
+  border:1px solid var(--div);border-radius:12px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.epl-rc-icon{
+  width:32px;height:32px;background:var(--gs);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+}
+.epl-rc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.epl-rc-meta{font-size:11px;font-weight:400;color:var(--m);margin-top:1px}
+.epl-rc-badge{
+  margin-left:auto;padding:4px 10px;border-radius:8px;
+  font-size:11px;font-weight:600;white-space:nowrap;
+}
+
+/* ── VEHICLE ROW COMPACT ── */
+.vc-row-compact{
+  margin:8px 20px 0;
+  border:1px solid var(--div);border-radius:12px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.vc-rc-icon{
+  width:32px;height:32px;background:var(--ys);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;
+}
+.vc-rc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.vc-rc-plate{font-size:11px;font-weight:400;color:var(--m);margin-top:1px;letter-spacing:.03em}
+
+/* ── QUICK ACTIONS ── */
+.qa-row{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  padding:14px 20px 0;
+}
+.qa{display:flex;flex-direction:column;align-items:center;gap:6px}
+.qa-ic{
+  width:42px;height:42px;background:var(--bg);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+}
+.qa-lbl{font-size:9.5px;font-weight:500;color:var(--m);text-align:center;line-height:1.3}
+
+/* ── FINDING JOBS ── */
+.finding-jobs{
+  margin:12px 20px 0;
+  border:1px solid var(--div);border-radius:12px;
+  padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.fj-left{display:flex;align-items:center;gap:8px}
+.fj-icon{font-size:15px}
+.fj-text{font-size:13px;font-weight:500;color:var(--ink)}
+.fj-sub{font-size:11px;font-weight:400;color:var(--m);margin-top:1px}
+.fj-btn{
+  padding:7px 12px;border-radius:9px;font-size:12px;font-weight:600;
+}
+.fj-btn.nav{background:var(--bs);color:var(--b)}
+
+/* ── DELIVERY TOGGLE ── */
+.del-toggle{
+  margin:8px 20px 0;
+  border:1px solid var(--div);border-radius:12px;
+  padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.dt-left{display:flex;flex-direction:column;gap:2px}
+.dt-title{font-size:13px;font-weight:600;color:var(--ink)}
+.dt-sub{font-size:11px;font-weight:400;color:var(--m)}
+.pill{width:42px;height:25px;border-radius:13px;position:relative;flex-shrink:0}
+.pill.on{background:var(--y)}
+.pill.off{background:#D0CCBF}
+.pill-dot{
+  width:21px;height:21px;background:#fff;border-radius:50%;
+  position:absolute;top:2px;box-shadow:0 1px 4px rgba(0,0,0,.18);
+}
+.pill.on .pill-dot{left:19px}
+.pill.off .pill-dot{left:2px}
+
+/* ── SHIFT STATS ── */
+.shift-stats{
+  display:flex;padding:14px 20px 0;
+}
+.ss-item{
+  flex:1;display:flex;flex-direction:column;gap:2px;
+  padding-right:14px;border-right:1px solid var(--div);margin-right:14px;
+}
+.ss-item:last-child{border-right:none;padding-right:0;margin-right:0}
+.ss-lbl{font-size:10px;font-weight:500;color:var(--f);text-transform:uppercase;letter-spacing:.05em}
+.ss-val{font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.2}
+.ss-sub{font-size:11px;font-weight:400;color:var(--m);margin-top:1px}
+
+</style>
+</head>
+<body>
+
+<div class="ph">
+  <div class="ph-ey">TradeTaxi · Driver App · Главный экран</div>
+  <h1>Главный экран — три состояния</h1>
+  <p>Офлайн → На линии → На линии + ЭПЛ истекает</p>
+</div>
+
+<div class="phones">
+
+<!-- ════════════════════════════════════════
+     PHONE 1 · OFFLINE STATE (default)
+     ════════════════════════════════════════ -->
+<div class="pw">
+  <div class="state-label">Состояние 1 · Офлайн · начало смены</div>
+
+  <div class="phone" style="height:870px">
+    <div class="notch"></div>
+
+    <!-- STATUS BAR -->
+    <div class="sb">
+      <span class="sb-t" style="color:var(--ink)">9:41</span>
+      <div class="sb-icons" style="color:var(--ink)">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="currentColor"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <!-- MAP (dimmed, offline) -->
+    <div class="map-area" style="height:220px">
+      <svg width="375" height="220" viewBox="0 0 375 220" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="220" fill="#E8E6DC"/>
+        <rect x="4" y="0" width="56" height="42" rx="3" fill="#D8D6C8" opacity=".85"/>
+        <rect x="70" y="4" width="76" height="36" rx="3" fill="#D0CEBC" opacity=".85"/>
+        <rect x="158" y="0" width="84" height="46" rx="3" fill="#D8D6C8" opacity=".85"/>
+        <rect x="256" y="4" width="115" height="38" rx="3" fill="#D0CEBC" opacity=".85"/>
+        <rect x="4" y="58" width="56" height="62" rx="3" fill="#D0CEBC" opacity=".8"/>
+        <rect x="70" y="54" width="80" height="58" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="164" y="58" width="74" height="54" rx="3" fill="#D0CEBC" opacity=".8"/>
+        <rect x="254" y="52" width="117" height="68" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="4" y="140" width="58" height="56" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="74" y="136" width="80" height="52" rx="3" fill="#D0CEBC" opacity=".75"/>
+        <rect x="168" y="140" width="72" height="50" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="256" y="134" width="115" height="58" rx="3" fill="#D0CEBC" opacity=".75"/>
+        <rect x="0" y="44" width="375" height="10" fill="#DDDBD0" opacity=".9"/>
+        <rect x="0" y="122" width="375" height="8" fill="#E4E2D6" opacity=".8"/>
+        <rect x="140" y="0" width="8" height="220" fill="#DDDBD0" opacity=".85"/>
+        <rect x="60" y="0" width="6" height="220" fill="#E0DED2" opacity=".7"/>
+        <rect x="250" y="0" width="6" height="220" fill="#E0DED2" opacity=".7"/>
+        <ellipse cx="308" cy="95" rx="34" ry="22" fill="#CDD9B8" opacity=".65"/>
+        <!-- greyed driver dot -->
+        <circle cx="186" cy="155" r="8" fill="#C8C4BC"/>
+        <circle cx="186" cy="155" r="16" fill="#C8C4BC" opacity=".15"/>
+        <rect width="375" height="220" fill="rgba(240,238,232,0.25)"/>
+      </svg>
+      <!-- Offline badge on map -->
+      <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(28,27,24,.72);backdrop-filter:blur(8px);border-radius:20px;padding:5px 13px;display:flex;align-items:center;gap:7px">
+        <div style="width:7px;height:7px;background:#9CA3AF;border-radius:50%"></div>
+        <span style="font-size:12px;font-weight:600;color:#fff;letter-spacing:.02em">Вы офлайн</span>
+      </div>
+      <!-- gradient fade -->
+      <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(0deg,#fff,transparent)"></div>
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;overflow-y:auto">
+      <div class="dh"></div>
+
+      <!-- ── HERO: STATUS + GO ONLINE (combined at top) ── -->
+      <div class="hero-block">
+        <!-- Status row + delivery toggle -->
+        <div class="hero-top">
+          <div class="hero-status-group">
+            <div class="status-pill sp-offline">
+              <div class="sp-dot sp-dot-off"></div>
+              Офлайн
+            </div>
+            <div class="hero-status-sub">Приём заказов отключён</div>
+          </div>
+          <div class="hero-delivery">
+            <div class="hero-del-label">Доставка</div>
+            <div class="hero-del-row">
+              <span class="hero-del-val">ВКЛ</span>
+              <div class="pill on"><div class="pill-dot"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA button -->
+        <div class="btn-y">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#1C1B18"/></svg>
+          Выйти на линию
+        </div>
+        <div class="btn-caption">Начнёт работать ЭПЛ № 2024-00184753</div>
+      </div>
+
+      <!-- EPL SECTION -->
+      <div class="sec-divider"></div>
+      <div class="sec">
+        <div class="sec-title">Электронный путевой лист</div>
+      </div>
+      <div class="epl-card">
+        <div class="epl-top">
+          <div class="epl-num">ЭПЛ № 2024-00184753</div>
+          <div class="epl-status active">
+            <div class="epl-status-dot" style="background:var(--g)"></div>
+            Активен
+          </div>
+        </div>
+        <div class="epl-title">Такси-парк «ТрейдТакси»</div>
+        <div class="epl-meta">Выписан сегодня, 06:00 · Действует до 23:59</div>
+        <div class="epl-row">
+          <div class="epl-chip">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            17 ч 43 мин
+          </div>
+          <div class="epl-chip">Осмотр ✓</div>
+          <div class="epl-action">Просмотр →</div>
+        </div>
+      </div>
+
+      <!-- VEHICLE SECTION -->
+      <div class="sec-divider"></div>
+      <div class="sec">
+        <div class="sec-title">Транспортное средство</div>
+      </div>
+      <div class="vehicle-card">
+        <div class="vc-header">
+          <div class="vc-icon">🚖</div>
+          <div style="flex:1">
+            <div class="vc-name">Kia Rio · 2021</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+              <div class="vc-plate">
+                <div class="vc-plate-flag">RU</div>
+                <div class="vc-plate-num">А 847 КМ · 77</div>
+              </div>
+            </div>
+          </div>
+          <div class="vc-badge comfort">Комфорт</div>
+        </div>
+
+        <div class="vc-stats">
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Страховка</div>
+            <div class="vc-stat-v ok">ОСАГО ✓</div>
+            <div class="vc-stat-sub">до 15.03.2026</div>
+          </div>
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Техосмотр</div>
+            <div class="vc-stat-v ok">ТО-8 ✓</div>
+            <div class="vc-stat-sub">до 12.08.2026</div>
+          </div>
+          <div class="vc-stat">
+            <div class="vc-stat-lbl">Пробег</div>
+            <div class="vc-stat-v">87 432 км</div>
+            <div class="vc-stat-sub">обнови одометр</div>
+          </div>
+        </div>
+
+        <div class="vc-footer">
+          <div class="vc-footer-label">Закреплено: <span style="font-weight:600;color:var(--ink)">Автопарк №3</span></div>
+          <div class="vc-change">Сменить ТС →</div>
+        </div>
+      </div>
+
+      <!-- READINESS CHECKLIST -->
+      <div class="sec-divider"></div>
+      <div class="sec" style="padding-bottom:10px">
+        <div class="sec-title">Готовность к смене</div>
+      </div>
+      <div class="cl-list">
+        <div class="cl-item">
+          <div class="cl-ic ok">✅</div>
+          <div style="flex:1">
+            <div class="cl-name">Документы водителя</div>
+            <div class="cl-sub">ВУ, паспорт — проверены</div>
+          </div>
+          <div class="cl-badge ok">ОК</div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-ic ok">✅</div>
+          <div style="flex:1">
+            <div class="cl-name">ЭПЛ и медосмотр</div>
+            <div class="cl-sub">Осмотр пройден в 05:58</div>
+          </div>
+          <div class="cl-badge ok">ОК</div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-ic warn">⚠️</div>
+          <div style="flex:1">
+            <div class="cl-name">Баланс кошелька</div>
+            <div class="cl-sub">2 840 ₽ · рекомендуем ≥ 3 000 ₽</div>
+          </div>
+          <div class="cl-badge warn">Пополни</div>
+        </div>
+      </div>
+
+      <div style="height:20px"></div>
+    </div><!-- /sheet -->
+
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
+    </div>
+  </div>
+</div><!-- /pw1 -->
+
+
+<!-- ════════════════════════════════════════
+     PHONE 2 · ONLINE STATE
+     ════════════════════════════════════════ -->
+<div class="pw">
+  <div class="state-label">Состояние 2 · На линии · ожидание заказов</div>
+
+  <div class="phone" style="height:870px">
+    <div class="notch"></div>
+
+    <!-- Status bar over map -->
+    <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">9:41</span>
+      <div class="sb-icons" style="color:#fff">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#fff"/><path d="M2.5 6A7.07 7.07 0 0 1 7.5 4c1.95 0 3.7.78 4.97 2.03" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M0 3.2A10.5 10.5 0 0 1 7.5 0c2.9 0 5.53 1.14 7.44 3" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
+      </div>
+    </div>
+
+    <!-- MAP full bleed -->
+    <div class="map-area" style="height:460px;flex-shrink:0">
+      <svg width="375" height="460" viewBox="0 0 375 460" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="460" fill="#E8E8E4"/>
+        <rect x="4" y="44" width="60" height="50" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="74" y="48" width="78" height="44" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="164" y="40" width="88" height="58" rx="3" fill="#D0CEC0" opacity=".8"/>
+        <rect x="264" y="46" width="107" height="50" rx="3" fill="#D8D6C8" opacity=".8"/>
+        <rect x="4" y="112" width="60" height="68" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="74" y="108" width="84" height="64" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="172" y="112" width="76" height="60" rx="3" fill="#D8D6C8" opacity=".75"/>
+        <rect x="264" y="106" width="107" height="74" rx="3" fill="#D0CEC0" opacity=".75"/>
+        <rect x="4" y="200" width="62" height="66" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="78" y="196" width="82" height="62" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="178" y="200" width="74" height="58" rx="3" fill="#D0CEC0" opacity=".7"/>
+        <rect x="268" y="192" width="103" height="74" rx="3" fill="#D8D6C8" opacity=".7"/>
+        <rect x="4" y="288" width="66" height="58" rx="3" fill="#D8D6C8" opacity=".65"/>
+        <rect x="82" y="284" width="84" height="56" rx="3" fill="#D0CEC0" opacity=".65"/>
+        <rect x="182" y="288" width="76" height="54" rx="3" fill="#D8D6C8" opacity=".65"/>
+        <rect x="272" y="282" width="99" height="66" rx="3" fill="#D0CEC0" opacity=".65"/>
+        <rect x="4" y="368" width="64" height="54" rx="3" fill="#D0CEC0" opacity=".55"/>
+        <rect x="82" y="364" width="84" height="50" rx="3" fill="#D8D6C8" opacity=".55"/>
+        <rect x="180" y="368" width="76" height="52" rx="3" fill="#D0CEC0" opacity=".55"/>
+        <rect x="270" y="362" width="101" height="62" rx="3" fill="#D8D6C8" opacity=".55"/>
+        <rect x="0" y="94" width="375" height="11" fill="#E8E680" opacity=".85"/>
+        <rect x="0" y="182" width="375" height="8" fill="#fff" opacity=".85"/>
+        <rect x="0" y="270" width="375" height="8" fill="#F0EEDF" opacity=".8"/>
+        <rect x="0" y="354" width="375" height="7" fill="#F0EEDF" opacity=".75"/>
+        <rect x="144" y="0" width="9" height="460" fill="#fff" opacity=".85"/>
+        <rect x="64" y="0" width="6" height="460" fill="#F0EEDF" opacity=".7"/>
+        <rect x="256" y="0" width="6" height="460" fill="#F0EEDF" opacity=".7"/>
+        <ellipse cx="315" cy="155" rx="38" ry="26" fill="#C8DFB0" opacity=".75"/>
+        <!-- driver dot (active) -->
+        <circle cx="188" cy="310" r="11" fill="#FFD100" stroke="#fff" stroke-width="3"/>
+        <circle cx="188" cy="310" r="20" fill="#FFD100" opacity=".18"/>
+        <circle cx="188" cy="310" r="30" fill="#FFD100" opacity=".07"/>
+        <!-- order pins -->
+        <circle cx="106" cy="120" r="5" fill="#2563EB"/>
+        <circle cx="240" cy="108" r="5" fill="#EA580C"/>
+        <circle cx="295" cy="220" r="5" fill="#16A34A"/>
+      </svg>
+
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#fff,transparent)"></div>
+
+      <!-- Earnings pill -->
+      <div class="map-pill-dark" style="top:58px;left:14px">
+        <div class="mpd-label">Сегодня</div>
+        <div class="mpd-val">3 280 ₽</div>
+        <div class="mpd-action">История →</div>
+      </div>
+      <!-- Wallet pill -->
+      <div class="map-pill-dark" style="top:58px;left:148px">
+        <div class="mpd-label">Кошелёк</div>
+        <div class="mpd-val">2 840 ₽</div>
+        <div class="mpd-sub">Пополнить СБП</div>
+      </div>
+      <!-- Rating pill -->
+      <div class="map-pill-light" style="top:58px;right:14px">
+        <span style="font-size:15px">⭐</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink)">4.92</div>
+          <div style="font-size:10px;font-weight:500;color:var(--m)">Рейтинг</div>
+        </div>
+      </div>
+      <!-- order labels -->
+      <div style="position:absolute;top:104px;left:72px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10.5px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;align-items:center;gap:3px">👤 520₽</div>
+      <div style="position:absolute;top:92px;left:206px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10.5px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;align-items:center;gap:3px">📦 340₽</div>
+      <div style="position:absolute;top:204px;left:261px;background:#fff;border-radius:8px;padding:3px 7px;font-size:10.5px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;align-items:center;gap:3px">🍕 290₽</div>
+
+      <!-- Go Offline button -->
+      <div class="go-offline-btn" style="bottom:16px">
+        <div class="go-offline-ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18.364 5.636A9 9 0 1 0 5.636 18.364 9 9 0 0 0 18.364 5.636z" stroke="#fff" stroke-width="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#fff"/></svg>
+        </div>
+        <div>
+          <div class="go-offline-text">На линии · Tap чтобы уйти</div>
+          <div class="go-offline-sub">Принимаю пассажиров и доставку</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;overflow-y:auto;padding-bottom:0">
+      <div class="dh"></div>
+
+      <!-- Status + action row -->
+      <div class="status-bar-inline">
+        <div class="sbi-left">
+          <div class="sbi-status">
+            <div class="sp-dot sp-dot-on" style="width:8px;height:8px"></div>
+            <div class="sbi-title">На линии</div>
+          </div>
+          <div class="sbi-sub">С 07:15 · 2 ч 26 мин</div>
+        </div>
+        <div class="sbi-action">Завершить смену</div>
+      </div>
+
+      <!-- Shift stats -->
+      <div class="shift-stats">
+        <div class="ss-item">
+          <div class="ss-lbl">Заработок</div>
+          <div class="ss-val">3 280 ₽</div>
+          <div class="ss-sub">+2 заказа</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">До окупаемости</div>
+          <div class="ss-val">720 ₽</div>
+          <div class="ss-sub">аренды</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Смена</div>
+          <div class="ss-val">2:26</div>
+          <div class="ss-sub">из 12 ч</div>
+        </div>
+      </div>
+
+      <!-- Finding jobs -->
+      <div class="finding-jobs">
+        <div class="fj-left">
+          <div class="fj-icon">⚡</div>
+          <div>
+            <div class="fj-text">Ищу заказы в районе</div>
+            <div class="fj-sub">Кировский р-н · Спрос средний</div>
+          </div>
+        </div>
+        <div class="fj-btn nav">Карта</div>
+      </div>
+
+      <!-- Delivery toggle -->
+      <div class="del-toggle">
+        <div class="dt-left">
+          <div class="dt-title">Принимать доставку</div>
+          <div class="dt-sub">Посылки, еда, продукты</div>
+        </div>
+        <div class="pill on"><div class="pill-dot"></div></div>
+      </div>
+
+      <!-- EPL compact -->
+      <div class="sec-divider" style="margin-top:12px"></div>
+      <div class="epl-row-compact">
+        <div class="epl-rc-icon">📋</div>
+        <div style="flex:1">
+          <div class="epl-rc-name">ЭПЛ № 2024-00184753</div>
+          <div class="epl-rc-meta">Такси-парк «ТрейдТакси» · до 23:59</div>
+        </div>
+        <div class="epl-rc-badge" style="background:var(--gs);color:var(--g)">Активен</div>
+      </div>
+
+      <!-- Vehicle compact -->
+      <div class="vc-row-compact">
+        <div class="vc-rc-icon">🚖</div>
+        <div style="flex:1">
+          <div class="vc-rc-name">Kia Rio 2021 · Комфорт</div>
+          <div class="vc-rc-plate">А 847 КМ 77 · Автопарк №3</div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--b)">Детали</div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="sec-divider" style="margin-top:12px"></div>
+      <div class="qa-row">
+        <div class="qa">
+          <div class="qa-ic">🚗</div>
+          <div class="qa-lbl">Типы<br>заказов</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">📍</div>
+          <div class="qa-lbl">Моё<br>направление</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">⚡</div>
+          <div class="qa-lbl">Авто-<br>приём</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic">🛡️</div>
+          <div class="qa-lbl">Безопас-<br>ность</div>
+        </div>
+        <div class="qa">
+          <div class="qa-ic" style="font-size:22px;font-weight:300;color:var(--m)">···</div>
+          <div class="qa-lbl">Ещё</div>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div><!-- /sheet -->
+
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
+    </div>
+  </div>
+</div><!-- /pw2 -->
+
+
+<!-- ════════════════════════════════════════
+     PHONE 3 · ONLINE + EPL EXPIRING
+     ════════════════════════════════════════ -->
+<div class="pw">
+  <div class="state-label">Состояние 3 · На линии · ЭПЛ истекает</div>
+
+  <div class="phone" style="height:870px">
+    <div class="notch"></div>
+
+    <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent;z-index:20">
+      <span class="sb-t" style="color:#fff">22:41</span>
+      <div class="sb-icons" style="color:#fff">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="1"/><rect x="9" y="2" width="3" height="9" rx="1"/><rect x="13.5" y="0" width="2.5" height="11" rx="1"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="#fff" stroke-width="1.2" fill="none"/><rect x="1.5" y="2.5" width="9" height="7" rx="1.5" fill="#fff"/><path d="M22 4v4a2 2 0 0 0 0-4z" fill="#fff"/></svg>
+      </div>
+    </div>
+
+    <!-- MAP (night) -->
+    <div class="map-area" style="height:340px;flex-shrink:0">
+      <svg width="375" height="340" viewBox="0 0 375 340" preserveAspectRatio="xMidYMid slice">
+        <rect width="375" height="340" fill="#2C2C2A"/>
+        <rect x="4" y="44" width="60" height="50" rx="3" fill="#383632" opacity=".9"/>
+        <rect x="74" y="48" width="78" height="44" rx="3" fill="#302E2B" opacity=".9"/>
+        <rect x="164" y="40" width="88" height="58" rx="3" fill="#383632" opacity=".9"/>
+        <rect x="264" y="46" width="107" height="50" rx="3" fill="#302E2B" opacity=".9"/>
+        <rect x="4" y="112" width="60" height="68" rx="3" fill="#302E2B" opacity=".85"/>
+        <rect x="74" y="108" width="84" height="64" rx="3" fill="#383632" opacity=".85"/>
+        <rect x="172" y="112" width="76" height="60" rx="3" fill="#302E2B" opacity=".85"/>
+        <rect x="264" y="106" width="107" height="74" rx="3" fill="#383632" opacity=".85"/>
+        <rect x="4" y="200" width="62" height="66" rx="3" fill="#383632" opacity=".8"/>
+        <rect x="78" y="196" width="82" height="62" rx="3" fill="#302E2B" opacity=".8"/>
+        <rect x="178" y="200" width="74" height="58" rx="3" fill="#383632" opacity=".8"/>
+        <rect x="268" y="192" width="103" height="74" rx="3" fill="#302E2B" opacity=".8"/>
+        <rect x="4" y="288" width="66" height="42" rx="3" fill="#302E2B" opacity=".7"/>
+        <rect x="82" y="284" width="84" height="42" rx="3" fill="#383632" opacity=".7"/>
+        <rect x="0" y="94" width="375" height="11" fill="#4A4840" opacity=".9"/>
+        <rect x="0" y="182" width="375" height="8" fill="#3C3A36" opacity=".85"/>
+        <rect x="0" y="270" width="375" height="8" fill="#3C3A36" opacity=".8"/>
+        <rect x="144" y="0" width="9" height="340" fill="#3C3A36" opacity=".85"/>
+        <rect x="64" y="0" width="6" height="340" fill="#383632" opacity=".7"/>
+        <rect x="256" y="0" width="6" height="340" fill="#383632" opacity=".7"/>
+        <circle cx="188" cy="220" r="11" fill="#FFD100" stroke="#2C2C2A" stroke-width="3"/>
+        <circle cx="188" cy="220" r="22" fill="#FFD100" opacity=".12"/>
+      </svg>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:70px;background:linear-gradient(0deg,#fff,transparent)"></div>
+      <!-- Earnings -->
+      <div class="map-pill-dark" style="top:58px;left:14px">
+        <div class="mpd-label">Сегодня</div>
+        <div class="mpd-val">7 140 ₽</div>
+        <div class="mpd-sub">8 заказов</div>
+      </div>
+      <!-- Rating -->
+      <div class="map-pill-light" style="top:58px;right:14px">
+        <span style="font-size:15px">⭐</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink)">4.92</div>
+          <div style="font-size:10px;font-weight:500;color:var(--m)">Рейтинг</div>
+        </div>
+      </div>
+      <!-- Go Offline -->
+      <div class="go-offline-btn" style="bottom:16px">
+        <div class="go-offline-ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18.364 5.636A9 9 0 1 0 5.636 18.364 9 9 0 0 0 18.364 5.636z" stroke="#fff" stroke-width="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#fff"/></svg>
+        </div>
+        <div>
+          <div class="go-offline-text">На линии · Tap чтобы уйти</div>
+          <div class="go-offline-sub">Принимаю пассажиров и доставку</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM SHEET -->
+    <div class="sheet" style="flex:1;overflow-y:auto;padding-bottom:0">
+      <div class="dh"></div>
+
+      <!-- Status row -->
+      <div class="status-bar-inline">
+        <div class="sbi-left">
+          <div class="sbi-status">
+            <div class="sp-dot sp-dot-on"></div>
+            <div class="sbi-title">На линии</div>
+          </div>
+          <div class="sbi-sub">С 07:15 · 15 ч 26 мин</div>
+        </div>
+        <div class="sbi-action">Завершить смену</div>
+      </div>
+
+      <!-- Shift stats -->
+      <div class="shift-stats">
+        <div class="ss-item">
+          <div class="ss-lbl">Заработок</div>
+          <div class="ss-val">7 140 ₽</div>
+          <div class="ss-sub">8 заказов</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Аренда закрыта</div>
+          <div class="ss-val" style="color:var(--g)">4 000 ₽ ✓</div>
+          <div class="ss-sub">в плюсе +3 140 ₽</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-lbl">Смена</div>
+          <div class="ss-val">15:26</div>
+          <div class="ss-sub">из 16 ч</div>
+        </div>
+      </div>
+
+      <!-- EPL WARNING -->
+      <div style="margin:14px 20px 0;background:var(--os);border:1px solid #FED7AA;border-radius:16px;padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px">
+          <span style="font-size:18px;line-height:1;flex-shrink:0">⚠️</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.01em">ЭПЛ истекает через 1 ч 18 мин</div>
+            <div style="font-size:12px;font-weight:500;color:var(--o);margin-top:2px">№ 2024-00184753 · до 23:59</div>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:400;color:var(--m);margin-bottom:12px;line-height:1.55">После истечения ЭПЛ вы не сможете принимать новые заказы. Выпишите новый заранее.</div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;padding:10px;background:var(--o);border-radius:10px;text-align:center;font-size:13px;font-weight:700;color:#fff">
+            Выписать новый ЭПЛ
+          </div>
+          <div style="padding:10px 14px;background:rgba(255,255,255,.7);border:1px solid #FED7AA;border-radius:10px;font-size:13px;font-weight:500;color:var(--m)">
+            Позже
+          </div>
+        </div>
+      </div>
+
+      <!-- Vehicle compact -->
+      <div class="vc-row-compact">
+        <div class="vc-rc-icon">🚖</div>
+        <div style="flex:1">
+          <div class="vc-rc-name">Kia Rio 2021 · Комфорт</div>
+          <div class="vc-rc-plate">А 847 КМ 77 · Автопарк №3</div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--b)">Детали</div>
+      </div>
+
+      <!-- Delivery toggle -->
+      <div class="del-toggle">
+        <div class="dt-left">
+          <div class="dt-title">Принимать доставку</div>
+          <div class="dt-sub">Посылки, еда, продукты</div>
+        </div>
+        <div class="pill on"><div class="pill-dot"></div></div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="sec-divider" style="margin-top:12px"></div>
+      <div class="qa-row">
+        <div class="qa"><div class="qa-ic">🚗</div><div class="qa-lbl">Типы<br>заказов</div></div>
+        <div class="qa"><div class="qa-ic">📍</div><div class="qa-lbl">Моё<br>направление</div></div>
+        <div class="qa"><div class="qa-ic">⚡</div><div class="qa-lbl">Авто-<br>приём</div></div>
+        <div class="qa"><div class="qa-ic">🛡️</div><div class="qa-lbl">Безопас-<br>ность</div></div>
+        <div class="qa"><div class="qa-ic" style="font-size:22px;font-weight:300;color:var(--m)">···</div><div class="qa-lbl">Ещё</div></div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bnav">
+      <div class="ni on"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9v9a1 1 0 0 1-1 1H14v-6H10v6H4a1 1 0 0 1-1-1v-9z" stroke="#1C1B18" stroke-width="2"/></svg></div><div class="ni-lbl">Главная</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#A8A293" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#A8A293" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ni-lbl">ЭПЛ</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Заказы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#A8A293" stroke-width="2"/></svg></div><div class="ni-lbl">Штрафы</div></div>
+      <div class="ni"><div class="ni-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8A293" stroke-width="2"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#A8A293" stroke-width="2" stroke-linecap="round"/></svg></div><div class="ni-lbl">Профиль</div></div>
+    </div>
+  </div>
+</div><!-- /pw3 -->
+
+</div><!-- /phones -->
+</body>
+</html>
